@@ -70,7 +70,7 @@ const config = {
           },
           {
             type: 'doc',
-            docId: 'API/upload',
+            docId: 'api/upload',
             position: 'left',
             label: 'API',
           },
@@ -93,7 +93,7 @@ const config = {
               },
               {
                 label: 'API',
-                to: '/docs/api',
+                to: '/docs/category/api',
               },
             ],
           },
