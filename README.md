@@ -2,11 +2,11 @@
 
 Bananasign provides a fully compliant digital signature flow, that can be integrated with your Web or mobile application in minutes. 
 
-View the [Bananasign Docs] online at [https://luminpdf.github.io/bananasign-docs/](https://luminpdf.github.io/bananasign-docs/)
-
-This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
+View the [Bananasign Docs](https://luminpdf.github.io/bananasign-docs/) online at [https://luminpdf.github.io/bananasign-docs/](https://luminpdf.github.io/bananasign-docs/). 
 
 ### Installation
+
+This website is built using Docusaurus 2.
 
 ```
 $ yarn
@@ -34,6 +34,7 @@ Using SSH:
 
 ```
 $ USE_SSH=true yarn deploy
+$ npx docusaurus deploy
 ```
 
 Not using SSH:
@@ -42,4 +43,3 @@ Not using SSH:
 $ GIT_USER=<Your GitHub username> yarn deploy
 ```
 
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
