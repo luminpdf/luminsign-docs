@@ -2,7 +2,7 @@
 
 Bananasign provides a fully compliant digital signature flow, that can be integrated with your Web or mobile application in minutes. 
 
-View the Bananasign Docs at [luminpdf.github.io/bananasign-docs/](https://luminpdf.github.io/bananasign-docs/)
+View the [Bananasign Docs] online at [https://luminpdf.github.io/bananasign-docs/](https://luminpdf.github.io/bananasign-docs/)
 
 This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
 
