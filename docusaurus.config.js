@@ -9,15 +9,15 @@ const config = {
   title: 'Bananasign Developer Docs',
   tagline: 'Add a signing workflow to your app',
   url: 'https://bananasign-docs.github.io',
-  baseUrl: '/',
+  baseUrl: '/bananasign-docs/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon-32x32.png',
-  trailingSlash: false,
+  trailingSlash: true,
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'lumin-pdf', // Usually your GitHub org/user name.
+  organizationName: 'luminpdf', // Usually your GitHub org/user name.
   projectName: 'bananasign-docs', // Usually your repo name.
 
   // Even if you don't use internalization, you can use this field to set useful
@@ -35,10 +35,9 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/luminpdf/bananasign-docs/blob/main/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -53,7 +52,7 @@ const config = {
       navbar: {
         title: '',
         logo: {
-          alt: 'My Site Logo',
+          alt: 'Bananasign',
           src: 'img/logo.svg',
         },
         items: [
@@ -68,6 +67,12 @@ const config = {
             docId: 'intro',
             position: 'left',
             label: 'Docs',
+          },
+          {
+            type: 'doc',
+            docId: 'API/upload',
+            position: 'left',
+            label: 'API',
           },
           {
             href: 'https://github.com/luminpdf/bananasign-docs',
@@ -85,6 +90,10 @@ const config = {
               {
                 label: 'Tutorial',
                 to: '/docs/intro',
+              },
+              {
+                label: 'API',
+                to: '/docs/api',
               },
             ],
           },
@@ -110,7 +119,7 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/luminpdf/bananasign-docs',
+                href: 'https://github.com/luminpdf/bananasign-docs/blob',
               },
             ],
           },

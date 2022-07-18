@@ -5,7 +5,7 @@ sidebar_position: 1
 
 # Bananasign Intro
 
-Bananasign provides a fully compliant digital signature flow, that can be integrated with your Web or mobile application in miniutes. Let's discover **Bananasign in less than 5 minutes**. Bananasign provides functionality for:
+Bananasign provides a fully compliant digital signature flow, that can be integrated with your Web or mobile application in minutes. Let's discover **Bananasign in less than 5 minutes**. Bananasign provides functionality for:
 
 * Send documents for signing via email
 * Legally-compliant digital signatures
@@ -13,7 +13,7 @@ Bananasign provides a fully compliant digital signature flow, that can be integr
 * Send automated or manual reminder emails for signer
 * OAuth2.0 integration
 
-Bananasign is available as a standalone application, avaiilable at [bananasign.co](https://www.bananasign.co/). Bananasign also provides a simple integration to enable signing from your application.
+Bananasign is available as a standalone application, available at [bananasign.co](https://www.bananasign.co/). Bananasign also provides a simple integration to enable signing from your application.
 
 ## Getting Started
 
