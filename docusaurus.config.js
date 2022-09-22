@@ -127,6 +127,7 @@ const config = {
         copyright: `Copyright © ${new Date().getFullYear()} Lumin PDF, Inc`,
       },
       prism: {
+        additionalLanguages: ['http'],
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
       },
