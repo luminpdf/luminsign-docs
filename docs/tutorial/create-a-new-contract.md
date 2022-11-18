@@ -1,17 +1,17 @@
 ---
-title: Create a new Contract
+title: Create a new Document
 sidebar_position: 3
 ---
 
-In Bananasign, each signing flow is related to a *contract*. A contract is a PDF file and some associated metadata, that needs to be signed by one or more parties. In this page, we use the Bananasign API to create a new contract. The contract can then be displayed in an iFrame as explained on the following pages. 
+In Bananasign, each signing flow is related to a *document*. A document is a PDF file and some associated metadata, that needs to be signed by one or more parties. In this page, we use the Bananasign API to create a new document. The document can then be displayed in an iFrame as explained on the following pages.
 
 ## Create an API Client
 
-An authenticated API client is required to setup a new contract on Bananasign. 
+An authenticated API client is required to setup a new document on Bananasign.
 This page takes you through the process of setting up an authenticated API client.
 
-The Lumin and Bananasign API are protected using OAuth2.0. 
-Any Oauth2 Client library can be used to fetch a token and make authenticated requests. 
+The Lumin and Bananasign API are protected using OAuth2.0.
+Any Oauth2 Client library can be used to fetch a token and make authenticated requests.
 In this tutorial, we are using [axios-oauth-client](https://www.npmjs.com/package/axios-oauth-client)
 
 Install the Axios Oauth Client:
@@ -19,7 +19,7 @@ Install the Axios Oauth Client:
 $ npm install --save axios-oauth-client axios-token-interceptor axios
 ```
 
-## Client Credentials grant 
+## Client Credentials grant
 Fetch a new authentication token from the Lumin PDF Authentication servers:
 
 ```js title="bananasign.js"
@@ -59,9 +59,9 @@ client.get('https://lxb.bananasign.co/api/version');
 ```
 
 
-## Creating a contract
+## Creating a document
 
-The Bananasign client can be used to create a new contract.
+The Bananasign client can be used to create a new document.
 This can be done using a single POST call:
 
 ```js title="bananasign.js"
@@ -91,5 +91,5 @@ This can be done using a single POST call:
   // {identify: "5tyeu4il7x"}
 ```
 
-The Banasign API returns a unique identifyer for the newly created contract (5tyeu4il7x).
+The Bananasign API returns a unique identifier for the newly created document (5tyeu4il7x).
 

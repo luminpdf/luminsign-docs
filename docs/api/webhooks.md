@@ -1,0 +1,81 @@
+---
+sidebar_position: 70
+---
+
+# Webhooks
+
+You can use webhooks to get real-time updates from Bananasign via a callback url.
+Webhooks are useful for updating your application state after an asynchronous event.
+
+## Create event subscription
+
+You can subscribe to a document event via a callback URL.
+
+:::info
+Refer [Document events](./document-events.md) for a list of event types.
+:::
+
+**Request**
+
+```http
+POST /v1/event-subscriptions
+Content-Type: application/json
+Authorization: Bearer oauth2_access_token
+
+{
+  "documentId": "624fe419cd66d9e6db9982e9",
+  "callback": "https://myapp.com/api/callback/bananasign",
+  "event": "document.created"
+}
+```
+
+**Parameters**
+
+| Key          | Type   | Description                                      |
+| :----------- | :----- | :----------------------------------------------- |
+| `documentId` | string | ID of the document to subscribe to               |
+| `callback`   | string | Callback URL Bananasign used to notify new event |
+| `event`      | string | The event type to subscribe                      |
+
+## Update event subscription
+
+Update an event subscription to change its callback URL or event type.
+
+**Request**
+
+```http
+PUT /v1/event-subscriptions/:subscription_id
+Content-Type: application/json
+Authorization: Bearer oauth2_access_token
+
+{
+  "callback": "https://myapp.com/api/callback/bananasign",
+  "event": "document.created"
+}
+```
+
+**Parameters**
+
+| Key               | Type   | Description                                      |
+| :---------------- | :----- | :----------------------------------------------- |
+| `subscription_id` | string | The subscription's ID                            |
+| `callback`        | string | Callback URL Bananasign used to notify new event |
+| `event`           | string | The event type to subscribe                      |
+
+## Delete event subscription
+
+Unsubscribe from a document event to no longer receive callback.
+
+**Request**
+
+```http
+DELETE /v1/event-subscriptions/:subscription_id
+Content-Type: application/json
+Authorization: Bearer oauth2_access_token
+```
+
+**Parameters**
+
+| Key               | Type   | Description           |
+| :---------------- | :----- | :-------------------- |
+| `subscription_id` | string | The subscription's ID |

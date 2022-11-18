@@ -11,14 +11,14 @@ The Bananasign signing workflow is normally started when a customer in your appl
 
 ## Start Page
 
-The application (in this case Lumin PDF) often needs to collect some additional information about the contract before launching the signing flow. The most important information is the a list of email addresses that will need to sign the document. 
+The application (in this case Lumin PDF) often needs to collect some additional information about the document before launching the signing flow. The most important information is the a list of email addresses that will need to sign the document.
 
 
 Bananasign provides a [simple react widget](https://github.com/luminpdf/bananasign-example) that can be used to collect this information. Of course, you can build any widget to collect this information, or skip this step altogether.
 
 ![image](img/start-page.png)
 
-The customer uses this page to select the people who need to sign the contract. They can also select who will be able to view the contract during the signing process, and download the document once it is complete.
+The customer uses this page to select the people who need to sign the document. They can also select who will be able to view the document during the signing process, and download the document once it is complete.
 
 :::tip This page is customizable
 This step in the Bananasign setup flow is 100% customizable. The app developer can adapt the Bananasign widget or they can skip this step altogether. The app developer can provide their own email address suggestion or pre-fill the input field, as this page is controlled by the app developer.
