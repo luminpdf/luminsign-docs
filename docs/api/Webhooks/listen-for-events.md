@@ -2,7 +2,7 @@
 sidebar_position: 70
 ---
 
-# Webhooks
+# Listen for events
 
 You can use webhooks to get real-time updates from Bananasign via a callback url.
 Webhooks are useful for updating your application state after an asynchronous event.
