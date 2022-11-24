@@ -75,6 +75,12 @@ const config = {
             label: 'API',
           },
           {
+            type: 'doc',
+            docId: 'authorization/overview',
+            position: 'left',
+            label: 'OAuth2',
+          },
+          {
             href: 'https://github.com/luminpdf/bananasign-docs',
             label: 'GitHub',
             position: 'right',
@@ -94,6 +100,10 @@ const config = {
               {
                 label: 'API',
                 to: '/docs/category/api',
+              },
+              {
+                label: 'OAuth2 Integration',
+                to: '/docs/category/oauth20-integration',
               },
             ],
           },
