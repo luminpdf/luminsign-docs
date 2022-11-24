@@ -3,60 +3,86 @@ title: Contract Temporary
 sidebar_position: 3
 ---
 
-This API endpoint allows customers to create a Contract.
-The API endpoint returns a JSON object describing the new object.
-An example call to this API could look like: 
+This API allows customers to create a Contract with 2 steps.
 
-```js title="bananasign.js"
-  client.post(
-    'https://lxb.luminpdf.com/api/web/auth/contract-temporary',
-    {
-      "signerList": [
-          {
-              "name": "First Signer",
-              "email": "signer@luminpdf.com",
-              "requestType": "SIGNER",
-              "dueTimeExpired": 0
-          }
-      ],
-      "viewerList": [],
-      "inputContract": {
-          "name": "Lumin Brand Guidelines.pdf",
-          "dueTimeExpired": 0,
-          "type": "MEANDOTHERS",
-          "formBuilderType": "KEEP_DATA"
-      },
-      "type": "LOCAL",
-      "remoteId": "b66e35c9-6ef4-44eb-8703-ed00a53779ae.pdf",
-      "thumbnail": "thumbnails/0c8d7e8d-57ef-4f8c-a787-b8c42a14ad40.jpeg",
-      "userId": "62ad50a2d7d72af7a83356e9"
-  });
-  // {identify: "5tyeu4il7x"}
+An example call to this API could look like:
+
+### Step 1
+```js title="init.js"
+  fetch('https://app.bananasign.co/api/web/v1/document-signing/init', {
+    method: 'POST',
+    body: JSON.stringify({
+      fileName: 'sample.pdf',
+    }),
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    },
+  })
 ```
 
-**@signerList:** This is an array of people who need to sign the document
+The API endpoint returns a JSON object describing the new object
 
-**@viewerList:** This is an array of people who will be able to view the contract
+**Payload**
 
-**@signerList.name:** The display name of the signer
+| Key               | Type   | Description                                      |
+| :---------------- | :----- | :----------------------------------------------- |
+| `flowId` | string | The unique identifier for the newly created document                           |
+| `preSignedUrl`        | string | The URL for uploading document to bananasign temporary bucket with an expiration time of 15/30 mins  |
+| `owner`           | object | The owner of contract in Bananasign                  |
 
-**@signerList.email:** The contact email of this person. This email will be used to send the contact a unique link.
 
-**@signerList.requestType:** Can be "SIGNER" or "VIEWER" depending on the permissions that this person will have on the file.
+Using `preSignedUrl` for uploading document to bananasign
+```js title="upload.js"
+ fetch(preSignedUrl, {
+  method: 'PUT',
+  body: fileData, // Your document file object
+  headers: {
+    'Content-Type': 'application/pdf',
+  },
+})
+```
 
-**@signerList.dueTimeExpired:** The due date for this person as a UTC timestamp. The signer will not be able to sign the document after this date.
+:::caution
+You must use preSignedUrl for uploading your document to bananasign before going to step 2
+:::
 
-**@inputContract.name:** The display name of the contract
+### Step 2
 
-**@inputContract.dueTimeExpired:** The due date for the contract as a UTC timestamp. Nobody will not bee able to sign the document after this date.
+You can create temporary document with your signers and viewers with `flowId`
 
-**@inputContract.type:** Only local is supported at this time "LOCAL"
+```js title="create.js"
+  fetch('https://app.bananasign.co/api/web/v1/document-signing/create-document-temporary', {
+    method: 'PUT',
+    body: JSON.stringify({
+      signers: [{
+        name: 'First Signer',
+        email: 'signer@luminpdf.com',
+      }],
+      viewers: [],
+      flowId: 'WNLW4u4dBOOn',
+    }),
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    }
+  })
+```
+**@accessToken:** The OAuth2 access token getting from [Getting an Access Token](/docs/authorization/get-token)
 
-**@inputContract.remoteId:** The remoteId of the file, as returned by the upload endpoint
+**@fileName:** The contract name
 
-**@inputContract.thumbnail:** The thumbnail of the file, as returned by the upload endpoint
+**@signers:** This is an array of people who need to sign the document
 
-**@inputContract.userId:** Leave empty
+**@viewers:** This is an array of people who will be able to view the contract
+
+**@signers.name:** The display name of the signer
+
+**@signers.email:** The contact email of this person. This email will be used to send the contact a unique link.
+
+**@viewers.name:** The display name of the viewer
+
+**@viewers.email:** The contact email of this person. This email will be used to send the contact a unique link.
 
 
 

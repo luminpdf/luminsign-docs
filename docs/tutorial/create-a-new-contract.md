@@ -5,91 +5,64 @@ sidebar_position: 3
 
 In Bananasign, each signing flow is related to a *document*. A document is a PDF file and some associated metadata, that needs to be signed by one or more parties. In this page, we use the Bananasign API to create a new document. The document can then be displayed in an iFrame as explained on the following pages.
 
-## Create an API Client
+:::caution
+Prerequisites: You need to obtain an access token from [Getting an Access Token](/docs/authorization/get-token)
+:::
 
-An authenticated API client is required to setup a new document on Bananasign.
-This page takes you through the process of setting up an authenticated API client.
-
-The Lumin and Bananasign API are protected using OAuth2.0.
-Any Oauth2 Client library can be used to fetch a token and make authenticated requests.
-In this tutorial, we are using [axios-oauth-client](https://www.npmjs.com/package/axios-oauth-client)
-
-Install the Axios Oauth Client:
-```sh
-$ npm install --save axios-oauth-client axios-token-interceptor axios
-```
-
-## Client Credentials grant
-Fetch a new authentication token from the Lumin PDF Authentication servers:
-
-```js title="bananasign.js"
-const axios = require('axios');
-const oauth = require('axios-oauth-client');
-const tokenProvider = require('axios-token-interceptor');
-
-const getAuthorizationCode = oauth.client(axios.create(), {
-  url: 'https://auth.luminpdf.com/2.0/token',
-  grant_type: 'client_credentials',
-  client_id: 'INSERT_CLIENT_ID_HERE',
-  client_secret: 'INSERT_CLIENT_SECRET_HERE',
-  scope: 'contracts',
-});
-```
-
-## Authenticated Axios client
-Create a new authenticated Axios client. This can be used to make requests to the Lumin PDF API
-or the Bananasign API.
-
-```js title="bananasign.js"
-const client = axios.create();
-client.interceptors.request.use(
-  // Wraps axios-token-interceptor with oauth-specific configuration,
-  // fetches the token using the desired claim method, and caches until the token expires
-  oauth.interceptor(tokenProvider, getOwnerCredentials)
-);
-```
-
-
-You can now make requests to the Bananasign API:
-
-```js
-client.get('https://lxb.bananasign.co/api/version');
-// {version: "1.0.0"}
-
-```
-
-
+:::info
+If you are using our [simple react widget](https://github.com/luminpdf/bananasign-integration), you can skip this step and [Launch Signing Flow](/docs/tutorial/signing-flow/).
+:::
 ## Creating a document
 
 The Bananasign client can be used to create a new document.
-This can be done using a single POST call:
 
-```js title="bananasign.js"
-  client.post(
-    'https://lxb.luminpdf.com/api/web/auth/contract-temporary',
-    {
-      "signerList": [
-          {
-              "name": "First Signer",
-              "email": "signer@luminpdf.com",
-              "requestType": "SIGNER",
-              "dueTimeExpired": 0
-          }
-      ],
-      "viewerList": [],
-      "inputContract": {
-          "name": "Lumin Brand Guidelines.pdf",
-          "dueTimeExpired": 0,
-          "type": "MEANDOTHERS",
-          "formBuilderType": "KEEP_DATA"
-      },
-      "type": "LOCAL",
-      "remoteId": "b66e35c9-6ef4-44eb-8703-ed00a53779ae.pdf",
-      "thumbnail": "thumbnails/0c8d7e8d-57ef-4f8c-a787-b8c42a14ad40.jpeg",
-      "userId": "62ad50a2d7d72af7a83356e9"
-  });
-  // {identify: "5tyeu4il7x"}
+Firstly, you need to call init api to obtain unique identifier of document.
+
+```js title="init-flow.js"
+  fetch('https://app.bananasign.co/api/web/v1/document-signing/init', {
+    method: 'POST',
+    body: JSON.stringify({
+      fileName: 'sample.pdf',
+    }),
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(async (response) => {
+      const data = await response.json();
+      // { 
+      //   flowId: "WNLW4u4dBOOn",
+      //   preSignedUrl: "https://bananasign-temporary-contracts.s3...",
+      //   owner: {
+      //     email: 'signer@luminpdf.com',
+      //     name: 'First Signer',
+      //   }
+      // }
+    })
 ```
 
-The Bananasign API returns a unique identifier for the newly created document (5tyeu4il7x).
+This API returns a unique identifier for the newly created document (WNLW4u4dBOOn) and `preSignedUrl` for upload document to bananasign.
+
+After that, you can create temporary document with your signers and viewers by using a single PUT call:
+```js title="create-document.js"
+  fetch('https://app.bananasign.co/api/web/v1/document-signing/create-document-temporary', {
+    method: 'PUT',
+    body: JSON.stringify({
+      signers: [{
+        name: 'First Signer',
+        email: 'signer@luminpdf.com',
+      }],
+      viewers: [],
+      flowId: 'WNLW4u4dBOOn',
+    }),
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    }
+  })
+```
+:::info
+For more information, please visit: [Contract Temporary API](/docs/api/contract-temporary)
+:::
 
