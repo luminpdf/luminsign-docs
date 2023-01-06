@@ -6,7 +6,7 @@ sidebar_position: 3
 In Bananasign, each signing flow is related to a *document*. A document is a PDF file and some associated metadata, that needs to be signed by one or more parties. In this page, we use the Bananasign API to create a new document. The document can then be displayed in an iFrame as explained on the following pages.
 
 :::caution
-Prerequisites: You need to obtain an access token from [Getting an Access Token](/docs/authorization/get-token)
+Prerequisites: You need to obtain an access token from [Getting an Access Token](/docs/category/getting-an-access-token)
 :::
 
 :::info
@@ -19,7 +19,7 @@ The Bananasign client can be used to create a new document.
 Firstly, you need to call init api to obtain unique identifier of document.
 
 ```js title="init-flow.js"
-  fetch('https://app.bananasign.co/api/web/v1/document-signing/init', {
+  fetch('https://app-auth-staging.bananasign.co/api/web/v1/document-signing/init', {
     method: 'POST',
     body: JSON.stringify({
       fileName: 'sample.pdf',
@@ -46,7 +46,7 @@ This API returns a unique identifier for the newly created document (WNLW4u4dBOO
 
 After that, you can create temporary document with your signers and viewers by using a single PUT call:
 ```js title="create-document.js"
-  fetch('https://app.bananasign.co/api/web/v1/document-signing/create-document-temporary', {
+  fetch('https://app-auth-staging.bananasign.co/api/web/v1/document-signing/create-document-temporary', {
     method: 'PUT',
     body: JSON.stringify({
       signers: [{

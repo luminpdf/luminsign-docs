@@ -8,12 +8,12 @@ sidebar_position: 4
 There are a few more steps for the customer to prepare there document for signing. Luckily, Bananasign handles everything from this point onwards. Just load the Bananasign iframe using the unique document identifier:
 
 :::caution
-Prerequisites: You need to obtain an access token from [Getting an Access Token](/docs/authorization/get-token)
+Prerequisites: You need to obtain an access token from [Getting an Access Token](/docs/category/getting-an-access-token)
 :::
 
 ```html
   <iframe width="100%" height="100%"
-   src="https://app.bananasign.co/embed/WNLW4u4dBOOn?token={accessToken}"
+   src="https://app-auth-staging.bananasign.co/embed/WNLW4u4dBOOn?token={accessToken}"
    title="Iframe Upload"
    frameborder="0"
    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"

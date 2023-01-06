@@ -1,6 +1,5 @@
 {
-  "label": "OAuth2.0",
-  "position": 3,
+  "label": "Getting an Access Token",
   "link": {
     "type": "generated-index",
     "description": "Connect your application to Bananasign in a few easy steps."

@@ -9,7 +9,7 @@ An example call to this API could look like:
 
 ### Step 1
 ```js title="init.js"
-  fetch('https://app.bananasign.co/api/web/v1/document-signing/init', {
+  fetch('https://app-auth-staging.bananasign.co/api/web/v1/document-signing/init', {
     method: 'POST',
     body: JSON.stringify({
       fileName: 'sample.pdf',
@@ -52,7 +52,7 @@ You must use preSignedUrl for uploading your document to bananasign before going
 You can create temporary document with your signers and viewers with `flowId`
 
 ```js title="create.js"
-  fetch('https://app.bananasign.co/api/web/v1/document-signing/create-document-temporary', {
+  fetch('https://app-auth-staging.bananasign.co/api/web/v1/document-signing/create-document-temporary', {
     method: 'PUT',
     body: JSON.stringify({
       signers: [{
@@ -68,7 +68,7 @@ You can create temporary document with your signers and viewers with `flowId`
     }
   })
 ```
-**@accessToken:** The OAuth2 access token getting from [Getting an Access Token](/docs/authorization/get-token)
+**@accessToken:** The OAuth2 access token getting from [Getting an Access Token](/docs/category/getting-an-access-token)
 
 **@fileName:** The contract name
 
