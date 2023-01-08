@@ -24,6 +24,7 @@ GET https://kratos-auth-staging.luminpdf.com/oauth2/auth
 | `redirect_uri`           | object | The redirect_uri where authentication responses will be sent and received. It is one of the redirect URIs you registered in the Bananasign. |
 | `scope`        | string | Scope that you want to request `(openid, bananasign:document.write)`  |
 | `state`        | string (optional) | Optional value for prevent attacks and redirect users  |
+| `nonce`        | string (optional) | Optional value for prevent playback attack  |
 ## Get access token and refresh token with authorization code
 Fetch a new authentication token from the Lumin PDF Authentication servers:
 
