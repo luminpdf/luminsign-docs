@@ -15,7 +15,8 @@
   --ifm-color-primary-lightest: #3cad6e;
   --ifm-footer-background-color: rgb(12, 57, 91);
   --ifm-color-secondary-contrast-foreground: rgb(12, 57, 91);
-  --ifm-code-font-size: 95%;
+  --ifm-code-font-size: 80%;
+  --ifm-font-size-base: 14px;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
 
