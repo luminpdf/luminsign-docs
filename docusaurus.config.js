@@ -1,7 +1,8 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
+const path = require('path');
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
+const lightCodeTheme = require('prism-react-renderer/themes/nightOwlLight');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
@@ -28,13 +29,16 @@ const config = {
     locales: ['en'],
   },
 
+  themes: ['docusaurus-theme-redoc'],
+
   presets: [
     [
-      'classic',
+      '@docusaurus/preset-classic',
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
+          sidebarCollapsible: false,
           // Remove this to remove the "edit this page" links.
           editUrl:
             'https://github.com/luminpdf/bananasign-docs/blob/main/',
@@ -43,6 +47,20 @@ const config = {
           customCss: require.resolve('./src/css/custom.css'),
         },
       }),
+    ],
+    
+    [
+      'redocusaurus',
+      {
+        config: '/Users/mac/Documents/Project/bananasign-docs/redocly.yaml',
+        specs: [
+          {
+            id: 'oauth2-yml',
+            spec: 'openapi/oauth2/openapi.yaml',
+            // route: 'docs/examples',
+          },
+        ],
+      }
     ],
   ],
 

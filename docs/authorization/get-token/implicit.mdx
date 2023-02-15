@@ -3,42 +3,38 @@ title: Implicit Flow
 sidebar_position: 2
 ---
 
- Implicit grant as the way JavaScript code can obtain access tokens and call APIs directly from a browser.
+import ApiSchema from '@theme/ApiSchema';
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@theme/Badge';
 
-## Obtaining access token
+Implicit grant as the way JavaScript code can obtain bearer token and call APIs directly from a browser.
+
+## Obtaining bearer token
 The client app makes an authorization request by redirecting user to a page with an authorization proposal.
+<CodeBlock>
+  <Badge bg="rgb(47, 129, 50)">GET</Badge>
+  {' '} 
+  {
+    `https://kratos-auth-staging.luminpdf.com/oauth2/auth?client_id=YOUR_CLIENT_ID&response_type=token id_token&redirect_uri=YOUR_REDIRECT_URI&scope=openid bananasign:document.create&state=5a7a4c98-40e2-4e2a-a0d5-979fb639b5b5&nonce=11101998`
+  }
+</CodeBlock>
 
-Example:
-```js
-GET https://kratos-auth-staging.luminpdf.com/oauth2/auth
-?client_id=8447510d-475e-4f65-a3a0-90465ac1417f
-&response_type=token id_token
-&redirect_uri=http://localhost:3000/
-&scope=openid bananasign:document.write
-&state=5a7a4c98-40e2-4e2a-a0d5-979fb639b5b5
-&nonce=11101998
+
+#### QUERY PARAMETERS:
+<ApiSchema pointer="#/components/schemas/Implicit" />
+
+After authentication success, you will be redirected to ```redirect_uri``` with ```access_token``` or ```id_token```, ex:
+
+```bash
+https://YOUR_REDIRECT_URI#access_token=ory_...&id_token=ey...
 ```
-| Key               | Type   | Description                                      |
-| :---------------- | :----- | :----------------------------------------------- |
-| `response_type` | string | The value is `token` or `token id_token`                         |
-| `client_id`        | string | Your app Client ID  |
-| `redirect_uri`           | object | The redirect_uri where authentication responses will be sent and received. It is one of the redirect URIs you registered in the Bananasign. |
-| `scope`        | string | Scope that you want to request `(openid, bananasign:document.write)`  |
-| `state`        | string (optional) | Optional value for prevent attacks and redirect users  |
-| `nonce`        | string (required if request for `id_token`) | Value for prevent playback attack, you must compare with nonce in `id_token` if set  |
 
-You can now make requests to the Bananasign API with access token:
+## Make a simple call with bearer token
+You can now make requests to the Bananasign API with bearer token:
 
-```js title="example-request.js"
-fetch('https://app-auth-staging.bananasign.co/api/web/oauth2/version', {
-  method: 'GET',
-  headers: {
-    Authorization: `Bearer ${accessToken}`,
-    'Content-Type': 'application/json',
-  },
-})
-  .then(async (response) => {
-    const data = await response.json();
-    // {version: "1.0.0"}
-  })
+```bash
+curl --request GET \
+  --url https://app-auth-staging.bananasign.co/api/web/oauth2/version \
+  --header 'Authorization: Bearer $access_token' \
+  --header 'Content-Type: application/json'
 ```
