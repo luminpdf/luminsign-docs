@@ -3,12 +3,73 @@ title: Contract Temporary
 sidebar_position: 3
 ---
 
+import ApiSchema from '@theme/ApiSchema';
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@theme/Badge';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 This API allows customers to create a Contract with 2 steps.
 
 An example call to this API could look like:
 
-### Step 1
-```js title="init.js"
+### Init create contract flow
+
+<CodeBlock>
+  <Badge bg="rgb(24, 111, 175)">POST</Badge>
+  {' '} 
+  {
+    'https://app-auth-staging.bananasign.co/api/web/v1'
+  }
+  <b>/document-signing/init</b>
+</CodeBlock>
+
+#### Header:
+Provide your bearer token in the Authorization Header
+
+Example: ```Authorization: Bearer 111098```
+
+
+#### Request body schema:
+<ApiSchema id="contract-yml" pointer="#/components/schemas/Init" />
+
+#### Payload:
+<ApiSchema id="contract-yml" pointer="#/components/schemas/InitPayload" />
+
+#### Example:
+
+<Tabs 
+  defaultValue="curl"
+  values={[
+    { label: 'Shell/cURL', value: 'curl'},
+    { label: 'Javascript', value: 'js'}
+  ]}
+>
+<TabItem value="curl">
+
+```bash title="init-flow"
+  curl --request POST \
+  --url https://app-auth-staging.bananasign.co/api/web/v1/document-signing/init \
+  -d '{"fileName":"sample.pdf"}' \
+  --header 'Authorization: Bearer $access_token' \
+  --header 'Content-Type: application/json'
+```
+
+```bash title="response"
+  { 
+    flowId: "WNLW4u4dBOOn",
+    preSignedUrl: "https://bananasign-temporary-contracts.s3...",
+    owner: {
+      email: 'signer@luminpdf.com',
+      name: 'First Signer',
+    }
+  }
+```
+</TabItem>
+
+<TabItem value="js">
+
+```js title="init-flow.js"
   fetch('https://app-auth-staging.bananasign.co/api/web/v1/document-signing/init', {
     method: 'POST',
     body: JSON.stringify({
@@ -19,20 +80,42 @@ An example call to this API could look like:
       'Content-Type': 'application/json',
     },
   })
+    .then(async (response) => {
+      const data = await response.json();
+      // { 
+      //   flowId: "WNLW4u4dBOOn",
+      //   preSignedUrl: "https://bananasign-temporary-contracts.s3...",
+      //   owner: {
+      //     email: 'signer@luminpdf.com',
+      //     name: 'First Signer',
+      //   }
+      // }
+    })
 ```
+</TabItem>
 
-The API endpoint returns a JSON object describing the new object
-
-**Payload**
-
-| Key               | Type   | Description                                      |
-| :---------------- | :----- | :----------------------------------------------- |
-| `flowId` | string | The unique identifier for the newly created document                           |
-| `preSignedUrl`        | string | The URL for uploading document to bananasign temporary bucket with an expiration time of 15/30 mins  |
-| `owner`           | object | The owner of contract in Bananasign                  |
-
+</Tabs>
 
 Using `preSignedUrl` for uploading document to bananasign
+<Tabs 
+  defaultValue="curl"
+  values={[
+    { label: 'Shell/cURL', value: 'curl'},
+    { label: 'Javascript', value: 'js'}
+  ]}
+>
+<TabItem value="curl">
+
+```bash title="init-flow"
+  curl --request PUT \
+  --url preSignedUrl \
+  -d 'your_file' \
+  --header 'Content-Type: application/pdf'
+```
+</TabItem>
+
+<TabItem value="js">
+
 ```js title="upload.js"
  fetch(preSignedUrl, {
   method: 'PUT',
@@ -42,14 +125,68 @@ Using `preSignedUrl` for uploading document to bananasign
   },
 })
 ```
+</TabItem>
+
+</Tabs>
 
 :::caution
-You must use preSignedUrl for uploading your document to bananasign before going to step 2
+You must use preSignedUrl for uploading your document to bananasign before going to next step
 :::
 
-### Step 2
+### Create document temporary
 
 You can create temporary document with your signers and viewers with `flowId`
+
+<CodeBlock>
+  <Badge bg="rgb(149, 80, 124)">PUT</Badge>
+  {' '} 
+  {
+    'https://app-auth-staging.bananasign.co/api/web/v1'
+  }
+  <b>/document-signing/create-document-temporary</b>
+</CodeBlock>
+
+#### Header:
+Provide your bearer token in the Authorization Header
+
+Example: ```Authorization: Bearer 111098```
+
+
+#### Request body schema:
+<ApiSchema id="contract-yml" pointer="#/components/schemas/ContractTemporary" />
+
+#### Payload:
+<ApiSchema id="contract-yml" pointer="#/components/schemas/ContractTemporaryPayload" />
+
+#### Example:
+
+<Tabs 
+  defaultValue="curl"
+  values={[
+    { label: 'Shell/cURL', value: 'curl'},
+    { label: 'Javascript', value: 'js'}
+  ]}
+>
+<TabItem value="curl">
+
+```bash title="init-flow"
+  curl --request PUT \
+  --url https://app-auth-staging.bananasign.co/api/web/v1/document-signing/create-document-temporary \
+  -d '{"signers":[{"name":"First Signer","email":"signer@luminpdf.com"}],"viewers":[],"flowId":"WNLW4u4dBOOn"}' \
+  --header 'Authorization: Bearer $access_token' \
+  --header 'Content-Type: application/json'
+```
+
+```bash title="response"
+  {
+    flowId: "WNLW4u4dBOOn",
+    message: "You've requested to a save document info successfully",
+    statusCode: 200
+  }
+```
+</TabItem>
+
+<TabItem value="js">
 
 ```js title="create.js"
   fetch('https://app-auth-staging.bananasign.co/api/web/v1/document-signing/create-document-temporary', {
@@ -66,25 +203,15 @@ You can create temporary document with your signers and viewers with `flowId`
       Authorization: `Bearer ${accessToken}`,
       'Content-Type': 'application/json',
     }
-  })
+  }).then(async (response) => {
+      const data = await response.json();
+      // { 
+      //   flowId: "WNLW4u4dBOOn",
+      //   message: "You've requested to a save document info successfully",
+      //   statusCode: 200,
+      // }
+    })
 ```
-**@accessToken:** The OAuth2 bearer token getting from [Getting an Bearer Token](/docs/category/getting-an-access-token)
+</TabItem>
 
-**@fileName:** The contract name
-
-**@signers:** This is an array of people who need to sign the document
-
-**@viewers:** This is an array of people who will be able to view the contract
-
-**@signers.name:** The display name of the signer
-
-**@signers.email:** The contact email of this person. This email will be used to send the contact a unique link.
-
-**@viewers.name:** The display name of the viewer
-
-**@viewers.email:** The contact email of this person. This email will be used to send the contact a unique link.
-
-
-
-
-
+</Tabs>

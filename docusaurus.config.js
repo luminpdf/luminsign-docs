@@ -57,7 +57,10 @@ const config = {
           {
             id: 'oauth2-yml',
             spec: 'openapi/oauth2/openapi.yaml',
-            // route: 'docs/examples',
+          },
+          {
+            id: 'contract-yml',
+            spec: 'openapi/contract/openapi.yaml',
           },
         ],
       }
