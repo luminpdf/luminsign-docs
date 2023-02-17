@@ -7,12 +7,12 @@ components:
           type: array
           description: Array of people who need to sign the document
           items:
-            $ref: '#/components/schemas/UserInfo'
+            $ref: 'Init.yml#/components/schemas/UserInfo'
         viewers:
           type: array
           description: Array of people who will be able to view the contract
           items:
-            $ref: '#/components/schemas/UserInfo'
+            $ref: 'Init.yml#/components/schemas/UserInfo'
         flowId:
           type: string
           description: The unique identifier for the newly created document
