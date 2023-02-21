@@ -1,0 +1,217 @@
+---
+title: Contract Temporary
+sidebar_position: 3
+---
+
+import ApiSchema from '@theme/ApiSchema';
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@theme/Badge';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+This API allows customers to create a Contract with 2 steps.
+
+An example call to this API could look like:
+
+### Init create contract flow
+
+<CodeBlock>
+  <Badge bg="rgb(24, 111, 175)">POST</Badge>
+  {' '} 
+  {
+    'https://app-auth-staging.bananasign.co/api/web/v1'
+  }
+  <b>/document-signing/init</b>
+</CodeBlock>
+
+#### Header:
+Provide your bearer token in the Authorization Header
+
+Example: ```Authorization: Bearer 111098```
+
+
+#### Request body schema:
+<ApiSchema id="contract-yml" pointer="#/components/schemas/Init" />
+
+#### Payload:
+<ApiSchema id="contract-yml" pointer="#/components/schemas/InitPayload" />
+
+#### Example:
+
+<Tabs 
+  defaultValue="curl"
+  values={[
+    { label: 'Shell/cURL', value: 'curl'},
+    { label: 'Javascript', value: 'js'}
+  ]}
+>
+<TabItem value="curl">
+
+```bash title="init-flow"
+  curl --request POST \
+  --url https://app-auth-staging.bananasign.co/api/web/v1/document-signing/init \
+  -d '{"fileName":"sample.pdf"}' \
+  --header 'Authorization: Bearer $access_token' \
+  --header 'Content-Type: application/json'
+```
+
+```bash title="response"
+  { 
+    flowId: "WNLW4u4dBOOn",
+    preSignedUrl: "https://bananasign-temporary-contracts.s3...",
+    owner: {
+      email: 'signer@luminpdf.com',
+      name: 'First Signer',
+    }
+  }
+```
+</TabItem>
+
+<TabItem value="js">
+
+```js title="init-flow.js"
+  fetch('https://app-auth-staging.bananasign.co/api/web/v1/document-signing/init', {
+    method: 'POST',
+    body: JSON.stringify({
+      fileName: 'sample.pdf',
+    }),
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(async (response) => {
+      const data = await response.json();
+      // { 
+      //   flowId: "WNLW4u4dBOOn",
+      //   preSignedUrl: "https://bananasign-temporary-contracts.s3...",
+      //   owner: {
+      //     email: 'signer@luminpdf.com',
+      //     name: 'First Signer',
+      //   }
+      // }
+    })
+```
+</TabItem>
+
+</Tabs>
+
+Using `preSignedUrl` for uploading document to Bananasign
+<Tabs 
+  defaultValue="curl"
+  values={[
+    { label: 'Shell/cURL', value: 'curl'},
+    { label: 'Javascript', value: 'js'}
+  ]}
+>
+<TabItem value="curl">
+
+```bash title="init-flow"
+  curl --request PUT \
+  --url preSignedUrl \
+  -d 'your_file' \
+  --header 'Content-Type: application/pdf'
+```
+</TabItem>
+
+<TabItem value="js">
+
+```js title="upload.js"
+ fetch(preSignedUrl, {
+  method: 'PUT',
+  body: fileData, // Your document file object
+  headers: {
+    'Content-Type': 'application/pdf',
+  },
+})
+```
+</TabItem>
+
+</Tabs>
+
+:::caution
+You must use preSignedUrl for uploading your document to bananasign before going to next step
+:::
+
+### Create document temporary
+
+You can create temporary document with your signers and viewers with `flowId`
+
+<CodeBlock>
+  <Badge bg="rgb(149, 80, 124)">PUT</Badge>
+  {' '} 
+  {
+    'https://app-auth-staging.bananasign.co/api/web/v1'
+  }
+  <b>/document-signing/create-document-temporary</b>
+</CodeBlock>
+
+#### Header:
+Provide your bearer token in the Authorization Header
+
+Example: ```Authorization: Bearer 111098```
+
+
+#### Request body schema:
+<ApiSchema id="contract-yml" pointer="#/components/schemas/ContractTemporary" />
+
+#### Payload:
+<ApiSchema id="contract-yml" pointer="#/components/schemas/ContractTemporaryPayload" />
+
+#### Example:
+
+<Tabs 
+  defaultValue="curl"
+  values={[
+    { label: 'Shell/cURL', value: 'curl'},
+    { label: 'Javascript', value: 'js'}
+  ]}
+>
+<TabItem value="curl">
+
+```bash title="init-flow"
+  curl --request PUT \
+  --url https://app-auth-staging.bananasign.co/api/web/v1/document-signing/create-document-temporary \
+  -d '{"signers":[{"name":"First Signer","email":"signer@luminpdf.com"}],"viewers":[],"flowId":"WNLW4u4dBOOn"}' \
+  --header 'Authorization: Bearer $access_token' \
+  --header 'Content-Type: application/json'
+```
+
+```bash title="response"
+  {
+    flowId: "WNLW4u4dBOOn",
+    message: "You've requested to a save document info successfully",
+    statusCode: 200
+  }
+```
+</TabItem>
+
+<TabItem value="js">
+
+```js title="create.js"
+  fetch('https://app-auth-staging.bananasign.co/api/web/v1/document-signing/create-document-temporary', {
+    method: 'PUT',
+    body: JSON.stringify({
+      signers: [{
+        name: 'First Signer',
+        email: 'signer@luminpdf.com',
+      }],
+      viewers: [],
+      flowId: 'WNLW4u4dBOOn',
+    }),
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    }
+  }).then(async (response) => {
+      const data = await response.json();
+      // { 
+      //   flowId: "WNLW4u4dBOOn",
+      //   message: "You've requested to a save document info successfully",
+      //   statusCode: 200,
+      // }
+    })
+```
+</TabItem>
+
+</Tabs>

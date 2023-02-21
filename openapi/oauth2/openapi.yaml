@@ -1,0 +1,24 @@
+openapi: 3.0.0
+servers:
+  - url: https://kratos-auth-staging.luminpdf.com
+    description: OAuth2 server
+info:
+  description: |
+    LuminPDF OAuth2 specification
+  title: OAuth2 specification
+  version: 1.0.0
+tags:
+  - name: Implicit flow
+    description: OAuth2 with implicit flow
+  - name: Authorization code
+    description: OAuth2 with authorization code flow
+components:
+  schemas:
+    Implicit:
+      $ref: 'components/implicit.yml#/components/schemas/Implicit'
+      xml:
+        name: Implicit
+    AuthorizationCode:
+      $ref: 'components/authorization_code.yml#/components/schemas/AuthorizationCode'
+      xml:
+        name: AuthorizationCode

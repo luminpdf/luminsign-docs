@@ -1,0 +1,40 @@
+---
+title: Implicit Flow
+sidebar_position: 2
+---
+
+import ApiSchema from '@theme/ApiSchema';
+import CodeBlock from '@theme/CodeBlock';
+import Badge from '@theme/Badge';
+
+Implicit grant as the way JavaScript code can obtain bearer token and call APIs directly from a browser.
+
+## Obtaining bearer token
+The client app makes an authorization request by redirecting user to a page with an authorization proposal.
+<CodeBlock>
+  <Badge bg="rgb(47, 129, 50)">GET</Badge>
+  {' '} 
+  {
+    `https://kratos-auth-staging.luminpdf.com/oauth2/auth?client_id=YOUR_CLIENT_ID&response_type=token id_token&redirect_uri=YOUR_REDIRECT_URI&scope=openid bananasign:document.create&state=5a7a4c98-40e2-4e2a-a0d5-979fb639b5b5&nonce=11101998`
+  }
+</CodeBlock>
+
+
+#### Query parameters:
+<ApiSchema pointer="#/components/schemas/Implicit" />
+
+After authentication succeeds, you will be redirected to ```redirect_uri``` with ```access_token``` or ```id_token```, ex:
+
+```bash
+https://YOUR_REDIRECT_URI#access_token=ory_...&id_token=ey...
+```
+
+## Make a simple call with bearer token
+You can now make requests to the Bananasign API with bearer token:
+
+```bash
+curl --request GET \
+  --url https://app-auth-staging.bananasign.co/api/web/oauth2/version \
+  --header 'Authorization: Bearer $access_token' \
+  --header 'Content-Type: application/json'
+```

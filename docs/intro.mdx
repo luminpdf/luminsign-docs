@@ -11,7 +11,7 @@ Bananasign provides a fully compliant digital signature flow, that can be integr
 * Legally-compliant digital signatures
 * Mobile and web push notifications for signing lifecycle
 * Send automated or manual reminder emails for signer
-* OAuth2.0 integration
+* OAuth 2.0 integration
 
 Bananasign is available as a standalone application, available at [bananasign.co](https://www.bananasign.co/). Bananasign also provides a simple integration to enable signing from your application.
 

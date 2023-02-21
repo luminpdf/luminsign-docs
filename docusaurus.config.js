@@ -1,8 +1,9 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
+const path = require('path');
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const lightCodeTheme = require('prism-react-renderer/themes/oceanicNext');
+const darkCodeTheme = require('prism-react-renderer/themes/palenight');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -28,13 +29,16 @@ const config = {
     locales: ['en'],
   },
 
+  themes: ['docusaurus-theme-redoc'],
+
   presets: [
     [
-      'classic',
+      '@docusaurus/preset-classic',
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
+          sidebarCollapsible: false,
           // Remove this to remove the "edit this page" links.
           editUrl:
             'https://github.com/luminpdf/bananasign-docs/blob/main/',
@@ -43,6 +47,23 @@ const config = {
           customCss: require.resolve('./src/css/custom.css'),
         },
       }),
+    ],
+    
+    [
+      'redocusaurus',
+      {
+        config: '/Users/mac/Documents/Project/bananasign-docs/redocly.yaml',
+        specs: [
+          {
+            id: 'oauth2-yml',
+            spec: 'openapi/oauth2/openapi.yaml',
+          },
+          {
+            id: 'contract-yml',
+            spec: 'openapi/contract/openapi.yaml',
+          },
+        ],
+      }
     ],
   ],
 
@@ -78,7 +99,7 @@ const config = {
             type: 'doc',
             docId: 'authorization/overview',
             position: 'left',
-            label: 'OAuth2',
+            label: 'OAuth 2.0',
           },
           {
             href: 'https://github.com/luminpdf/bananasign-docs',
@@ -102,7 +123,7 @@ const config = {
                 to: '/docs/category/api',
               },
               {
-                label: 'OAuth2 Integration',
+                label: 'OAuth 2.0 Integration',
                 to: '/docs/category/oauth20-integration',
               },
             ],
