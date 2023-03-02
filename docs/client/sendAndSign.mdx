@@ -1,0 +1,37 @@
+---
+title: Send And Sign API
+sidebar_position: 2
+---
+
+This reference describes the Send and Sign API, which you can integrate with bananasign send and sign flow.
+
+## Method: lumin.sign.sendAndSign
+The ```sendAndSign``` method start the send and sign flow with following input:
+
+```js
+window.lumin.sign.sendAndSign(config: SendAndSignConfig)
+```
+
+### Data type: SendAndSignConfig
+
+| Properties          | Type   | Description                                      |
+| :----------- | :----- | :----------------------------------------------- |
+| `fileData` | File or Blob or () => (File or Blob) | **Required**. Your file will be sent to bananasign               |
+| `accessToken`   | string |  **Required**. An Bearer token with scope `bananasign:document.create` included   |
+| `fileName`      | string | **Required**. Name of file that will be saved in bananasign |
+| `onError`      | (error: any) => void | Error handler |
+| `onLoading`      | (state: boolean) => void | State of send and sign flow |
+
+We create a custom dom element `<lumin-sign />` for rendering Send and Sign button ([Logo Preview](/docs/tutorial/sendAndSign/)), ex:
+```js
+function onSend() {
+  window.lumin.sign.sendAndSign(); 
+}
+
+<lumin-sign size="small" onClick={onSend}/>
+```
+
+| Properties          | Type   | Description                                      |
+| :----------- | :----- | :----------------------------------------------- |
+| `size` | string | Size of button. `small` or `large` (Default: `large`) |
+| `hideLogo`   | boolean | Render button without logo (Default: `false`)|

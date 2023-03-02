@@ -1,0 +1,81 @@
+---
+title: Authorization API
+sidebar_position: 2
+---
+
+This reference describes the Lumin 3P Authorization JavaScript Library API, which you can use to load authorization codes or access tokens from Lumin.
+
+## Method: lumin.auth.initialize
+The ```initialize``` method initializes config for authorization flow
+
+```js
+window.lumin.auth.initialize(config: AuthConfig)
+```
+
+### Data type: AuthConfig
+
+| Properties          | Type   | Description                                      |
+| :----------- | :----- | :----------------------------------------------- |
+| `client_id` | string | **Required**. Your application's client ID               |
+| `scope`   | string |  **Required**. A space-delimited list of scopes that identify the resources that your application want to access. Supported scopes are: ```openid```, ```bananasign:document.create``` |
+| `response_type`      | string | **Required**. Which grant to execute. Available values are: ```code```, ```code id_token```, ```token```, ```token id_token```
+| `nonce`      | string | A random string for ID tokens
+| `state`      | string | Specifies any string value for prevent attacks and redirect users
+| `redirect_uri`      | string | The redirect_uri where authentication responses will be sent and received. It is one of the redirect URIs you registered in the Bananasign.  
+| `ux_mode`      | string | The UX mode to use for the authorization flow. Valid values are ```popup``` and ```redirect```. (Default: ```redirect```)
+
+## Method: lumin.auth.signin
+The ```signin``` method start the authorization flow with configuration in initialize step
+
+```js
+window.lumin.auth.signin(option: SigninOption)
+```
+
+### Data type: SigninOption (optional)
+
+| Properties          | Type   | Description                                      |
+| :----------- | :----- | :----------------------------------------------- |
+| `onSuccess` | (payload: **SuccessPayload**): void| The JavaScript function that handles returned response |
+| `onError`   | (payload: **ErrorPayload**): void | The JavaScript function that handles error response  |
+
+#### SuccessPayload
+
+| Properties          | Type   | Description                                      |
+| :----------- | :----- | :----------------------------------------------- |
+| `code` | string | (**Authorization code flow**) The authorization code of a successful token response. |
+| `access_token`   | string | (**Implicit flow**) The access token of a successful token response. |
+| `id_token`   | string | (**OpenID Connect**)The id token of a successful token response.  |
+| `token_type`   | string | The type of the token issued. |
+| `state`   | string | Specifies any string value for prevent attacks and redirect users |
+| `scope`   | string | A space-delimited list of scopes that identify the resources that your application want to access. Supported scopes are: ```openid```, ```bananasign:document.create``` |
+| `expires_in`   | string | The lifetime in seconds of the access token.  |
+| `error`   | string | (**Error of OAuth2 configuration**) A single ASCII error code.  |
+| `error_description`   | string | (**Error of OAuth2 configuration**) Human-readable ASCII text providing additional information  |
+
+#### ErrorPayload
+
+| Properties          | Type   | Description                                      |
+| :----------- | :----- | :----------------------------------------------- |
+| `error`   | string | A single ASCII error code.  |
+| `error_description`   | string | Human-readable ASCII text providing additional information  |
+
+## Method: lumin.auth.signout
+The ```signout``` method start the sign out OAuth2 flow with configuration in initialize step
+
+```js
+window.lumin.auth.signout(option: SignoutOption)
+```
+
+### Data type: SignoutOption (optional)
+
+| Properties          | Type   | Description                                      |
+| :----------- | :----- | :----------------------------------------------- |
+| `onSuccess` | (): void| The JavaScript function that handles after sign out success |
+| `onError`   | (payload: **ErrorPayload**): void | The JavaScript function that handles error  |
+
+#### ErrorPayload
+
+| Properties          | Type   | Description                                      |
+| :----------- | :----- | :----------------------------------------------- |
+| `error`   | string | A single ASCII error code.  |
+| `error_description`   | string | Human-readable ASCII text providing additional information  |

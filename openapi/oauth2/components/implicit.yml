@@ -24,12 +24,12 @@ components:
         scope:
           type: string
           description:  |
-            Scope that you want to request. Supported scopes are:
+            A space-delimited list of scopes that identify the resources that your application want to access. Supported scopes are:
 
             openid, bananasign:document.create
         state:
           type: string
-          description: Value for prevent attacks and redirect users
+          description: Specifies any string value for prevent attacks and redirect users
         nonce:
           type: string
           description: This value is required if use request for id_token scope. Value for prevent playback attack, you must compare with nonce in id_token if set

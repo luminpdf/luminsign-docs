@@ -16,7 +16,7 @@ The client app makes an authorization request by redirecting user to a page with
   <Badge bg="rgb(47, 129, 50)">GET</Badge>
   {' '} 
   {
-    `https://kratos-auth-staging.luminpdf.com/oauth2/auth?client_id=YOUR_CLIENT_ID&response_type=code&redirect_uri=YOUR_REDIRECT_URI&scope=openid bananasign:document.create&state=5a7a4c98-40e2-4e2a-a0d5-979fb639b5b5&nonce=11101998`
+    `https://kratos-auth-test.luminpdf.com/oauth2/auth?client_id=YOUR_CLIENT_ID&response_type=code&redirect_uri=YOUR_REDIRECT_URI&scope=openid bananasign:document.create&state=5a7a4c98-40e2-4e2a-a0d5-979fb639b5b5&nonce=11101998`
   }
 </CodeBlock>
 
@@ -28,7 +28,7 @@ Fetch a new authentication token from the Lumin PDF Authentication servers:
 
 ```bash
 curl --request POST \
-  --url https://kratos-auth-staging.luminpdf.com/oauth2/token \
+  --url https://kratos-auth-test.luminpdf.com/oauth2/token \
   -d 'grant_type=authorization_code' \
   -d 'code=$YOUR_AUTHORIZATION_CODE' \
   -d 'client_id=$YOUR_CLIENT_ID' \

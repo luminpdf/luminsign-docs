@@ -1,6 +1,6 @@
 openapi: 3.0.0
 servers:
-  - url: https://kratos-auth-staging.luminpdf.com
+  - url: https://kratos-auth-test.luminpdf.com
     description: OAuth2 server
 info:
   description: |
