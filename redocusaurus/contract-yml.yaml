@@ -1,0 +1,84 @@
+openapi: 3.0.0
+servers:
+  - url: https://app-auth-staging.bananasign.co/api/web/v1
+    description: Resource server
+info:
+  description: |
+    Bananasign resource server
+  title: Bananasign resource server specification
+  version: 1.0.0
+tags:
+  - name: Create contract temporary
+    description: Create contract temporary flow
+components:
+  schemas:
+    Init:
+      type: object
+      required:
+        - fileName
+      properties:
+        fileName:
+          type: string
+          description: Contract name
+      xml:
+        name: Init
+    InitPayload:
+      type: object
+      properties:
+        flowId:
+          type: string
+          description: The unique identifier for the newly created document
+        owner:
+          allOf:
+            - $ref: '#/components/schemas/UserInfo'
+          description: The owner of contract in Bananasign
+        preSignedUrl:
+          type: string
+          format: uri
+          description: >-
+            The URL for uploading document to bananasign temporary bucket with
+            an expiration time of 15/30 mins
+      xml:
+        name: InitPayload
+    ContractTemporary:
+      type: object
+      properties:
+        signers:
+          type: array
+          description: Array of people who need to sign the document
+          items:
+            $ref: '#/components/schemas/UserInfo'
+        viewers:
+          type: array
+          description: Array of people who will be able to view the contract
+          items:
+            $ref: '#/components/schemas/UserInfo'
+        flowId:
+          type: string
+          description: The unique identifier for the newly created document
+      xml:
+        name: ContractTemporary
+    ContractTemporaryPayload:
+      type: object
+      properties:
+        flowId:
+          type: string
+          description: The unique identifier for the newly created document
+        message:
+          type: string
+        statusCode:
+          type: number
+      xml:
+        name: ContractTemporary
+    UserInfo:
+      type: object
+      properties:
+        email:
+          format: email
+          type: string
+          description: Email of contract owner
+        name:
+          type: string
+          description: Name of contract owner
+      xml:
+        name: Owner
