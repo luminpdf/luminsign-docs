@@ -8,7 +8,7 @@ const FeatureList = [
     Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
-        Bananasign was designed from the ground up to make it easy to get your signing flow up and running quickly.
+        Lumin Sign was designed from the ground up to make it easy to get your signing flow up and running quickly.
       </>
     ),
   },
@@ -17,7 +17,7 @@ const FeatureList = [
     Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
     description: (
       <>
-        Bananasign lets you focus on your app, and we&apos;ll do the chores. Go
+        Lumin Sign lets you focus on your app, and we&apos;ll do the chores. Go
         ahead and work on the functionality that matters.
       </>
     ),
@@ -27,7 +27,7 @@ const FeatureList = [
     Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        Extend or customize your bananasign integration using React.
+        Extend or customize your Lumin Sign integration using React.
       </>
     ),
   },

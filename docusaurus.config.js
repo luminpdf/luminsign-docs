@@ -7,7 +7,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/palenight');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Bananasign Developer Docs',
+  title: 'Lumin Sign Developer Docs',
   tagline: 'Add a signing workflow to your app',
   url: 'https://bananasign-docs.github.io',
   baseUrl: '/bananasign-docs/',

@@ -8,7 +8,7 @@
     "description": "The label for category Tutorial in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.Tutorial.link.generated-index.description": {
-    "message": "Connect your application to Bananasign in a few easy steps.",
+    "message": "Connect your application to Lumin Sign in a few easy steps.",
     "description": "The generated-index page description for category Tutorial in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.API": {
@@ -16,7 +16,7 @@
     "description": "The label for category API in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.API.link.generated-index.description": {
-    "message": "Connect your application to Bananasign in a few easy steps.",
+    "message": "Connect your application to Lumin Sign in a few easy steps.",
     "description": "The generated-index page description for category API in sidebar tutorialSidebar"
   }
 }
