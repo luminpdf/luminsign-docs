@@ -3,7 +3,7 @@ title: Send And Sign API
 sidebar_position: 2
 ---
 
-This reference describes the Send and Sign API, which you can integrate with bananasign send and sign flow.
+This reference describes the Send and Sign API, which you can integrate with Lumin Sign send and sign flow.
 
 ## Method: lumin.sign.sendAndSign
 The ```sendAndSign``` method start the send and sign flow with following input:
@@ -16,9 +16,9 @@ window.lumin.sign.sendAndSign(config: SendAndSignConfig)
 
 | Properties          | Type   | Description                                      |
 | :----------- | :----- | :----------------------------------------------- |
-| `fileData` | File or Blob or () => (File or Blob) | **Required**. Your file will be sent to bananasign               |
+| `fileData` | File or Blob or () => (File or Blob) | **Required**. Your file will be sent to Lumin Sign               |
 | `accessToken`   | string |  **Required**. An Bearer token with scope `bananasign:document.create` included   |
-| `fileName`      | string | **Required**. Name of file that will be saved in bananasign |
+| `fileName`      | string | **Required**. Name of file that will be saved in Lumin Sign |
 | `onError`      | (error: any) => void | Error handler |
 | `onLoading`      | (state: boolean) => void | State of send and sign flow |
 

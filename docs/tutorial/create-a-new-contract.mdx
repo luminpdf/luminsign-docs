@@ -6,7 +6,7 @@ sidebar_position: 3
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-In Bananasign, each signing flow is related to a *document*. A document is a PDF file and some associated metadata, that needs to be signed by one or more parties. In this page, we use the Bananasign API to create a new document. The document can then be displayed in an iFrame as explained on the following pages.
+In Lumin Sign, each signing flow is related to a *document*. A document is a PDF file and some associated metadata, that needs to be signed by one or more parties. In this page, we use the Lumin Sign API to create a new document. The document can then be displayed in an iFrame as explained on the following pages.
 
 :::caution
 Prerequisites: You need to obtain a bearer token from [Getting a Bearer Token](/docs/category/getting-an-bearer-token)
@@ -17,7 +17,7 @@ If you are using our [simple react widget](https://github.com/luminpdf/bananasig
 :::
 ## Creating a document
 
-The Bananasign client can be used to create a new document.
+The Lumin Sign client can be used to create a new document.
 
 Firstly, you need to call init api to obtain unique identifier of document.
 
@@ -83,9 +83,9 @@ For more information, please visit: [Contract Temporary API](/docs/api/contract-
 
 </Tabs>
 
-This API returns a unique identifier for the newly created document ```(WNLW4u4dBOOn)``` and `preSignedUrl` for upload document to bananasign.
+This API returns a unique identifier for the newly created document ```(WNLW4u4dBOOn)``` and `preSignedUrl` for upload document to Lumin Sign.
 
-Using `preSignedUrl` for uploading document to bananasign
+Using `preSignedUrl` for uploading document to Lumin Sign
 
 <Tabs 
   defaultValue="curl"

@@ -18,7 +18,7 @@ function HomepageHeader() {
           <Link
             className="button button--secondary button--lg"
             to="/docs/intro">
-            Bananasign Tutorial - 5min ⏱️
+            Lumin Sign Tutorial - 5min ⏱️
           </Link>
         </div>
       </div>
@@ -31,7 +31,7 @@ export default function Home() {
   return (
     <Layout
       title={`Hello from ${siteConfig.title}`}
-      description="Bananasign Tutorial - Add a signing workflow to your app <head />">
+      description="Lumin Sign Tutorial - Add a signing workflow to your app">
       <HomepageHeader />
       <main>
         <HomepageFeatures />

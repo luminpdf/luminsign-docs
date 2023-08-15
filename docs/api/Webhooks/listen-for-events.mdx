@@ -4,7 +4,7 @@ sidebar_position: 70
 
 # Listen to events
 
-You can use webhooks to get real-time updates from Bananasign via a callback url.
+You can use webhooks to get real-time updates from Lumin Sign via a callback url.
 Webhooks are useful for updating your application state after an asynchronous event.
 
 ## Create event subscription
@@ -34,7 +34,7 @@ Authorization: Bearer oauth2_access_token
 | Key          | Type   | Description                                      |
 | :----------- | :----- | :----------------------------------------------- |
 | `documentId` | string | ID of the document to subscribe to               |
-| `callback`   | string | Callback URL Bananasign used to notify new event |
+| `callback`   | string | Callback URL Lumin Sign used to notify new event |
 | `event`      | string | The event type to subscribe                      |
 
 ## Update event subscription
@@ -59,7 +59,7 @@ Authorization: Bearer oauth2_access_token
 | Key               | Type   | Description                                      |
 | :---------------- | :----- | :----------------------------------------------- |
 | `subscription_id` | string | The subscription's ID                            |
-| `callback`        | string | Callback URL Bananasign used to notify new event |
+| `callback`        | string | Callback URL Lumin Sign used to notify new event |
 | `event`           | string | The event type to subscribe                      |
 
 ## Delete event subscription
