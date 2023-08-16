@@ -36,8 +36,8 @@ components:
           format: uri
           description: >-
             The redirect_uri where authentication responses will be sent and
-            received. It is one of the redirect URIs you registered in the
-            Bananasign.
+            received. It is one of the redirect URIs you registered in the Lumin
+            Sign.
         scope:
           type: string
           description: >
@@ -79,8 +79,8 @@ components:
           format: uri
           description: >-
             The redirect_uri where authentication responses will be sent and
-            received. It is one of the redirect URIs you registered in the
-            Bananasign.
+            received. It is one of the redirect URIs you registered in the Lumin
+            Sign.
         scope:
           type: string
           description: >
