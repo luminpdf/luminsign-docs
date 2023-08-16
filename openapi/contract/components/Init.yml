@@ -31,11 +31,11 @@ components:
         owner:
           allOf:
             - $ref: '#/components/schemas/UserInfo'
-          description: The owner of contract in Bananasign
+          description: The owner of contract in Lumin Sign
         preSignedUrl:
           type: string
           format: uri
-          description: The URL for uploading document to bananasign temporary bucket with an expiration time of 15/30 mins
+          description: The URL for uploading document to Lumin Sign temporary bucket with an expiration time of 15/30 mins
         
       xml:
         name: InitPayload

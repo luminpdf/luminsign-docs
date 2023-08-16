@@ -20,7 +20,7 @@ components:
         redirect_uri:
           type: string
           format: uri
-          description: The redirect_uri where authentication responses will be sent and received. It is one of the redirect URIs you registered in the Bananasign.
+          description: The redirect_uri where authentication responses will be sent and received. It is one of the redirect URIs you registered in the Lumin Sign.
         scope:
           type: string
           description:  |
