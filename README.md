@@ -1,8 +1,8 @@
-# Bananasign Developer Docs
+# Luminsign Developer Docs
 
-Bananasign provides a fully compliant digital signature flow, that can be integrated with your Web or mobile application in minutes. 
+Luminsign provides a fully compliant digital signature flow, that can be integrated with your Web or mobile application in minutes. 
 
-View the [Bananasign Docs](https://luminpdf.github.io/bananasign-docs/) online at [https://luminpdf.github.io/bananasign-docs/](https://luminpdf.github.io/bananasign-docs/). 
+View the [Luminsign Docs](https://luminpdf.github.io/luminsign-docs/) online at [https://luminpdf.github.io/luminsign-docs/](https://luminpdf.github.io/luminsign-docs/). 
 
 ### Installation
 

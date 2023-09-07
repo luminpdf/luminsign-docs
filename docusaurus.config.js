@@ -10,7 +10,7 @@ const config = {
   title: 'Lumin Sign Developer Docs',
   tagline: 'Add a signing workflow to your app',
   url: 'https://bananasign-docs.github.io',
-  baseUrl: '/bananasign-docs/',
+  baseUrl: '/luminsign-docs/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon-32x32.png',
