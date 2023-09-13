@@ -2,14 +2,14 @@
 // Note: type annotations allow type checking and IDEs autocompletion
 const path = require('path');
 
-const lightCodeTheme = require('prism-react-renderer/themes/oceanicNext');
+const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/palenight');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Lumin Sign Developer Docs',
   tagline: 'Add a signing workflow to your app',
-  url: 'https://bananasign-docs.github.io',
+  url: 'https://luminsign-docs.github.io',
   baseUrl: '/luminsign-docs/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
@@ -19,7 +19,7 @@ const config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'luminpdf', // Usually your GitHub org/user name.
-  projectName: 'bananasign-docs', // Usually your repo name.
+  projectName: 'luminsign-docs', // Usually your repo name.
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
@@ -41,14 +41,14 @@ const config = {
           sidebarCollapsible: false,
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/luminpdf/bananasign-docs/blob/main/',
+            'https://github.com/luminpdf/luminsign-docs/blob/main/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
       }),
     ],
-    
+
     [
       'redocusaurus',
       {
@@ -79,30 +79,18 @@ const config = {
         items: [
           {
             type: 'doc',
-            docId: 'tutorial/overview',
+            docId: 'deprecated/intro',
             position: 'left',
-            label: 'Tutorial',
+            label: 'Docs (Deprecated)',
           },
           {
             type: 'doc',
-            docId: 'intro',
+            docId: 'api/intro',
             position: 'left',
             label: 'Docs',
           },
           {
-            type: 'doc',
-            docId: 'api/upload',
-            position: 'left',
-            label: 'API',
-          },
-          {
-            type: 'doc',
-            docId: 'authorization/overview',
-            position: 'left',
-            label: 'OAuth 2.0',
-          },
-          {
-            href: 'https://github.com/luminpdf/bananasign-docs',
+            href: 'https://github.com/luminpdf/luminsign-docs',
             label: 'GitHub',
             position: 'right',
           },
@@ -112,19 +100,15 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Docs',
+            title: 'API Reference',
             items: [
               {
-                label: 'Tutorial',
-                to: '/docs/intro',
+                label: 'Docs (Deprecated)',
+                to: '/docs/deprecated/intro',
               },
               {
-                label: 'API',
-                to: '/docs/category/api',
-              },
-              {
-                label: 'OAuth 2.0 Integration',
-                to: '/docs/category/oauth20-integration',
+                label: 'Docs',
+                to: '/docs/api/intro',
               },
             ],
           },
@@ -150,7 +134,7 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/luminpdf/bananasign-docs/blob',
+                href: 'https://github.com/luminpdf/luminsign-docs',
               },
             ],
           },

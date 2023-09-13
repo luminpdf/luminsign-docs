@@ -9,11 +9,11 @@ import TabItem from '@theme/TabItem';
 In Lumin Sign, each signing flow is related to a *document*. A document is a PDF file and some associated metadata, that needs to be signed by one or more parties. In this page, we use the Lumin Sign API to create a new document. The document can then be displayed in an iFrame as explained on the following pages.
 
 :::caution
-Prerequisites: You need to obtain a bearer token from [Getting a Bearer Token](/docs/category/getting-an-bearer-token)
+Prerequisites: You need to obtain a bearer token from [Getting a Bearer Token](/docs/deprecated/category/getting-an-bearer-token)
 :::
 
 :::info
-If you are using our [simple react widget](https://github.com/luminpdf/bananasign-integration), you can skip this step and [Launch Signing Flow](/docs/tutorial/signing-flow/).
+If you are using our [simple react widget](https://github.com/luminpdf/bananasign-integration), you can skip this step and [Launch Signing Flow](/docs/deprecated/tutorial/signing-flow/).
 :::
 ## Creating a document
 
@@ -22,10 +22,10 @@ The Lumin Sign client can be used to create a new document.
 Firstly, you need to call init api to obtain unique identifier of document.
 
 :::info
-For more information, please visit: [Contract Temporary API](/docs/api/contract-temporary)
+For more information, please visit: [Contract Temporary API](/docs/deprecated/api/contract-temporary)
 :::
 
-<Tabs 
+<Tabs
   defaultValue="curl"
   values={[
     { label: 'Shell/cURL', value: 'curl'},
@@ -43,7 +43,7 @@ For more information, please visit: [Contract Temporary API](/docs/api/contract-
 ```
 
 ```bash title="response"
-  { 
+  {
     flowId: "WNLW4u4dBOOn",
     preSignedUrl: "https://bananasign-temporary-contracts.s3...",
     owner: {
@@ -69,7 +69,7 @@ For more information, please visit: [Contract Temporary API](/docs/api/contract-
   })
     .then(async (response) => {
       const data = await response.json();
-      // { 
+      // {
       //   flowId: "WNLW4u4dBOOn",
       //   preSignedUrl: "https://bananasign-temporary-contracts.s3...",
       //   owner: {
@@ -87,7 +87,7 @@ This API returns a unique identifier for the newly created document ```(WNLW4u4d
 
 Using `preSignedUrl` for uploading document to Lumin Sign
 
-<Tabs 
+<Tabs
   defaultValue="curl"
   values={[
     { label: 'Shell/cURL', value: 'curl'},
@@ -121,7 +121,7 @@ Using `preSignedUrl` for uploading document to Lumin Sign
 
 After that, you can create temporary document with your signers and viewers by using a single PUT call:
 
-<Tabs 
+<Tabs
   defaultValue="curl"
   values={[
     { label: 'Shell/cURL', value: 'curl'},

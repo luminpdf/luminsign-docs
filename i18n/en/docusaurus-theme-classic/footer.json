@@ -13,11 +13,11 @@
   },
   "link.item.label.Tutorial": {
     "message": "Tutorial",
-    "description": "The label of footer link with label=Tutorial linking to /docs/intro"
+    "description": "The label of footer link with label=Tutorial linking to /docs/deprecated/intro"
   },
   "link.item.label.API": {
     "message": "API",
-    "description": "The label of footer link with label=API linking to /docs/category/api"
+    "description": "The label of footer link with label=API linking to /docs/deprecated/category/api"
   },
   "link.item.label.Stack Overflow": {
     "message": "Stack Overflow",
