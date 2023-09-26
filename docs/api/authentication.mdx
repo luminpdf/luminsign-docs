@@ -17,7 +17,7 @@ Authentication to the API is performed in two ways: using **X-API-KEY** or with 
 ### X-API-KEY
 ```bash
 API_KEY=my_simple_api_key
-curl -XGET -H 'X-API-KEY: ${API_KEY}' 'https://api-staging.luminpdf.com/v1/user/info'
+curl -XGET -H "X-API-KEY: ${API_KEY}" 'https://api-staging.luminpdf.com/v1/user/info'
 ```
 ### Basic Auth
 Provide your API key as the basic auth username value. You don't need to provide a password (Note: Don't forget the trailing **":"** after the API key):
