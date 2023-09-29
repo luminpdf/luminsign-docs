@@ -7,7 +7,7 @@ servers:
   - url: https://api-staging.luminpdf.com/v1
     description: Staging server
 tags:
-  - name: SignatureRequest
+  - name: Signature Request
     description: Everything about Signature Request
 paths:
   /signature_request/send:
@@ -18,7 +18,7 @@ paths:
       security:
         - ApiKey: []
       tags:
-        - SignatureRequest
+        - Signature Request
       requestBody:
         content:
           application/json:
