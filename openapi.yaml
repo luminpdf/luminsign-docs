@@ -1,0 +1,182 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Lumin Sign Api Reference
+  description: The Lumin Sign API Reference supply a wide range of eSignature tools for your application.
+servers:
+  - url: https://api-staging.luminpdf.com/v1
+    description: Staging server
+tags:
+  - name: SignatureRequest
+    description: Everything about Signature Request
+paths:
+  /signature_request/send:
+    post:
+      summary: Send signature request
+      description: Creates and sends a new SignatureRequest with the submitted documents.
+      operationId: sendSignatureRequest
+      security:
+        - ApiKey: []
+      tags:
+        - SignatureRequest
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignatureRequestDTO'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SignatureRequestDTO'
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - signature_request
+                properties:
+                  signature_request:
+                    description: Contains information about a signature request.
+                    $ref: '#/components/schemas/SignatureRequest'
+        '400':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      name: X-API-KEY
+      in: header
+  schemas:
+    Signer:
+      type: object
+      required:
+        - email_address
+        - name
+      properties:
+        email_address:
+          type: string
+        name:
+          type: string
+    Viewer:
+      type: object
+      required:
+        - email_address
+        - name
+      properties:
+        email_address:
+          type: string
+        name:
+          type: string
+    SignatureRequest:
+      type: object
+      required:
+        - signature_request_id
+        - title
+        - created_at
+        - expires_at
+        - type
+        - form_builder_type
+        - details_url
+      properties:
+        signature_request_id:
+          type: string
+          description: The unique identifier for the signature request.
+        title:
+          type: string
+          description: The title of the signature request.
+        created_at:
+          type: string
+          description: The time the signature request was created.
+        expires_at:
+          type: string
+          description: The time the signature request will expire.
+        type:
+          type: string
+          description: The type of signature request.
+          enum:
+            - ME_AND_OTHERS
+        form_builder_type:
+          type: string
+          description: The form builder type of signature request.
+          enum:
+            - KEEP_DATA
+        details_url:
+          type: string
+          description: The url to view the signature request in the browser.
+    SignatureRequestDTO:
+      type: object
+      required:
+        - signers
+        - title
+        - expires_at
+      properties:
+        file_url:
+          type: string
+          description: The url of the file, which will be downloaded and signed. This endpoint requires either file or file_url, but not both.
+        file:
+          type: string
+          format: binary
+          description: The uploaded file to send for signature.. This endpoint requires either file or file_url, but not both.
+        signers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Signer'
+          description: Add Signers to your Signature Request.
+        viewers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Viewer'
+          description: Add Viewers to your Signature Request.
+        title:
+          type: string
+          minLength: 1
+          maxLength: 255
+          description: The title you want to give the Signature Request.
+        expires_at:
+          type: int64
+          format: unix-epoch
+          description: When the signature request will expire. This is a unix epoch timestamp (miliseconds). Should be later than today.
+        type:
+          type: string
+          enum:
+            - ME_AND_OTHERS
+          default: ME_AND_OTHERS
+          description: The type of signature request.
+        form_builder_type:
+          type: string
+          enum:
+            - KEEP_DATA
+          default: KEEP_DATA
+          description: The form builder type of signature request.
+      example:
+        file_url: https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf
+        signers:
+          - email_address: nhuttm@luminpdf.com
+            name: Nhut Tran
+          - email_address: hieudm@luminpdf.com
+            name: Hieu Do
+        viewers:
+          - email_address: congnt@luminpdf.com
+            name: Cong Nguyen
+          - email_address: tientm@luminpdf.com
+            name: Tien Tran
+        title: My first request signing document
+        expires_at: 1727510980694
+        type: ME_AND_OTHERS
+        form_builder_type: KEEP_DATA
+    Error:
+      type: object
+      required:
+        - error_code
+        - error_message
+      properties:
+        error_code:
+          type: string
+        error_message:
+          type: string

@@ -1,12 +1,8 @@
-# Luminsign Developer Docs
+# Website
 
-Luminsign provides a fully compliant digital signature flow, that can be integrated with your Web or mobile application in minutes. 
-
-View the [Luminsign Docs](https://luminpdf.github.io/luminsign-docs/) online at [https://luminpdf.github.io/luminsign-docs/](https://luminpdf.github.io/luminsign-docs/). 
+This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
 
 ### Installation
-
-This website is built using Docusaurus 2.
 
 ```
 $ yarn
@@ -34,7 +30,6 @@ Using SSH:
 
 ```
 $ USE_SSH=true yarn deploy
-$ npx docusaurus deploy
 ```
 
 Not using SSH:
@@ -43,3 +38,4 @@ Not using SSH:
 $ GIT_USER=<Your GitHub username> yarn deploy
 ```
 
+If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.

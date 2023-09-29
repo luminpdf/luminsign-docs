@@ -1,13 +1,12 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
-const path = require('path');
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/palenight');
+const lightCodeTheme = require("prism-react-renderer/themes/github");
+const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Lumin Sign Developer Docs',
+   title: 'Lumin Sign Developer Docs',
   tagline: 'Add a signing workflow to your app',
   url: 'https://luminsign-docs.github.io',
   baseUrl: '/luminsign-docs/',
@@ -33,11 +32,15 @@ const config = {
 
   presets: [
     [
-      '@docusaurus/preset-classic',
-      /** @type {import('@docusaurus/preset-classic').Options} */
+      "docusaurus-preset-openapi",
+      /** @type {import('docusaurus-preset-openapi').Options} */
       ({
+        api: {
+          path: "openapi.yaml",
+          routeBasePath: "/api",
+        },
         docs: {
-          sidebarPath: require.resolve('./sidebars.js'),
+          sidebarPath: require.resolve("./sidebars.js"),
           sidebarCollapsible: false,
           // Remove this to remove the "edit this page" links.
           editUrl:
@@ -67,6 +70,7 @@ const config = {
     ],
   ],
 
+  
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
@@ -90,6 +94,10 @@ const config = {
             label: 'Docs',
           },
           {
+            label: 'API Reference',
+            to: '/api',
+          },
+          {
             href: 'https://github.com/luminpdf/luminsign-docs',
             label: 'GitHub',
             position: 'right',
@@ -100,7 +108,7 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'API Reference',
+            title: 'API Documentation',
             items: [
               {
                 label: 'Docs (Deprecated)',
@@ -109,6 +117,10 @@ const config = {
               {
                 label: 'Docs',
                 to: '/docs/api/intro',
+              },
+              {
+                label: 'API Reference',
+                to: '/api',
               },
             ],
           },
