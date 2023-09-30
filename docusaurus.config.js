@@ -6,9 +6,9 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-   title: 'Lumin Sign Developer Docs',
+  title: 'Lumin Sign Developer Docs',
   tagline: 'Add a signing workflow to your app',
-  url: 'https://luminsign-docs.github.io',
+  url: 'https://luminpdf.github.io',
   baseUrl: '/luminsign-docs/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
