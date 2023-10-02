@@ -25,9 +25,8 @@ tags:
 paths:
   /signature_request/send:
     post:
-      summary: Send signature request
-      description: Creates and sends a new SignatureRequest with the submitted documents.
-      operationId: sendSignatureRequest
+      summary: Send Signature Request
+      description: Creates and sends a new Signature Request with the submitted documents.
       security:
         - ApiKey: []
       tags:
@@ -51,7 +50,7 @@ paths:
                   - signature_request
                 properties:
                   signature_request:
-                    description: Contains information about a signature request.
+                    description: Contains information about a Signature Request.
                     $ref: '#/components/schemas/SignatureRequest'
         '400':
           description: Unexpected error
@@ -99,29 +98,29 @@ components:
       properties:
         signature_request_id:
           type: string
-          description: The unique identifier for the signature request.
+          description: The unique identifier for the Signature Request.
         title:
           type: string
-          description: The title of the signature request.
+          description: The title of the Signature Request.
         created_at:
           type: string
-          description: The time the signature request was created.
+          description: The time the Signature Request was created.
         expires_at:
           type: string
-          description: The time the signature request will expire.
+          description: The time the Signature Request will expire.
         type:
           type: string
-          description: The type of signature request.
+          description: The type of Signature Request.
           enum:
             - ME_AND_OTHERS
         form_builder_type:
           type: string
-          description: The form builder type of signature request.
+          description: The form builder type of Signature Request.
           enum:
             - KEEP_DATA
         details_url:
           type: string
-          description: The url to view the signature request in the browser.
+          description: The url to view the Signature Request in the browser.
     SignatureRequestDTO:
       type: object
       required:
@@ -135,7 +134,7 @@ components:
         file:
           type: string
           format: binary
-          description: The uploaded file to send for signature.. This endpoint requires either file or file_url, but not both.
+          description: The uploaded file to send for signature. This endpoint requires either file or file_url, but not both.
         signers:
           type: array
           items:
@@ -154,19 +153,19 @@ components:
         expires_at:
           type: int64
           format: unix-epoch
-          description: When the signature request will expire. This is a unix epoch timestamp (miliseconds). Should be later than today.
+          description: When the Signature Request will expire. This is a unix epoch timestamp (miliseconds). Should be later than today.
         type:
           type: string
           enum:
             - ME_AND_OTHERS
           default: ME_AND_OTHERS
-          description: The type of signature request.
+          description: The type of Signature Request.
         form_builder_type:
           type: string
           enum:
             - KEEP_DATA
           default: KEEP_DATA
-          description: The form builder type of signature request.
+          description: The form builder type of Signature Request.
       example:
         file_url: https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf
         signers:
