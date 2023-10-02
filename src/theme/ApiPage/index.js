@@ -13,7 +13,6 @@ export default function ApiPageWrapper(props) {
     <>
       <Head>
         <meta property="og:description" content={description} />
-        <meta property="og:image" content="/luminsign-docs/img/luminsign_logo_square.png" />
       </Head>
       <ApiPage {...props} />
     </>

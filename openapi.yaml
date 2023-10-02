@@ -2,7 +2,20 @@ openapi: 3.0.0
 info:
   version: 1.0.0
   title: Lumin Sign Api Reference
-  description: The Lumin Sign API Reference supply a wide range of eSignature tools for your application.
+  description: |
+    The Lumin Sign API Reference supply a wide range of eSignature tools for your application.
+
+    Some useful links:
+    - [The document repository](https://github.com/luminpdf/luminsign-docs)
+    - [The source API definition for the Lumin Sign API](https://github.com/luminpdf/luminsign-docs/blob/main/openapi.yaml)
+    - [Authentication for using API](/luminsign-docs/docs/api/authentication/)
+  contact:
+    name: API Support
+    email: support@example.com
+    url: http://example.com/support
+  externalDocs:
+    description: Find out more
+    url: http://example.com
 servers:
   - url: https://api-staging.luminpdf.com/v1
     description: Staging server
