@@ -3,7 +3,7 @@ info:
   version: 1.0.0
   title: Lumin Sign Api Reference
   description: |
-    The Lumin Sign API Reference supply a wide range of eSignature tools for your application.
+    The Lumin Sign API Reference supplies a wide range of eSignature tools for your application.
 
     Some useful links:
     - [The document repository](https://github.com/luminpdf/luminsign-docs)
