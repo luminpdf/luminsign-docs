@@ -22,6 +22,8 @@ servers:
 tags:
   - name: Signature Request
     description: Everything about Signature Request
+  - name: User
+    description: Everything about User
 paths:
   /signature_request/send:
     post:
@@ -34,9 +36,6 @@ paths:
       requestBody:
         content:
           application/json:
-            schema:
-              $ref: '#/components/schemas/SignatureRequestDTO'
-          multipart/form-data:
             schema:
               $ref: '#/components/schemas/SignatureRequestDTO'
       responses:
@@ -52,7 +51,34 @@ paths:
                   signature_request:
                     description: Contains information about a Signature Request.
                     $ref: '#/components/schemas/SignatureRequest'
-        '400':
+        '4xx':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /user/info:
+    get:
+      summary: Get User Information
+      description: Get information of current user by API Key
+      security:
+        - ApiKey: []
+      tags:
+        - User
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - user
+                properties:
+                  user:
+                    description: Contains information about a User.
+                    $ref: '#/components/schemas/User'
+        '4xx':
           description: Unexpected error
           content:
             application/json:
@@ -112,7 +138,7 @@ components:
           type: string
           description: The type of Signature Request.
           enum:
-            - ME_AND_OTHERS
+            - OTHERS
         form_builder_type:
           type: string
           description: The form builder type of Signature Request.
@@ -121,6 +147,19 @@ components:
         details_url:
           type: string
           description: The url to view the Signature Request in the browser.
+    User:
+      type: object
+      required:
+        - email
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        name:
+          type: string
     SignatureRequestDTO:
       type: object
       required:
@@ -157,8 +196,8 @@ components:
         type:
           type: string
           enum:
-            - ME_AND_OTHERS
-          default: ME_AND_OTHERS
+            - OTHERS
+          default: OTHERS
           description: The type of Signature Request.
         form_builder_type:
           type: string
@@ -173,14 +212,18 @@ components:
             name: Nhut Tran
           - email_address: hieudm@luminpdf.com
             name: Hieu Do
+          - email_address: hientv@luminpdf.com
+            name: Hien Tran
         viewers:
           - email_address: congnt@luminpdf.com
             name: Cong Nguyen
           - email_address: tientm@luminpdf.com
             name: Tien Tran
+          - email_address: tannn@luminpdf.com
+            name: Tan Nguyen
         title: My first request signing document
         expires_at: 1727510980694
-        type: ME_AND_OTHERS
+        type: OTHERS
         form_builder_type: KEEP_DATA
     Error:
       type: object
