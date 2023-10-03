@@ -118,8 +118,6 @@ components:
         - title
         - created_at
         - expires_at
-        - type
-        - form_builder_type
         - details_url
       properties:
         signature_request_id:
@@ -134,16 +132,6 @@ components:
         expires_at:
           type: string
           description: The time the Signature Request will expire.
-        type:
-          type: string
-          description: The type of Signature Request.
-          enum:
-            - OTHERS
-        form_builder_type:
-          type: string
-          description: The form builder type of Signature Request.
-          enum:
-            - KEEP_DATA
         details_url:
           type: string
           description: The url to view the Signature Request in the browser.
@@ -193,18 +181,6 @@ components:
           type: int64
           format: unix-epoch
           description: When the Signature Request will expire. This is a unix epoch timestamp (miliseconds). Should be later than today.
-        type:
-          type: string
-          enum:
-            - OTHERS
-          default: OTHERS
-          description: The type of Signature Request.
-        form_builder_type:
-          type: string
-          enum:
-            - KEEP_DATA
-          default: KEEP_DATA
-          description: The form builder type of Signature Request.
       example:
         file_url: https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf
         signers:
@@ -223,8 +199,6 @@ components:
             name: Tan Nguyen
         title: My first request signing document
         expires_at: 1727510980694
-        type: OTHERS
-        form_builder_type: KEEP_DATA
     Error:
       type: object
       required:
