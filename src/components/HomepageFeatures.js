@@ -5,7 +5,7 @@ import styles from './styles.module.css';
 const FeatureList = [
   {
     title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    Svg: require('@site/static/img/easy-to-use.svg').default,
     description: (
       <>
         Lumin Sign was designed from the ground up to make it easy to get your signing flow up and running quickly.
@@ -14,7 +14,7 @@ const FeatureList = [
   },
   {
     title: 'Focus on What Matters',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    Svg: require('@site/static/img/focus-to-what-matter.svg').default,
     description: (
       <>
         Lumin Sign lets you focus on your app, and we&apos;ll do the chores. Go
@@ -24,7 +24,7 @@ const FeatureList = [
   },
   {
     title: 'Customize with React',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    Svg: require('@site/static/img/custom-with-react.svg').default,
     description: (
       <>
         Extend or customize your Lumin Sign integration using React.

@@ -83,9 +83,9 @@ const config = {
         items: [
           {
             type: 'doc',
-            docId: 'deprecated/intro',
+            docId: 'beta/intro',
             position: 'left',
-            label: 'Docs (Deprecated)',
+            label: 'Docs (Beta)',
           },
           {
             type: 'doc',
@@ -111,8 +111,8 @@ const config = {
             title: 'API Documentation',
             items: [
               {
-                label: 'Docs (Deprecated)',
-                to: '/docs/deprecated/intro',
+                label: 'Docs (Beta)',
+                to: '/docs/beta/intro',
               },
               {
                 label: 'Docs',

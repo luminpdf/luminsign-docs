@@ -24,13 +24,13 @@ html[data-theme="dark"] .docusaurus-highlight-code-line {
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: rgb(49, 128, 241);
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
+  --ifm-color-primary: #110068;
+  --ifm-color-primary-dark: #110068;
+  --ifm-color-primary-darker: #110068;
+  --ifm-color-primary-darkest: #110068;
   --ifm-color-primary-light: #111;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
+  --ifm-color-primary-lighter: #110068;
+  --ifm-color-primary-lightest: #110068;
   --ifm-footer-background-color: rgb(12, 57, 91);
   --ifm-color-secondary-contrast-foreground: rgb(12, 57, 91);
   --ifm-code-font-size: 80%;
@@ -48,6 +48,16 @@ html[data-theme="dark"] .docusaurus-highlight-code-line {
   --ifm-color-primary-lighter: #32d8b4;
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+.navbar__link--active,
+.navbar__link:hover,
+.menu__link:hover,
+.menu__link--active,
+.table-of-contents__link--active,
+.table-of-contents__link:hover,
+.footer__link-item:hover {
+  color: rgb(242, 56, 90);
 }
 
 .hidden {
