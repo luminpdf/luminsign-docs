@@ -132,10 +132,6 @@ const config = {
                 href: 'https://stackoverflow.com/questions/tagged/luminpdf',
               },
               {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/luminpdf',
-              },
-              {
                 label: 'Twitter',
                 href: 'https://twitter.com/luminpdf',
               },

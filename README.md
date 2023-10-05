@@ -1,6 +1,9 @@
-# Website
+# Lumin API Documentation
 
-This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
+This repo contains the code for the [Lumin API documentation](https://luminpdf.github.io/luminsign-docs/). 
+The Lumin API allows customers to send documents via [Lumin Sign](https://www.luminpdf.com/lumin-sign/). 
+
+This website is built using [Docusaurus 2](https://docusaurus.io/).
 
 ### Installation
 
