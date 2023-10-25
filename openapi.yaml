@@ -25,6 +25,40 @@ tags:
   - name: User
     description: Everything about User
 paths:
+  /signature_request/{signature_request_id}:
+    get:
+      summary: Get Signature Request
+      description: Get Signature Request by id.
+      security:
+        - ApiKey: []
+      tags:
+        - Signature Request
+      parameters:
+        - in: path
+          name: signature_request_id
+          schema:
+            type: string
+          required: true
+          description: ID of the Signature Request to get
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - signature_request
+                properties:
+                  signature_request:
+                    description: Contains information about a Signature Request.
+                    $ref: '#/components/schemas/SignatureRequest'
+        '4xx':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /signature_request/send:
     post:
       summary: Send Signature Request
@@ -119,6 +153,8 @@ components:
         - created_at
         - expires_at
         - details_url
+        - status
+        - signers
       properties:
         signature_request_id:
           type: string
@@ -135,6 +171,36 @@ components:
         details_url:
           type: string
           description: The url to view the Signature Request in the browser.
+        status:
+          type: string
+          description: The status of the Signature Request.
+          enum:
+            - NEED_TO_SIGN
+            - WAITING_FOR_OTHERS
+            - APPROVED
+            - REJECTED
+        signers:
+          type: array
+          items:
+            required:
+              - email_address
+              - name
+              - is_approved
+              - status
+            allOf:
+              - $ref: '#/components/schemas/Signer'
+              - properties:
+                  is_approved:
+                    type: boolean
+                    description: Whether the Signer has approved the Signature Request.
+                  status:
+                    type: string
+                    description: The status of the Signer.
+                    enum:
+                      - NEED_TO_SIGN
+                      - APPROVED
+                      - REJECTED
+          description: The Signers of the Signature Request.
     User:
       type: object
       required:
