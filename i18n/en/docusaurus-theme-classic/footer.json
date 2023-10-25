@@ -36,7 +36,7 @@
     "description": "The label of footer link with label=GitHub linking to https://github.com/luminpdf/luminsign-docs/blob"
   },
   "copyright": {
-    "message": "Copyright © 2022 Lumin PDF, Inc",
+    "message": "Copyright © 2023 Lumin PDF, Inc",
     "description": "The footer copyright"
   }
 }
