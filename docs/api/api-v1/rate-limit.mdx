@@ -1,0 +1,21 @@
+---
+title: Rate limits
+sidebar_position: 1
+---
+
+To help manage the sheer volume of these requests, limits are placed on the number of requests that can be made. These limits provide the reliable and scalable API that our developer community relies on. 
+
+The maximum number of requests that are allowed is based on a time interval, we specified on the window of time. If an endpoint has a rate limit of 100 requests/min, then up to 100 requests over minute intervals are allowed.
+
+### Signature Request
+
+| Endpoint          | Requests   | Window of time                                      | Per |
+| :----------- | :----- | :----------------------------------------------- |:-----------------------------------------------
+| **/v1/signature_request/send** | 3000 | 30 minutes | per user |
+| **/v1/signature_request/:signature_request_id** | 3000 | 30 minutes | per user
+
+### User
+
+| Endpoint          | Requests   | Window of time                                      | Per |
+| :----------- | :----- | :----------------------------------------------- |:-----------------------------------------------
+| **/v1/user/info** | 50 | 30 minutes | per user |
