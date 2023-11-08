@@ -5,9 +5,17 @@ sidebar_position: 1
 
 This changelog lists all additions and updates to the Lumin Sign API.
 
+### November 8, 2023
+#### Added
+- Add `use_text_tags` parameter to [Send Signature Request](/api/send-signature-request) to enable text tags in the document.
+
+To begin and end a tag, use square brackets `[ ]` in your document. Within the square brackets, use the pipe character `|` to divide the parts of the tag. The first part of the tag is the type. The second part indicates if it is required or not. The third part indicates which signer in the list of signers needs to complete the field. The last two parts are optional and are for setting a label and unique ID
+ex: [text|noreq|signer1|Label|UniqueId]
+#### Fixed
+- Some minor issues related to signers list and signer name in signature request.
 ### October 26, 2023
 #### Added
 - Create API Key from [Developer Settings page](https://sign-staging.luminpdf.com/developer/configuration). For more information, see [Authentication](/docs/api/authentication/).
-- Send Signature Request ([Send Signature Request #1](/api/send-signature-request))
-- Get Signature Request ([Get Signature Request #2](/api/get-signature-request))
-- Get user info ([Get User Info #3](/api/get-user-information))
+- Send Signature Request ([Send Signature Request](/api/send-signature-request))
+- Get Signature Request ([Get Signature Request](/api/get-signature-request))
+- Get user info ([Get User Info](/api/get-user-information))

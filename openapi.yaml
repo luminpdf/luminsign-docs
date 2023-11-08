@@ -247,6 +247,9 @@ components:
           type: int64
           format: unix-epoch
           description: When the Signature Request will expire. This is a unix epoch timestamp (miliseconds). Should be later than today.
+        use_text_tags:
+          type: boolean
+          description: Set to `true` to enable Text Tag parsing in your document. Your Text Tags will be converted into UI components for the user to interact with. Defaults to `false`.
       example:
         file_url: https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf
         signers:
@@ -265,6 +268,7 @@ components:
             name: Tan Nguyen
         title: My first request signing document
         expires_at: 1727510980694
+        use_text_tags: false
     Error:
       type: object
       required:
