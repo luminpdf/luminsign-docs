@@ -200,6 +200,7 @@ components:
                       - NEED_TO_SIGN
                       - APPROVED
                       - REJECTED
+                      - WAITING_FOR_OTHERS
           description: The Signers of the Signature Request.
     User:
       type: object
