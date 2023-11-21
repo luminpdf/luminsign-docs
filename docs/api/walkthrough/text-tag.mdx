@@ -1,0 +1,48 @@
+---
+title: Text Tags
+sidebar_position: 1
+---
+
+# Text Tags
+## Introduction
+In case of a non-embedded signature request, the document sender would not interact with the Lumin Sign iFrame to prepare the document but rather the document will be sent via the API request. Hence, we need another way to add form fields and assign them to the recipients, and that is by using Text Tags.
+
+Once enabled, Text Tags will be parsed and converted into form fields - UI components that the recipients of the document can interact with. Guide on how to use Text Tags will be provided in the section below.
+
+## Text Tags Walkthrough
+### Using Text Tags in API request
+Include `use_text_tags` parameter to your API request and set it to `true` to enable Text Tag parsing in your document. If left out, this parameter is default to `false`.
+### Important note
+Text Tags are detected by actual text value, not by doing OCR on images with text, thus it is important to note:
+
+1. The document contains actual text for tags
+
+2. The document is a PDF, as form fields might end up in the wrong location with other formats
+
+3. The tags WILL remain on the document, thus we highly recommend setting the text color same as that of the document background to hide them
+### Syntax
+This is the correct syntax of the Text Tags:
+:::info
+**[text|noreq|signer1|Label|UniqueId]**
+:::
+A Text Tag will be wrapped between a pair of square brackets `[ ]`, and contains identifiers divided by a pipe character `|`. Identifiers are parts of the text that determine the field type, the recipient assigned to the field, and the requirement of the field. Details of each identifiers are listed in the table below:
+
+| Identifier           | Acceptable value                | Required | Description | Remark
+| ------------- | -------------------------- | -------------------------- | -------------------------- | --------------------------
+| Types of field          | `sig` (for signature field) <br /> `initial` (for initial field) <br /> `text` (for text field) <br /> `date` (for date field) | Yes (must not be blank) | Define the type of form field |
+| Types of requirement       | `req` (for required) <br /> `noreq` (for optional)      | Yes (must not be blank) | Define if this form field is required or optional. |
+| Assigner    | `signerN` (N = 1, 2, 3, etc.)             | Yes (must not be blank) | Match the index of the signers in the API request |
+| Label  | Free text           | No | Acting as placeholder for the field | This is currently overridden by the default placeholders of the form fields in Lumin Sign
+| Unique ID | Free text          | No | Acting as field name, where the 3rd party can assign a unique ID to the field
+
+### Text Tags validation
+Text Tags are detected by parsing the documents for any text that meets the syntax requirement presented in the section above. A tag that is missing any of the required identifiers will NOT be considered a Text Tag, thus you would not receive any errors as these tags are not converted into form fields.
+
+In case of an invalid Text Tag i.e. wrong requirement type or unidentified signer, you would not receive an immediate error in the API response. Instead, the error will come back later in the webhook event `signature_request_invalid`. You can read more about our events in the [Events and Callbacks](/docs/api/events/) section.
+
+### Form field properties
+The size of the form fields created will be defined as follows:
+
+1. The height of the form fields will be fixed to accommodate a font size of 12
+
+2. The width of the form fields will be equal to the length of the tag (between the pair of square brackets). Thus you can make the fields longer by putting white spaces after the last identifier of the tag.
