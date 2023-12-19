@@ -5,6 +5,15 @@ sidebar_position: 1
 
 This changelog lists all additions and updates to the Lumin Sign API.
 
+### December 19, 2023
+- Add `signature_request_created` and `signature_request_invalid` events to [Signature Request Events](/docs/api/events/#event-names).
+
+### December 6, 2023
+#### Added
+- Add webhook support for signature request events. For more information about supported events, see [Signature Request Events](/docs/api/events/#event-names).
+
+For more information about events and callbacks, see [Events](/docs/api/events/).
+
 ### November 8, 2023
 #### Added
 - Add `use_text_tags` parameter to [Send Signature Request](/api/send-signature-request) to enable text tags in the document. For more information, see [Text Tags](/docs/api/walkthrough/text-tag/).
@@ -15,7 +24,7 @@ ex: [text|noreq|signer1|Label|UniqueId]
 - Some minor issues related to signers list and signer name in signature request.
 ### October 26, 2023
 #### Added
-- Create API Key from [Developer Settings page](https://sign-staging.luminpdf.com/developer/configuration). For more information, see [Authentication](/docs/api/authentication/).
+- Create API Key from [Developer Settings page](https://sign-integration.luminpdf.com/developer/configuration). For more information, see [Authentication](/docs/api/authentication/).
 - Send Signature Request ([Send Signature Request](/api/send-signature-request))
 - Get Signature Request ([Get Signature Request](/api/get-signature-request))
 - Get user info ([Get User Info](/api/get-user-information))

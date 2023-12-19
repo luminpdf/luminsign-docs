@@ -10,7 +10,7 @@ Lumin Sign Events (aka "webhooks), which are payloads of event metadata automati
 
 **Account Callbacks** notify your app when an event happens involving your account by sending the event payload to your account callback url.
 
-The **Account Callbacks** can be configured on the [Developer Settings page](https://sign-staging.luminpdf.com/developer/configuration).
+The **Account Callbacks** can be configured on the [Developer Settings page](https://sign-integration.luminpdf.com/developer/configuration).
 
 ![image](img/account-callback.png)
 
@@ -59,4 +59,26 @@ echo -n $json | openssl dgst -sha256 -hmac $api_key (X-Signature = 3810cb411041e
 
 Our requests will timeout after 30 seconds, so callbacks will fail if your server takes longer than that to respond.
 
-Retry policy will be updated later.
+The retry pattern is described below:
+
+| Retry           | Delay After Previous Attempt |
+| ------------- | -------------------------- |
+| First        | 5 minutes
+| Second       | 15 minutes
+| Third    | 45 minutes
+| Fourth  | 2 hours 15 minutes
+| Fifth | 6 hours 45 minutes
+| Sixth | 20 hours 15 minutes
+
+## Event Names
+
+Here is a list of webhook events that can be sent to your callback urls:
+
+| Event Name | Description | Attached API object |
+| ------------- | ------------- | ------------- |
+| `signature_request_created` | The signature request is created successfully | [Signature Request](/api/get-signature-request/) |
+| `signature_request_viewed` | A signer opens the document | [Signature Request](/api/get-signature-request/) |
+| `signature_request_approved` | The document has been signed by all signers | [Signature Request](/api/get-signature-request/) |
+| `signature_request_declined` | A signer declines the document. This will turn the `status` of the `signature_request` to `REJECTED` | [Signature Request](/api/get-signature-request/) |
+| `signature_request_signed` | The document has been signed by a signer | [Signature Request](/api/get-signature-request/) |
+| `signature_request_invalid` | An error occurred while processing the signature request data on our back-end i.e. invalid text tags | [Signature Request Error](/api/get-signature-request/) |

@@ -84,7 +84,23 @@ paths:
                 properties:
                   signature_request:
                     description: Contains information about a Signature Request.
-                    $ref: '#/components/schemas/SignatureRequest'
+                    required:
+                      - signature_request_id
+                      - created_at
+                      - status
+                    properties:
+                      signature_request_id:
+                        type: string
+                        description: The unique identifier for the Signature Request.
+                      created_at:
+                        type: string
+                        description: The time the Signature Request was created.
+                      status:
+                        type: string
+                        description: The status of the Signature Request.
+                        enum:
+                          - WAITING_FOR_PROCESSING
+                          - FAILED
         '4xx':
           description: Unexpected error
           content:
@@ -165,6 +181,9 @@ components:
         created_at:
           type: string
           description: The time the Signature Request was created.
+        updated_at:
+          type: string
+          description: The time the Signature Request was last updated.
         expires_at:
           type: string
           description: The time the Signature Request will expire.
@@ -179,6 +198,11 @@ components:
             - WAITING_FOR_OTHERS
             - APPROVED
             - REJECTED
+            - WAITING_FOR_PROCESSING
+            - FAILED
+        reason:
+          type: string
+          description: The reason for the status FAILED or REJECTED of the Signature Request.
         signers:
           type: array
           items:
@@ -266,7 +290,7 @@ components:
           - email_address: nhuttm2@luminpdf.com
             name: Tien Tran
           - email_address: nhuttm4@luminpdf.com
-            name: Tan Nguyen
+            name: Phap Huynh
         title: My first request signing document
         expires_at: 1727510980694
         use_text_tags: false
