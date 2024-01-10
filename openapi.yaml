@@ -73,7 +73,7 @@ paths:
             schema:
               $ref: '#/components/schemas/SignatureRequestDTO'
       responses:
-        '200':
+        '201':
           description: Expected response to a valid request
           content:
             application/json:
@@ -151,6 +151,9 @@ components:
           type: string
         name:
           type: string
+        group:
+          type: number
+          description: The signing order of signer for the Signature Request with `signing_type` is `ORDER`.
     Viewer:
       type: object
       required:
@@ -171,6 +174,7 @@ components:
         - details_url
         - status
         - signers
+        - signing_type
       properties:
         signature_request_id:
           type: string
@@ -203,6 +207,12 @@ components:
         reason:
           type: string
           description: The reason for the status FAILED or REJECTED of the Signature Request.
+        signing_type:
+          type: string
+          description: The type of signing for the Signature Request.
+          enum:
+            - SAME_TIME
+            - ORDER
         signers:
           type: array
           items:
@@ -256,7 +266,19 @@ components:
         signers:
           type: array
           items:
-            $ref: '#/components/schemas/Signer'
+            allOf:
+              - $ref: '#/components/schemas/Signer'
+              - properties:
+                  group:
+                    type: number
+                    description: |
+                      The signing order of signer for the Signature Request with `signing_type` is `ORDER`. Required if `signing_type` is `ORDER`.
+
+                      Only signers in `1st Signers` group will receive email/notification, signers in subsequent groups will receive email/notification when all signers in previous group has signed.
+                      
+                      Group starts incrementing at 1.
+
+                       The default value for group always is 1 if `signing_type` is `SAME_TIME.`
           description: Add Signers to your Signature Request.
         viewers:
           type: array
@@ -275,25 +297,36 @@ components:
         use_text_tags:
           type: boolean
           description: Set to `true` to enable Text Tag parsing in your document. Your Text Tags will be converted into UI components for the user to interact with. Defaults to `false`.
+        signing_type:
+          type: string
+          description: The signing order for the Signature Request. Defaults to `SAME_TIME`.
+          enum:
+            - SAME_TIME
+            - ORDER
+
       example:
-        file_url: https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf
+        file_url: https://lumin-resources-staging.s3.amazonaws.com/api-demo/Direct+Debit+form.pdf
         signers:
           - email_address: nhuttm@luminpdf.com
             name: Nhut Tran
-          - email_address: nhuttm1@luminpdf.com
+            group: 1
+          - email_address: hieudm1@luminpdf.com
             name: Hieu Do
-          - email_address: nhuttm5@luminpdf.com
+            group: 2
+          - email_address: hientv2@luminpdf.com
             name: Hien Tran
+            group: 1
         viewers:
-          - email_address: nhuttm3@luminpdf.com
+          - email_address: congnt3@luminpdf.com
             name: Cong Nguyen
-          - email_address: nhuttm2@luminpdf.com
+          - email_address: tientm4@luminpdf.com
             name: Tien Tran
-          - email_address: nhuttm4@luminpdf.com
+          - email_address: phaphl5@luminpdf.com
             name: Phap Huynh
         title: My first request signing document
         expires_at: 1727510980694
         use_text_tags: false
+        signing_type: ORDER
     Error:
       type: object
       required:

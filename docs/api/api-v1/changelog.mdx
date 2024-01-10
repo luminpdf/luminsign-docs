@@ -5,6 +5,11 @@ sidebar_position: 1
 
 This changelog lists all additions and updates to the Lumin Sign API.
 
+### December 20, 2023
+- Support signing order for Signature Request.
+- Add `signing_type` parameter to [Send Signature Request](/api/send-signature-request) to specify the signing order. Possible values: `SAME_TIME` and `ORDER`.
+- Add `group` parameter to [Send Signature Request](/api/send-signature-request) to specify the group of signers for the Signature Request with `signing_type` is `ORDER`.
+
 ### December 19, 2023
 - Add `signature_request_created` and `signature_request_invalid` events to [Signature Request Events](/docs/api/events/#event-names).
 
