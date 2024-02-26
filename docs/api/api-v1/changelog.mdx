@@ -5,11 +5,22 @@ sidebar_position: 1
 
 This changelog lists all additions and updates to the Lumin Sign API.
 
-### December 20, 2023
-- Support signing order for Signature Request.
-- Add `signing_type` parameter to [Send Signature Request](/api/send-signature-request) to specify the signing order. Possible values: `SAME_TIME` and `ORDER`.
-- Add `group` parameter to [Send Signature Request](/api/send-signature-request) to specify the group of signers for the Signature Request with `signing_type` is `ORDER`.
+### February 26, 2024
+#### Added
+- Download Signature Request as File URL ([Download File as File URL](/api/download-file-as-file-url/))
+- Download Signature Request as File ([Download File](/api/download-file/))
 
+### January 10, 2024
+To enhance the flexibility of the Signature Request process, two new parameters have been introduced:
+
+1. `signing_type`:
+  This parameter allows you to specify the signing order for the Signature Request. It accepts two possible values:
+  - `SAME_TIME`: All signers can sign the document simultaneously.
+  - `ORDER`: Signers must sign the document in a specified order.
+2. `group`:
+  When the `signing_type` is set to `ORDER`, you must use the group parameter to specify the group of signers who need to sign in the defined order.
+
+For more information, see [Send Signature Request](/api/send-signature-request).
 ### December 19, 2023
 - Add `signature_request_created` and `signature_request_invalid` events to [Signature Request Events](/docs/api/events/#event-names).
 
@@ -29,7 +40,7 @@ ex: [text|noreq|signer1|Label|UniqueId]
 - Some minor issues related to signers list and signer name in signature request.
 ### October 26, 2023
 #### Added
-- Create API Key from [Developer Settings page](https://sign-integration.luminpdf.com/developer/configuration). For more information, see [Authentication](/docs/api/authentication/).
+- Create API Key from [Developer Settings page](https://sign-staging.luminpdf.com/developer/configuration). For more information, see [Authentication](/docs/api/authentication/).
 - Send Signature Request ([Send Signature Request](/api/send-signature-request))
 - Get Signature Request ([Get Signature Request](/api/get-signature-request))
 - Get user info ([Get User Info](/api/get-user-information))

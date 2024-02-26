@@ -107,6 +107,71 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /signature_request/files_as_file_url/{signature_request_id}:
+    get:
+      summary: Download File as File URL
+      description: Obtain the file of the Signature Request by id as a file URL. Returns a JSON object with a url to the file 
+      security:
+        - ApiKey: []
+      tags:
+        - Signature Request
+      parameters:
+        - in: path
+          name: signature_request_id
+          schema:
+            type: string
+          required: true
+          description: ID of the Signature Request to get
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  file_url:
+                    type: string
+                    description: The url of the file, which will be downloaded and signed.
+                  expires_at:
+                    type: integer
+                    format: unix-epoch
+                    description: When the file url will expire. This is a unix epoch timestamp (miliseconds).
+        '4xx':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /signature_request/files/{signature_request_id}:
+    get:
+      summary: Download File
+      description: Obtain the file of the Signature Request by id as a file URL. Returns a PDF file.
+      security:
+        - ApiKey: []
+      tags:
+        - Signature Request
+      parameters:
+        - in: path
+          name: signature_request_id
+          schema:
+            type: string
+          required: true
+          description: ID of the Signature Request to get
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        '4xx':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /user/info:
     get:
       summary: Get User Information
@@ -291,7 +356,7 @@ components:
           maxLength: 255
           description: The title you want to give the Signature Request.
         expires_at:
-          type: int64
+          type: integer
           format: unix-epoch
           description: When the Signature Request will expire. This is a unix epoch timestamp (miliseconds). Should be later than today.
         use_text_tags:
