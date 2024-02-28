@@ -3,7 +3,7 @@ import ApiPage from '@theme-original/ApiPage';
 import Head from '@docusaurus/Head';
 
 const MapDescription = {
-  '/luminsign-docs/api/send-signature-request/': 'Creates and sends a new Signature Request with the submitted documents',
+  '/api/send-signature-request/': 'Creates and sends a new Signature Request with the submitted documents',
 };
 
 export default function ApiPageWrapper(props) {

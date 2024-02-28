@@ -6,10 +6,10 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Lumin Sign Developer Docs',
+  title: 'Lumin Developer Docs',
   tagline: 'Add a signing workflow to your app',
   url: 'https://luminpdf.github.io',
-  baseUrl: '/luminsign-docs/',
+  baseUrl: '/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon-32x32.png',
@@ -55,7 +55,7 @@ const config = {
     [
       'redocusaurus',
       {
-        config: '/Users/mac/Documents/Project/bananasign-docs/redocly.yaml',
+        config: '/Users/mac/Documents/Project/luminsign-docs/redocly.yaml',
         specs: [
           {
             id: 'oauth2-yml',
@@ -70,23 +70,23 @@ const config = {
     ],
   ],
 
-  
+
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
         title: '',
         logo: {
-          alt: 'Bananasign',
+          alt: 'Luminsign',
           src: 'img/logo.svg',
         },
         items: [
-          {
-            type: 'doc',
-            docId: 'beta/intro',
-            position: 'left',
-            label: 'Docs (Beta)',
-          },
+          // {
+          //   type: 'doc',
+          //   docId: 'beta/intro',
+          //   position: 'left',
+          //   label: 'Docs (Beta)',
+          // },
           {
             type: 'doc',
             docId: 'api/intro',
@@ -110,10 +110,10 @@ const config = {
           {
             title: 'API Documentation',
             items: [
-              {
-                label: 'Docs (Beta)',
-                to: '/docs/beta/intro',
-              },
+              // {
+              //   label: 'Docs (Beta)',
+              //   to: '/docs/beta/intro',
+              // },
               {
                 label: 'Docs',
                 to: '/docs/api/intro',

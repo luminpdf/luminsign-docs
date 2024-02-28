@@ -8,7 +8,7 @@ info:
     Some useful links:
     - [The document repository](https://github.com/luminpdf/luminsign-docs)
     - [The source API definition for the Lumin Sign API](https://github.com/luminpdf/luminsign-docs/blob/main/openapi.yaml)
-    - [Authentication for using API](/luminsign-docs/docs/api/authentication/)
+    - [Authentication for using API](docs/api/authentication/)
   contact:
     name: API Support
     email: support@example.com
