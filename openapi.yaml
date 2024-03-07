@@ -17,7 +17,7 @@ info:
     description: Find out more
     url: http://example.com
 servers:
-  - url: https://api-staging.luminpdf.com/v1
+  - url: https://api.luminpdf.com/v1
     description: Staging server
 tags:
   - name: Signature Request
@@ -146,7 +146,7 @@ paths:
   /signature_request/files/{signature_request_id}:
     get:
       summary: Download File
-      description: Obtain the file of the Signature Request by id as a file URL. Returns a PDF file.
+      description: Obtain the file of the Signature Request by id. Returns a PDF file.
       security:
         - ApiKey: []
       tags:

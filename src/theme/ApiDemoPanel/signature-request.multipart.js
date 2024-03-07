@@ -11,7 +11,7 @@ export default function SignatureRequestMultipart() {
               language="bash"
             >
               {`API_KEY=my_simple_api_key
-curl -L -X POST "https://api-staging.luminpdf.com/v1/signature_request/send" \\
+curl -L -X POST "https://api.luminpdf.com/v1/signature_request/send" \\
 -H "x-api-key: \${API_KEY}" \\
 -F "file=@"/path/to/file"" \\
 -F "title=My first request signing document" \\
@@ -56,7 +56,7 @@ data.append("viewers[2][name]", "Phap Huynh");
 
 var config = {
   method: "post",
-  url: "https://api-staging.luminpdf.com/v1/signature_request/send",
+  url: "https://api.luminpdf.com/v1/signature_request/send",
   headers: {
     "x-api-key": "YOUR_API_KEY",
     ...data.getHeaders()
@@ -93,7 +93,7 @@ import (
 
 func main() {
 
-  url := "https://api-staging.luminpdf.com/v1/signature_request/send"
+  url := "https://api.luminpdf.com/v1/signature_request/send"
   method := "POST"
 
   payload := &bytes.Buffer{}
@@ -162,7 +162,7 @@ func main() {
               language="python">
               {`import requests
 
-url = "https://api-staging.luminpdf.com/v1/signature_request/send"
+url = "https://api.luminpdf.com/v1/signature_request/send"
 
 payload={'title': 'My first request signing document',
 'expires_at': '1727510980694',
