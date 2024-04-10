@@ -82,3 +82,43 @@ Here is a list of webhook events that can be sent to your callback urls:
 | `signature_request_declined` | A signer declines the document. This will turn the `status` of the `signature_request` to `REJECTED` | [Signature Request](/api/get-signature-request/) |
 | `signature_request_signed` | The document has been signed by a signer | [Signature Request](/api/get-signature-request/) |
 | `signature_request_invalid` | An error occurred while processing the signature request data on our back-end i.e. invalid text tags | [Signature Request Error](/api/get-signature-request/) |
+| `signature_request_canceled` | The signature request is canceled | [Signature Request Error](/api/get-signature-request/) |
+| `signature_request_cancel_failed` | The signature request cancelation failed | [Signature Request Error](/api/get-signature-request/) |
+
+## Testing Webhooks Locally with Ngrok
+Webhooks require a publicly accessible URL to receive HTTP requests, which poses a problem during local development. Ngrok addresses this by creating a secure tunnel to your local server. This section will guide you through setting up ngrok and using it to test webhooks locally.
+
+### Step 1: Installing Ngrok
+Install ngrok by following the instructions on the [ngrok website](https://ngrok.com/docs/getting-started/).
+
+### Step 2: Starting a Local Server
+
+Before using ngrok, ensure your application is running locally on a specific port. For example, if you're developing a web application that listens on port `5090`, ensure the application is accessible via `http://localhost:<PORT>`.
+
+### Step 3: Creating a Secure Tunnel with Ngrok
+To expose your local server to the internet, use ngrok to create a secure tunnel to the port your application is running on:
+
+```bash
+ngrok http 5090
+```
+
+You will see something similar to the following console UI in your terminal.
+![image](img/ngrok_example.png)
+
+Replace `5090` with the port number your local server is using. Ngrok will start and display a UI in your terminal, including the public URL(s) that ngrok has generated for your local server (e.g., `https://<random>.ngrok.io`).
+
+### Step 4: Configuring the Webhook URL
+
+At [Developer Settings page](https://sign.luminpdf.com/developer/configuration), set the Account Callback URL to the ngrok URL generated in the previous step.
+
+For example, if the ngrok URL is `https://425b-14-241-246-156.ngrok-free.app` and your webhook handler path is `/webhook_handler`, set the Account Callback URL to `https://425b-14-241-246-156.ngrok-free.app/webhook_handler`.
+
+![image](img/callback_example.png)
+
+### Step 5: Testing the Webhook
+You can now test the webhook by triggering an event that would cause the webhook to be sent.
+
+For example, if you're testing the `signature_request_created` event, create a new signature request in Lumin Sign and you will see something similar to the following console UI in your terminal.
+
+![image](img/callback_success_example.png)
+

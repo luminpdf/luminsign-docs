@@ -8,17 +8,14 @@ info:
     Some useful links:
     - [The document repository](https://github.com/luminpdf/luminsign-docs)
     - [The source API definition for the Lumin Sign API](https://github.com/luminpdf/luminsign-docs/blob/main/openapi.yaml)
-    - [Authentication for using API](docs/api/authentication/)
+    - [Authentication for using API](/docs/api/authentication/)
   contact:
     name: API Support
-    email: support@example.com
-    url: http://example.com/support
-  externalDocs:
-    description: Find out more
-    url: http://example.com
+    email: integration@luminpdf.com
+    url: https://help.luminpdf.com
 servers:
   - url: https://api.luminpdf.com/v1
-    description: Staging server
+    description: Production server
 tags:
   - name: Signature Request
     description: Everything about Signature Request
@@ -101,6 +98,43 @@ paths:
                         enum:
                           - WAITING_FOR_PROCESSING
                           - FAILED
+        '4xx':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /signature_request/cancel/{signature_request_id}:
+    put:
+      summary: Cancel Signature Request
+      description: Cancel Signature Request by id.
+      security:
+        - ApiKey: []
+      tags:
+        - Signature Request
+      parameters:
+        - in: path
+          name: signature_request_id
+          schema:
+            type: string
+          required: true
+          description: ID of the Signature Request to cancel
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  signature_request_id:
+                    type: string
+                    description: The unique identifier for the Signature Request.
+                  status:
+                    type: string
+                    description: The status of the Signature Request.
+                    enum:
+                      - CANCELLED
         '4xx':
           description: Unexpected error
           content:
@@ -269,6 +303,7 @@ components:
             - REJECTED
             - WAITING_FOR_PROCESSING
             - FAILED
+            - CANCELLED
         reason:
           type: string
           description: The reason for the status FAILED or REJECTED of the Signature Request.

@@ -191,6 +191,50 @@ print(response.text)
 `}
             </CodeBlock>
           </TabItem>
+          <TabItem value="Groovy" label="Groovy">
+            <CodeBlock
+              language="groovy">
+              {`@Grab('com.squareup.okhttp3:okhttp:4.9.0')
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+import okhttp3.Response;
+
+OkHttpClient client = new OkHttpClient()
+
+def filePath = "path/to/file.pdf"
+def apikey = "YOUR_API_KEY"
+
+File file = new File(filePath)
+String url = "https://api.luminpdf.com/v1/signature_request/send"
+
+RequestBody fileBody = RequestBody.create(file, MediaType.parse("application/pdf"))
+
+MultipartBody requestBody = new MultipartBody.Builder()
+    .setType(MultipartBody.FORM)
+    .addFormDataPart("file", file.name, fileBody)
+    .addFormDataPart("title", "My sample file")
+    .addFormDataPart("expires_at", "1727510980694")
+    .addFormDataPart("signing_type", "SAME_TIME")
+    .addFormDataPart("signers[0][name]", "nhuttm")
+    .addFormDataPart("signers[0][email_address]", "nhuttm@luminpdf.com")
+    .build()
+
+Request request = new Request.Builder()
+    .url(url)
+    .addHeader("x-api-key", apikey)
+    .post(requestBody)
+    .build()
+try (Response response = client.newCall(request).execute())
+        {
+            resBody = response.body().string();
+            println(resBody);
+        }
+`}
+            </CodeBlock>
+          </TabItem>
         </Tabs>
   );
 }
