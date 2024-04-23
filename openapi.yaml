@@ -410,19 +410,20 @@ components:
           - email_address: nhuttm@luminpdf.com
             name: Nhut Tran
             group: 1
-          - email_address: hieudm1@luminpdf.com
-            name: Hieu Do
+          - email_address: hau_le@luminpdf.com
+            name: Hau Le
             group: 2
-          - email_address: hientv2@luminpdf.com
-            name: Hien Tran
+          - email_address: giang_pl@luminpdf.com
+            name: Giang Phan
             group: 1
-        viewers:
-          - email_address: congnt3@luminpdf.com
-            name: Cong Nguyen
-          - email_address: tientm4@luminpdf.com
-            name: Tien Tran
-          - email_address: phaphl5@luminpdf.com
-            name: Phap Huynh
+        viewers: 
+          - email_address: tuyen_ptt@luminpdf.com
+            name: Tuyen Phan
+          - email_address: son_lt@luminpdf.com
+            name: Thi Son
+          - email_address: phap_hl@luminpdf.com
+            name: Phap Hello
+
         title: My first request signing document
         expires_at: 1727510980694
         use_text_tags: false

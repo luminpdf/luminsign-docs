@@ -4,11 +4,11 @@ sidebar_position: 2
 sidebar_label: Events and Callbacks
 ---
 
-Lumin Sign Events (aka "webhooks), which are payloads of event metadata automatically sent to your app when something happens in Lumin Sign.
+Lumin Sign events (aka "webhooks") are payloads of event metadata automatically sent to your system when something happens in Lumin Sign.
 
 ## Account callbacks
 
-**Account Callbacks** notify your app when an event happens involving your account by sending the event payload to your account callback url.
+**Account Callbacks** notify your system when an event happens involving your account by sending the event payload to your account callback url.
 
 The **Account Callbacks** can be configured on the [Developer Settings page](https://sign.luminpdf.com/developer/configuration).
 
@@ -85,18 +85,18 @@ Here is a list of webhook events that can be sent to your callback urls:
 | `signature_request_canceled` | The signature request is canceled | [Signature Request Error](/api/get-signature-request/) |
 | `signature_request_cancel_failed` | The signature request cancelation failed | [Signature Request Error](/api/get-signature-request/) |
 
-## Testing Webhooks Locally with Ngrok
+## Testing Webhooks Locally with ngrok
 Webhooks require a publicly accessible URL to receive HTTP requests, which poses a problem during local development. Ngrok addresses this by creating a secure tunnel to your local server. This section will guide you through setting up ngrok and using it to test webhooks locally.
 
-### Step 1: Installing Ngrok
+### Step 1: Installing ngrok
 Install ngrok by following the instructions on the [ngrok website](https://ngrok.com/docs/getting-started/).
 
 ### Step 2: Starting a Local Server
 
 Before using ngrok, ensure your application is running locally on a specific port. For example, if you're developing a web application that listens on port `5090`, ensure the application is accessible via `http://localhost:<PORT>`.
 
-### Step 3: Creating a Secure Tunnel with Ngrok
-To expose your local server to the internet, use ngrok to create a secure tunnel to the port your application is running on:
+### Step 3: Creating a Secure Tunnel with ngrok
+To expose your local server to the Internet, use ngrok to create a secure tunnel to the port your application is running on:
 
 ```bash
 ngrok http 5090
@@ -105,7 +105,7 @@ ngrok http 5090
 You will see something similar to the following console UI in your terminal.
 ![image](img/ngrok_example.png)
 
-Replace `5090` with the port number your local server is using. Ngrok will start and display a UI in your terminal, including the public URL(s) that ngrok has generated for your local server (e.g., `https://<random>.ngrok.io`).
+Replace `5090` with the port number your local server is using. ngrok will start and display the session's information in your terminal, including the public URL(s) that ngrok has generated for your local server (e.g., `https://<random>.ngrok.io`).
 
 ### Step 4: Configuring the Webhook URL
 
