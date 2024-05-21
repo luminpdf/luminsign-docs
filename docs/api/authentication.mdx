@@ -15,7 +15,7 @@ API keys are long-lived and do not expire.
 Authentication to the API is performed in two ways: using **X-API-KEY** or with [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication).
 
 ### X-API-KEY
-```bash
+```jsx
 API_KEY=my_simple_api_key
 curl -XGET -H "X-API-KEY: ${API_KEY}" 'https://api.luminpdf.com/v1/user/info'
 ```

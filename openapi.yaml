@@ -410,17 +410,17 @@ components:
           - email_address: nhuttm@luminpdf.com
             name: Nhut Tran
             group: 1
-          - email_address: hau_le@luminpdf.com
-            name: Hau Le
-            group: 2
-          - email_address: giang_pl@luminpdf.com
-            name: Giang Phan
-            group: 1
-        viewers: 
           - email_address: tuyen_ptt@luminpdf.com
             name: Tuyen Phan
+            group: 1
           - email_address: son_lt@luminpdf.com
             name: Thi Son
+            group: 2
+        viewers:
+          - email_address: hau_le@luminpdf.com
+            name: Hau Le
+          - email_address: giang_pl@luminpdf.com
+            name: Giang Phan
           - email_address: phap_hl@luminpdf.com
             name: Phap Hello
 

@@ -1,0 +1,285 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Lumin PDF Api Reference
+  description: |
+    The Lumin PDF API Reference supplies a wide range of information about the Lumin PDF API. This includes a detailed description of the API endpoints, the request and response formats, and the authentication methods. The API is designed to allow developers to integrate Lumin PDF's features into their own applications.
+
+    Some useful links:
+    - [The document repository](https://github.com/luminpdf/luminsign-docs)
+    - [The source API definition for the Lumin PDF API](https://github.com/luminpdf/luminsign-docs/blob/main/pdf.openapi.yaml)
+    - [Authentication for using API](/docs/api/authentication/)
+  contact:
+    name: API Support
+    email: integration@luminpdf.com
+    url: https://help.luminpdf.com
+servers:
+  - url: https://api.luminpdf.com/v1
+    description: Production server
+tags:
+  - name: Document
+    description: Everything about Document
+  - name: User
+    description: Everything about User
+paths:
+  /documents/upload:
+    post:
+      summary: Upload a document
+      description: Upload a document to Lumin PDF for editing
+      security:
+        - ApiKey: []
+      tags:
+        - Document
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DocumentDTO'
+      responses:
+        '201':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - document
+                properties:
+                  document:
+                    description: Contains information about a Signature Request.
+                    $ref: '#/components/schemas/Document'
+        '4xx':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /user/info:
+    get:
+      summary: Get User Information
+      description: Get information of current user by API Key
+      security:
+        - ApiKey: []
+      tags:
+        - User
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - user
+                properties:
+                  user:
+                    description: Contains information about a User.
+                    $ref: '#/components/schemas/User'
+        '4xx':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /user/webhooks/subscriptions:
+    post:
+      summary: Subscribe to webhooks
+      description: Subscribe to webhooks related to the user
+      security:
+        - ApiKey: []
+      tags:
+        - User
+      requestBody:
+        content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  callback_url:
+                    description: The callback url of the webhook.
+                    type: string
+                  events:
+                    description: The events that the webhook will be triggered. Supported events is defined in the https://developers.luminpdf.com/docs/api/events/#event-names.
+                    type: array
+                    items:
+                      type: string
+                example:
+                  callback_url: https://luminpdf.com/webhook/handler
+                  events: ["signature_request_created", "signature_request_viewed"]
+      responses:
+        '201':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - subscription
+                properties:
+                  subscription:
+                    description: Contains information about a Webhook Subscription.
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: The unique identifier for the subscription.
+                      callback_url:
+                        type: string
+                        description: The callback url of the webhook.
+                      events:
+                        type: array
+                        description: The events that the webhook will be triggered.
+                        items:
+                          type: string
+
+        '4xx':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /user/webhooks/{webhook_id}:
+    delete:
+      summary: Unsubscribe to webhooks
+      description: Unsubscribe to webhooks related to the user
+      security:
+        - ApiKey: []
+      tags:
+        - User
+      parameters:
+        - in: path
+          name: webhook_id
+          schema:
+            type: string
+          required: true
+          description: ID of the webhook
+      responses:
+        '204':
+          description: Expected response to a valid request
+        '4xx':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /user/circles/all:
+    get:
+      summary: Get all circles
+      description: Get all circles of the user
+      security:
+        - ApiKey: []
+      tags:
+        - User
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - circles
+                  - total
+                properties:
+                  circles:
+                    description: Contains information about a list of Circles.
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: The unique identifier for the circle.
+                        name:
+                          type: string
+                          description: The name of the circle.
+                  total:
+                    type: integer
+                    description: The total number of circles.
+
+        '4xx':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      name: X-API-KEY
+      in: header
+  schemas:
+    Document:
+      type: object
+      required:
+        - id
+        - file_name
+        - file_url
+        - file_remote_id
+        - file_download_url
+
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the document.
+        file_name:
+          type: string
+          description: The name of the document.
+        file_url:
+          type: string
+          description: The private url of the document.
+        file_remote_id:
+          type: string
+          description: The remote id of the document.
+        file_download_url:
+          type: string
+          description: The download url of the document. Using for downloading the document. Expire in 30 mins.
+    User:
+      type: object
+      required:
+        - email
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        name:
+          type: string
+    DocumentDTO:
+      type: object
+      required:
+        - file_name
+      properties:
+        file_url:
+          type: string
+          description: The url of the file, which will be uploaded. This endpoint requires either file or file_url, but not both.
+        file:
+          type: string
+          format: binary
+          description: The file, which will be uploaded. This endpoint requires either file or file_url, but not both.
+        file_name:
+          type: string
+          minLength: 1
+          maxLength: 255
+          description: The name of the file.
+        circle_id:
+          type: string
+          description: The id of the circle that the document belongs to. If not provided, the document will be uploaded to the user's last access circle.
+
+      example:
+        file_url: https://lumin-resources-staging.s3.amazonaws.com/api-demo/Direct+Debit+form.pdf
+        file_name: Accountant team in my heart
+        circle_id: null
+    Error:
+      type: object
+      required:
+        - error_code
+        - error_message
+      properties:
+        error_code:
+          type: string
+        error_message:
+          type: string

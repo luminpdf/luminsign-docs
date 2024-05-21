@@ -3,15 +3,17 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@docusaurus/core": "^2.4.3",
-    "@mdx-js/react": "^1.6.21",
+    "@docusaurus/core": "^3.3.2",
+    "@mdx-js/react": "^3.0.1",
     "clsx": "^1.1.1",
-    "docusaurus-preset-openapi": "0.6.3",
-    "prism-react-renderer": "^1.2.1",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "url": "^0.11.0",
-    "redocusaurus": "^1.6.0"
+    "docusaurus-plugin-openapi": "^0.7.5",
+    "docusaurus-preset-openapi": "0.7.5",
+    "prism-react-renderer": "^2.1.0",
+    "prismjs": "^1.29.0",
+    "react": "^18.0.1",
+    "react-dom": "^18.3.1",
+    "redocusaurus": "^1.6.0",
+    "url": "^0.11.0"
   },
   "scripts": {
     "docusaurus": "docusaurus",

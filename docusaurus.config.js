@@ -1,8 +1,9 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
+const {themes} = require('prism-react-renderer');
 
-const lightCodeTheme = require("prism-react-renderer/themes/shadesOfPurple");
-const darkCodeTheme = require("prism-react-renderer/themes/dracula");
+const lightCodeTheme = themes.shadesOfPurple;
+const darkCodeTheme = themes.dracula;
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -69,6 +70,12 @@ const config = {
       }
     ],
   ],
+
+  plugins: [["docusaurus-plugin-openapi", {
+    id: 'beta',
+    path: 'pdf.openapi.yaml',
+    routeBasePath: '/api-beta',
+  }]],
 
 
   themeConfig:
