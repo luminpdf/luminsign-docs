@@ -16,6 +16,8 @@ info:
 servers:
   - url: https://api.luminpdf.com/v1
     description: Production server
+  - url: https://api-sandbox.luminpdf.com/v1
+    description: Sandbox server
 tags:
   - name: Document
     description: Everything about Document
@@ -271,7 +273,7 @@ components:
 
       example:
         file_url: https://lumin-resources-staging.s3.amazonaws.com/api-demo/Direct+Debit+form.pdf
-        file_name: Accountant team in my heart
+        file_name: Direct Debit Form
         circle_id: null
     Error:
       type: object

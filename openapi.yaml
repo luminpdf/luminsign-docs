@@ -16,6 +16,8 @@ info:
 servers:
   - url: https://api.luminpdf.com/v1
     description: Production server
+  - url: https://api-sandbox.luminpdf.com/v1
+    description: Sandbox server
 tags:
   - name: Signature Request
     description: Everything about Signature Request
@@ -144,7 +146,7 @@ paths:
   /signature_request/files_as_file_url/{signature_request_id}:
     get:
       summary: Download File as File URL
-      description: Obtain the file of the Signature Request by id as a file URL. Returns a JSON object with a url to the file 
+      description: Obtain the file of the Signature Request by id as a file URL. Returns a JSON object with a url to the file
       security:
         - ApiKey: []
       tags:
@@ -375,7 +377,7 @@ components:
                       The signing order of signer for the Signature Request with `signing_type` is `ORDER`. Required if `signing_type` is `ORDER`.
 
                       Only signers in `1st Signers` group will receive email/notification, signers in subsequent groups will receive email/notification when all signers in previous group has signed.
-                      
+
                       Group starts incrementing at 1.
 
                        The default value for group always is 1 if `signing_type` is `SAME_TIME.`
@@ -403,7 +405,19 @@ components:
           enum:
             - SAME_TIME
             - ORDER
-
+        custom_email:
+          type: object
+          description: Custom email content for the email sent to signers.
+          properties:
+            sender_email:
+              type: string
+              description: The email address of the sender.
+            subject_name:
+              type: string
+              description: The subject of the email.
+            title:
+              type: string
+              description: The title of the email.
       example:
         file_url: https://lumin-resources-staging.s3.amazonaws.com/api-demo/Direct+Debit+form.pdf
         signers:
