@@ -360,11 +360,21 @@ components:
       properties:
         file_url:
           type: string
-          description: The url of the file, which will be downloaded and signed. This endpoint requires either file or file_url, but not both.
+          description: The URL of a single file to be downloaded and signed. This field is mutually exclusive with `file`, `files`, and `file_urls`. Only one of these fields should be provided in the request.
         file:
           type: string
           format: binary
-          description: The uploaded file to send for signature. This endpoint requires either file or file_url, but not both.
+          description:  A single uploaded file to be sent for signature. This field is mutually exclusive with `file_url`, `files`, and `file_urls`. Only one of these fields should be provided in the request.
+        file_urls:
+          type: array
+          description: An array of URLs of files to be downloaded and signed. This field is mutually exclusive with `file`, `files`, and `file_url`. Only one of these fields should be provided in the request.
+          items:
+            type: string
+        files:
+          type: array
+          description: An array of uploaded files to be sent for signature. This field is mutually exclusive with `file`, `file_url`, and `file_urls`. Only one of these fields should be provided in the request.
+          items:
+            type: string
         signers:
           type: array
           items:
