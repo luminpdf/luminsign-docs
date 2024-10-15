@@ -374,7 +374,7 @@ components:
           type: array
           description: An array of uploaded files to be sent for signature. This field is mutually exclusive with `file`, `file_url`, and `file_urls`. Only one of these fields should be provided in the request.
           items:
-            type: string
+            type: binary
         signers:
           type: array
           items:
