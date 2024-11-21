@@ -429,7 +429,7 @@ components:
               type: string
               description: The title of the email.
       example:
-        file_url: https://lumin-resources-staging.s3.amazonaws.com/api-demo/Direct+Debit+form.pdf
+        file_url: https://lumin-assets-production.s3.us-east-1.amazonaws.com/api-demo/Direct+Debit+form.pdf
         signers:
           - email_address: nhuttm@luminpdf.com
             name: Nhut Tran

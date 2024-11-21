@@ -272,7 +272,7 @@ components:
           description: The id of the circle that the document belongs to. If not provided, the document will be uploaded to the user's last access circle.
 
       example:
-        file_url: https://lumin-resources-staging.s3.amazonaws.com/api-demo/Direct+Debit+form.pdf
+        file_url: https://lumin-assets-production.s3.us-east-1.amazonaws.com/api-demo/Direct+Debit+form.pdf
         file_name: Direct Debit Form
         circle_id: null
     Error:
