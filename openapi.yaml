@@ -430,10 +430,8 @@ components:
               description: The title of the email.
       example:
         file_url: https://lumin-assets-production.s3.us-east-1.amazonaws.com/api-demo/Direct+Debit+form.pdf
+        title: Financial Year-End Report Authorization
         signers:
-          - email_address: nhuttm@luminpdf.com
-            name: Nhut Tran
-            group: 1
           - email_address: tuyen_ptt@luminpdf.com
             name: Tuyen Phan
             group: 1
@@ -441,15 +439,14 @@ components:
             name: Thi Son
             group: 2
         viewers:
-          - email_address: hau_le@luminpdf.com
-            name: Hau Le
-          - email_address: giang_pl@luminpdf.com
-            name: Giang Phan
-          - email_address: phap_hl@luminpdf.com
-            name: Phap Hello
+          - email_address: tin_tt@luminpdf.com
+            name: Tezca Tin
+          - email_address: bac_pth@luminpdf.com
+            name: Bac Pham
+          - email_address: hau_lt@luminpdf.com
+            name: Holly Hau
 
-        title: My first request signing document
-        expires_at: 1727510980694
+        expires_at: 1927510980694
         use_text_tags: false
         signing_type: ORDER
     Error:

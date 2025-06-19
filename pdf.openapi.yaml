@@ -24,6 +24,49 @@ tags:
   - name: User
     description: Everything about User
 paths:
+  /documents/convert:
+    post:
+      summary: Convert a document from markdown to PDF
+      description: Convert a document from markdown to PDF
+      security:
+        - ApiKey: []
+      tags:
+        - Document
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+                  description: The markdown content to be converted to PDF.
+      responses:
+        '201':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - document
+                properties:
+                  document:
+                    description: Contains information about a converted document.
+                    type: object
+                    properties:
+                      download_url:
+                        type: string
+                        description: The download url of the document. Using for downloading the document. Expire in ~30 mins.
+                      expires_at:
+                        type: string
+                        description: The expiration time of the download url.
+        '4xx':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /documents/upload:
     post:
       summary: Upload a document
@@ -48,7 +91,7 @@ paths:
                   - document
                 properties:
                   document:
-                    description: Contains information about a Signature Request.
+                    description: Contains information about a Document.
                     $ref: '#/components/schemas/Document'
         '4xx':
           description: Unexpected error
