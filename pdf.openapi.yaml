@@ -26,7 +26,7 @@ tags:
 paths:
   /documents/convert:
     post:
-      summary: Convert a document from markdown to PDF
+      summary: Convert a document
       description: Convert a document from markdown to PDF
       security:
         - ApiKey: []
@@ -41,6 +41,8 @@ paths:
                 template:
                   type: string
                   description: The markdown content to be converted to PDF.
+              example:
+                template: This is my accountant's report.
       responses:
         '201':
           description: Expected response to a valid request
