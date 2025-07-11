@@ -30,6 +30,7 @@ paths:
       description: Get Signature Request by id.
       security:
         - ApiKey: []
+        - BearerAuth: []
       tags:
         - Signature Request
       parameters:
@@ -64,6 +65,7 @@ paths:
       description: Creates and sends a new Signature Request with the submitted documents.
       security:
         - ApiKey: []
+        - BearerAuth: []
       tags:
         - Signature Request
       requestBody:
@@ -112,6 +114,7 @@ paths:
       description: Cancel Signature Request by id.
       security:
         - ApiKey: []
+        - BearerAuth: []
       tags:
         - Signature Request
       parameters:
@@ -149,6 +152,7 @@ paths:
       description: Obtain the file of the Signature Request by id as a file URL. Returns a JSON object with a url to the file
       security:
         - ApiKey: []
+        - BearerAuth: []
       tags:
         - Signature Request
       parameters:
@@ -185,6 +189,7 @@ paths:
       description: Obtain the file of the Signature Request by id. Returns a PDF file.
       security:
         - ApiKey: []
+        - BearerAuth: []
       tags:
         - Signature Request
       parameters:
@@ -214,6 +219,7 @@ paths:
       description: Get information of current user by API Key
       security:
         - ApiKey: []
+        - BearerAuth: []
       tags:
         - User
       responses:
@@ -241,6 +247,10 @@ components:
       type: apiKey
       name: X-API-KEY
       in: header
+    BearerAuth:
+      type: http
+      scheme: Bearer
+      bearerFormat: JWT
   schemas:
     Signer:
       type: object

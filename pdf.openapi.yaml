@@ -30,6 +30,7 @@ paths:
       description: Convert a document from markdown to PDF
       security:
         - ApiKey: []
+        - BearerAuth: []
       tags:
         - Document
       requestBody:
@@ -75,6 +76,7 @@ paths:
       description: Upload a document to Lumin PDF for editing
       security:
         - ApiKey: []
+        - BearerAuth: []
       tags:
         - Document
       requestBody:
@@ -107,6 +109,7 @@ paths:
       description: Get information of current user by API Key
       security:
         - ApiKey: []
+        - BearerAuth: []
       tags:
         - User
       responses:
@@ -134,6 +137,7 @@ paths:
       description: Subscribe to webhooks related to the user
       security:
         - ApiKey: []
+        - BearerAuth: []
       tags:
         - User
       requestBody:
@@ -191,6 +195,7 @@ paths:
       description: Unsubscribe to webhooks related to the user
       security:
         - ApiKey: []
+        - BearerAuth: []
       tags:
         - User
       parameters:
@@ -215,6 +220,7 @@ paths:
       description: Get all circles of the user
       security:
         - ApiKey: []
+        - BearerAuth: []
       tags:
         - User
       responses:
@@ -256,6 +262,10 @@ components:
       type: apiKey
       name: X-API-KEY
       in: header
+    BearerAuth:
+      type: http
+      scheme: Bearer
+      bearerFormat: JWT
   schemas:
     Document:
       type: object
