@@ -23,7 +23,18 @@ tags:
     description: Everything about Signature Request
   - name: User
     description: Everything about User
+  - name: Template
+    description: Everything about Template
 paths:
+  /template:
+    post:
+      summary: Create Template
+      description: Create a new Template.
+      tags:
+        - Template
+      security:
+        - ApiKey: []
+        - BearerAuth: []
   /signature_request/{signature_request_id}:
     get:
       summary: Get Signature Request
