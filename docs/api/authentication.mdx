@@ -6,7 +6,7 @@ sidebar_label: Authentication
 
 You can authenticate with the Lumin Sign API by using an API key
 ## API Key
-API key is the most common method for authenticating against Lumin Sign API. You can retrieve keys from the [Developer Settings page](https://sign.luminpdf.com/developer/configuration) in the Lumin Sign Dashboard.
+API key is the most common method for authenticating against Lumin Sign API. You can retrieve keys from the **Developer Settings** page in the Lumin Dashboard. Note: You must be a **Workspace Owner** or **Workspace Admin** to access the Developer Settings page.
 
 API keys need to be kept secret and should only be used from your own backend. **Never expose your API key in any public spaces such as GitHub public gist/repositories**.
 
@@ -33,7 +33,7 @@ Each account may have up to four API keys at a time. All keys are **"active"** a
 
 Only one key can be set as the **Primary Key**. The **Primary Key** is used to generate the *signature*, which serves to [verify event payload from webhooks](/docs/api/events/#signature-verification).
 
-![image](img/apikey-dashboard.png)
+![image](img/apikey-dashboard_2.png)
 
 ## Rotate API Key
 
