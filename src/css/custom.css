@@ -34,7 +34,10 @@ html[data-theme="dark"] .docusaurus-highlight-code-line {
   --ifm-footer-background-color: rgb(12, 57, 91);
   --ifm-color-secondary-contrast-foreground: rgb(12, 57, 91);
   --ifm-code-font-size: 80%;
-  --ifm-font-size-base: 14px;
+  --ifm-font-size-base: 16px;
+  --ifm-menu-link-padding-vertical: 8px;
+  --ifm-h1-font-size: 48px;
+  --ifm-h2-font-size: 20px;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
 
@@ -67,4 +70,11 @@ html[data-theme="dark"] .docusaurus-highlight-code-line {
 iframe
 {
     display: none;
+}
+
+/* Logo size control */
+.navbar__brand img,
+.navbar__logo {
+  width: 80px !important;
+  height: 26px !important;
 }
