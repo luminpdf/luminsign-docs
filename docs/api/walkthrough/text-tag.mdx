@@ -13,13 +13,13 @@ Once enabled, Text Tags will be parsed and converted into form fields - UI compo
 ### Using Text Tags in API request
 Include `use_text_tags` parameter to your API request and set it to `true` to enable Text Tag parsing in your document. If left out, this parameter is default to `false`.
 ### Important note
-Text Tags are detected by actual text value, not by doing OCR on images with text, thus it is important to note:
+Text Tags are detected by actual text value, not by doing OCR on images with text. Thus, it is important to note:
 
-1. The document contains actual text for tags
+- The document must contain actual text for tags.
+- The document must be in PDF format, as form fields might end up in the wrong location with other formats.
+- The tags WILL remain on the document, so we highly recommend setting the tag text color the same as the document background to hide them.
+- Text Tags cannot contain whitespace. If whitespace is needed for layout purposes, consider using underscores `(_)` instead.
 
-2. The document is a PDF, as form fields might end up in the wrong location with other formats
-
-3. The tags WILL remain on the document, thus we highly recommend setting the text color same as that of the document background to hide them
 ### Syntax
 This is the correct syntax of the Text Tags:
 :::info
@@ -43,6 +43,7 @@ In case of an invalid Text Tag i.e. wrong requirement type or unidentified signe
 ### Form field properties
 The size of the form fields created will be defined as follows:
 
-1. The height of the form fields will be fixed to accommodate a font size of 12
+The height of the form fields will be fixed to accommodate a font size of 12.
+The width of the form fields will be equal to the length of the tag (between the pair of square brackets). To make a field longer, add extra underscores (_) after the last identifier of the tag.
 
-2. The width of the form fields will be equal to the length of the tag (between the pair of square brackets). Thus you can make the fields longer by putting white spaces after the last identifier of the tag.
+Example: `[sig1|noreq|signer1____]` will render a wider field than `[sig1|noreq|signer1]`. 
