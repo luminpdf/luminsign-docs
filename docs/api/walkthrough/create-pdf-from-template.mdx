@@ -1,0 +1,132 @@
+---
+title: Create a PDF from a Template
+sidebar_position: 2
+---
+
+# Create a PDF from a Template
+
+Lumin templates are document templates that created and saved in the Lumin application. Templates contain placeholders (tags and fields) that you can fill with dynamic data to create customized documents.
+
+**Important notes**
+- Tags and field names use `object.field` syntax (for example: `Client.Name`, `Customer.Name`).
+- Some attributes like `signer_roles` and `signing_type` are specific to **Lumin Sign** templates. These are used when a template will later be sent as a signature request.
+- The same template can be used in two ways: to generate a plain PDF document, or as input for creating a signature request via the signature endpoints.
+
+---
+
+## Understanding Merge Tags and Form Fields
+
+Lumin templates use two types of placeholders that you can fill with dynamic data:
+
+### Merge Tags
+Merge tags are text placeholders embedded directly in the document content. They use the syntax `[text-merge|req|sender|object.field]` and are replaced with actual values during document generation.
+
+**Examples:**
+- `[text-merge|req|sender|Client.Name]` → Replaced with "Acme Corp"
+- `[text-merge|req|sender|Effective.Date]` → Replaced with "2025-08-01"
+
+### Form Fields
+Form fields are interactive elements that users can fill out. They include various input types:
+- **Text**: Single-line text input
+- **Checkbox**: Boolean true/false values
+- **Signature**: Digital signature fields
+- **Radio Button**: Single selection from multiple options
+
+When generating a document from a template, the data you provide will be prefilled into the corresponding form fields.
+
+**Examples:**
+- `Customer.Name` → Text field for customer name
+- `Customer.AgreeToTerms` → Checkbox for agreement
+- `Customer.Signature` → Signature field
+
+---
+
+## Step 1: List available templates
+
+**📖 API Reference:** [GET /templates](/api/list-templates)
+
+```http
+GET /v1/templates
+Authorization: X-API-KEY
+Accept: application/json
+```
+
+**Response**
+
+```json
+{
+  "page": 1,
+  "limit": 25,
+  "total_count": 1,
+  "data": [
+    {
+      "template_id": "sign_abc123",
+      "name": "Mutual NDA",
+      "signing_type": "ORDER",
+      "signer_roles": [
+        { "name": "Customer", "group": 1 }
+      ],
+      "tags": [
+        { "name": "Client.Name", "type": "merge_tag", "is_required": true },
+        { "name": "Effective.Date", "type": "merge_tag", "is_required": false }
+      ],
+      "fields": [
+        { "name": "Customer.Name", "type": "text", "is_required": true },
+        { "name": "Customer.AgreeToTerms", "type": "checkbox", "is_required": true }
+      ],
+      "created_at": 1748456885430,
+      "updated_at": 1748456885430
+    }
+  ]
+}
+```
+
+---
+
+## Step 2: Generate PDF from template
+
+**📖 API Reference**: [POST /templates/template_id/generate-document](/api/generate-document-from-template)
+
+```http
+POST /v1/templates/{template_id}/generate-document
+Authorization: X-API-KEY
+Content-Type: application/json
+Accept: application/json
+```
+
+> To download the PDF directly, set `Accept: application/pdf` — the API returns a binary PDF file.
+
+**Request Body**
+
+Fill the template's tags and fields with your data:
+
+> **Note**: For form fields, only **text** and **checkbox** field types support data prefilling. Signature and radio button fields cannot be prefilled and will appear empty in the generated document.
+
+```json
+{
+  "tags": {
+    "Client.Name": "Acme Corp",
+    "Effective.Date": "2025-08-01"
+  },
+  "fields": {
+    "Customer.Name": "John Doe",
+    "Customer.AgreeToTerms": true
+  },
+  "document_name": "NDA_AcmeCorp"
+}
+```
+
+**Response (JSON)**
+
+```json
+{
+  "document_name": "NDA_AcmeCorp",
+  "signed_url": "https://files.luminpdf.com/download/nda-acmecorp-abc123.pdf",
+  "expires_at": 1766726700
+}
+```
+
+**Response (PDF)**
+
+- When `Accept: application/pdf` is used, the API returns the PDF binary stream directly.
+

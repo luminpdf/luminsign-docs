@@ -8,7 +8,7 @@ const darkCodeTheme = themes.dracula;
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Lumin Developer Docs',
-  tagline: 'Add a signing workflow to your app',
+  tagline: 'Build powerful document workflows with the Lumin API',
   url: 'https://luminpdf.github.io',
   baseUrl: '/',
   onBrokenLinks: 'warn',

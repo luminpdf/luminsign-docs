@@ -31,7 +31,7 @@ export default function Home() {
   return (
     <Layout
       title={`Hello from ${siteConfig.title}`}
-      description="Lumin Sign Tutorial - Add a signing workflow to your app">
+      description="Lumin API Tutorial - Build powerful document workflows with the Lumin API">
       <HomepageHeader />
       <main>
         <HomepageFeatures />
