@@ -5,11 +5,11 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 const FeatureList = [
   {
-    title: 'Easy to Use',
+    title: 'Easy to Integrate',
     Svg: '/img/easy-to-use.svg',
     description: (
       <>
-        Lumin Sign was designed from the ground up to make it easy to get your signing flow up and running quickly.
+        The Lumin API is designed to help you quickly connect your apps with document workflows — from editing to signing and automation.
       </>
     ),
   },
@@ -18,17 +18,16 @@ const FeatureList = [
     Svg: '/img/focus-to-what-matter.svg',
     description: (
       <>
-        Lumin Sign lets you focus on your app, and we&apos;ll do the chores. Go
-        ahead and work on the functionality that matters.
+        We handle the heavy lifting — storage, compliance, security, and workflow management — so you can focus on delivering the features that matter most to your users.
       </>
     ),
   },
   {
-    title: 'Customize with React',
+    title: 'Flexible & Extensible',
     Svg: '/img/custom-with-react.svg',
     description: (
       <>
-        Extend or customize your Lumin Sign integration using React.
+        Use our APIs to extend or customize Lumin to fit your business needs. Whether it's document editing, eSignature, or data-driven automation, you can adapt Lumin to your workflow.
       </>
     ),
   },

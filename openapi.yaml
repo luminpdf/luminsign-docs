@@ -1,14 +1,15 @@
 openapi: 3.0.0
 info:
   version: 1.0.0
-  title: Lumin Sign Api Reference
+  title: Lumin API Reference
   description: |
-    The Lumin Sign API Reference supplies a wide range of eSignature tools for your application.
+    The Lumin API Reference provides a comprehensive set of tools to integrate document workflows — including editing, eSignatures, and automation — into your applications.
 
-    Some useful links:
-    - [The document repository](https://github.com/luminpdf/luminsign-docs)
-    - [The source API definition for the Lumin Sign API](https://github.com/luminpdf/luminsign-docs/blob/main/openapi.yaml)
-    - [Authentication for using API](/docs/api/authentication/)
+    Useful links:
+    - [Document Repository](https://github.com/luminpdf/luminsign-docs)
+    - [API Definition](https://github.com/luminpdf/luminsign-docs/blob/main/openapi.yaml)
+    - [Authentication Guide](/docs/api/authentication/)
+  termsOfService: https://www.luminpdf.com/terms-of-use/
   contact:
     name: API Support
     email: integration@luminpdf.com
@@ -23,6 +24,8 @@ tags:
     description: Everything about Signature Request
   - name: User
     description: Everything about User
+  - name: Template
+    description: Everything about Template
 paths:
   /signature_request/{signature_request_id}:
     get:
@@ -172,11 +175,11 @@ paths:
                 properties:
                   file_url:
                     type: string
-                    description: The url of the file, which will be downloaded and signed.
+                    description: Signed HTTPS URL to download the document. Expires in 30 minutes.
                   expires_at:
                     type: integer
                     format: unix-epoch
-                    description: When the file url will expire. This is a unix epoch timestamp (miliseconds).
+                    description: Unix epoch timestamp **in seconds** when the signed URL expires.
         '4xx':
           description: Unexpected error
           content:
@@ -241,12 +244,153 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /templates:
+    get: 
+      summary: List Templates
+      description: Returns a paginated list of Lumin templates with essential details embedded for each item.
+      security:
+        - ApiKey: []
+        - BearerAuth: []
+      tags:
+        - Template
+      parameters:
+        - name: page
+          in: query
+          description: Specify which page of the dataset to return (min = 1).
+          schema:
+            type: integer
+            minimum: 1
+          required: false
+        - name: limit
+          in: query
+          description: The number of templates to return per page. One of 10, 25, or 50.
+          schema:
+            type: integer
+            enum: [10, 25, 50]
+          required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TemplateListResponse"
+              example:
+                page: 1
+                limit: 25
+                total_count: 1
+                data:
+                  - template_id: sign_123
+                    name: Mutual NDA
+                    signing_type: ORDER
+                    signer_roles:
+                      - name: Tenant
+                        group: 1
+                      - name: Customer
+                        group: 2
+                    fields:
+                      - name: CustomerName
+                        type: text
+                        is_required: true
+                      - name: HasCompleted
+                        type: checkbox
+                        is_required: true
+                    tags:
+                      - name: ClientName
+                        type: merge_tag
+                        is_required: true
+                      - name: EffectiveDate
+                        type: merge_tag
+                        is_required: true
+                    created_at: 1748456885430
+                    updated_at: 1748456885430
+        '4xx':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /templates/{template_id}/generate-document:
+    post:
+      summary: Generate Document from Template
+      description: |
+        Generates a downloadable PDF document from a specified Lumin template.
+
+        This endpoint takes an existing template identified by `template_id` and produces a static document based on its content and structure.  
+
+        Currently, this operation supports **Lumin Sign templates**, allowing you to prefill merge text tags and form fields, and create a finalized PDF ready for distribution or archiving.
+      security:
+        - ApiKey: []
+        - BearerAuth: []
+      tags:
+        - Template
+      parameters:
+        - in: path
+          name: template_id
+          schema:
+            type: string
+          required: true
+          description: ID of the template to generate document from
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TemplateDTO'
+            example:
+              default:
+                template_id: sign_123
+                tags:
+                  ClientName: ACME Corp
+                  EffectiveDate: 2025-01-01
+                fields:
+                  CustomerName: John Doe
+                  AgreeToTerms: true
+                document_name: Mutual NDA
+      responses:
+        '200':
+          description: Successfully generated document from template
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - document_name
+                  - signed_url
+                  - expires_at
+                properties:
+                  document_name:
+                    type: string
+                    description: Name of the generated document (from input or default).
+                  signed_url:
+                    type: string
+                    format: uri
+                    description: Signed HTTPS URL to download the generated document. Expires in 30 minutes.
+                  expires_at:
+                    type: integer
+                    format: unix-epoch
+                    description: Unix epoch timestamp **in seconds** when the signed URL expires.
+              example:
+                document_name: Mutual NDA
+                document_url: https://files.luminpdf.com/download/nda-acmecorp-abc123.pdf?expires=2025-08-24T10:45:00Z
+                expires_at: 1757219429466
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        '4xx':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 components:
   securitySchemes:
     ApiKey:
       type: apiKey
       name: X-API-KEY
       in: header
+      description: |
+        Provide your API key in the `Authorization` header, e.g., `Authorization: API-key`.
     BearerAuth:
       type: http
       scheme: Bearer
@@ -321,7 +465,7 @@ components:
           description: The reason for the status FAILED or REJECTED of the Signature Request.
         signing_type:
           type: string
-          description: The type of signing for the Signature Request.
+          description: Recipient signing flow.
           enum:
             - SAME_TIME
             - ORDER
@@ -459,6 +603,117 @@ components:
         expires_at: 1927510980694
         use_text_tags: false
         signing_type: ORDER
+    TemplateDTO:
+      type: object
+      required:
+        - template_id
+      properties:
+        tags:
+          type: object
+          items:
+            type: object
+          description: |
+            Key–value pairs for **Merge Text Tags** defined in the template.
+            Keys must match tag names. Values replace those tags in the generated document.
+            Currently supports merge tags with syntax: `[text-merge|req|sender|object.field]`.
+        fields:
+          type: object
+          items:
+            type: object
+          description: |
+            Key–value pairs for **Form Fields** defined in the template.
+            Keys must match field names. Values prefill the corresponding fields.
+        document_name:
+          type: string
+          description: Optional custom name for the generated document. Defaults to the template's name if omitted.
+      description: |
+        At least one of `tags` or `fields` may be required when the template defines required tags/fields.
+    Template:
+      type: object
+      required:
+        - template_id
+        - name
+        - tags
+        - fields
+        - created_at
+        - updated_at
+      properties:
+        template_id:
+          type: string
+          description: The unique identifier for the template.
+        name:
+          type: string
+          description: The name of the template.
+        signing_type:
+          allOf:
+            - $ref: '#/components/schemas/SignatureRequest/properties/signing_type'
+            - description: Recipient signing flow.
+        signer_roles:
+          type: array
+          description: Signer roles defined in the template.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the signer role.
+              group:
+                type: integer
+                description: The signing order of signer for the Signature Request with `signing_type` is `ORDER`.
+        tags:
+          type: array
+          description: Text Tags embedded in the template, which are placeholders added directly in the document using the syntax `[text-merge|req|sender|object.field]`.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name/label of the tag.
+              type:
+                type: string
+                description: The type of the text tag.
+                enum: [text-merge, merge_tag]
+              is_required:
+                type: boolean
+                description: Whether the tag must be filled before completing the document.
+        fields:
+          type: array
+          description: Form fields defined in the template.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name/label of the form field.
+              type:
+                type: string
+                description: The type of the form field.
+                enum: [text, checkbox, signature, radio_button]
+              is_required:
+                type: boolean
+                description: Whether the form field must be filled before completing the document.
+        created_at:
+          type: string
+          description: The time the template was created.
+        updated_at:
+          type: string
+          description: The time the template was last updated.
+    TemplateListResponse:
+      type: object
+      properties:
+        page:
+          type: integer
+          description: The page number of the dataset.
+        limit:
+          type: integer
+          description: The number of templates to return per page.
+        total_count:
+          type: integer
+          description: The total number of templates.
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Template"
     Error:
       type: object
       required:
