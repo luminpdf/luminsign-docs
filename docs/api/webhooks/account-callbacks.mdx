@@ -27,9 +27,9 @@ To configure Account webhooks:
 
 Once your Account webhook is configured, Lumin will automatically send **HTTP POST requests** to your endpoint when events occur.
 
-Account webhooks receive all supported event types across your entire Workspace. For a complete list of available events, see [Supported event types](/docs/api/webhooks/webhook-overview#supported-event-types).
+Account webhooks receive all supported event types across your entire Workspace. For a complete list of available events, see **[Supported event types](/docs/api/webhooks/webhook-overview#supported-event-types)**.
 
-All webhook events follow a consistent JSON structure. For detailed payload examples, see [Event payload structure](/docs/api/webhooks/webhook-overview#event-payload-structure).
+All webhook events follow a consistent JSON structure. For detailed payload examples, see **[Event payload structure](/docs/api/webhooks/webhook-overview#event-payload-structure)**.
 
 
 ### Event delivery rules
@@ -43,13 +43,13 @@ All webhook events follow a consistent JSON structure. For detailed payload exam
 ## Verify the webhook
 Lumin provides a couple of headers on Webhook requests:
 
-**User-Agent**: Sender agent. Always `Lumin Sign API`
+**User-Agent**: Sender agent. Always `Lumin Sign API`.
 
-**X-Signature**: A hex digest SHA256 signature of the request's JSON payload, generated using your [Primary API key](/docs/api/authentication/#multiple-api-keys)
+**X-Signature**: A hex digest SHA256 signature of the request's JSON payload, generated using your **[Primary API key](/docs/api/authentication/#multiple-api-keys)**.
 
 **Verification steps**:
 1. Read the `X-Signature` header.
-2. Compute HMAC-SHA256 with your **Primary API key**.
+2. Compute HMAC-SHA256 with your **[Primary API key](/docs/api/authentication/#multiple-api-keys)**.
 3. Compare securely with the header value.
 4. Reject if mismatch or timestamp expired.
 
@@ -82,4 +82,4 @@ Content-Type: application/json
 - **Timeout responses** (>30 seconds) will be retried
 - **Connection failures** will be retried with exponential backoff
 
-For detailed retry schedules and failure handling, see [Retry rules and failure handling](/docs/api/webhooks/webhook-overview#retry-rules-and-failure-handling).
+For detailed retry schedules and failure handling, see **[Retry rules and failure handling](/docs/api/webhooks/webhook-overview#retry-rules-and-failure-handling)**.

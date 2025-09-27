@@ -43,7 +43,7 @@ All webhook events follow a consistent JSON structure with additional user conte
 ## Verify the webhook
 Lumin provides a couple of headers on Webhook requests:
 
-**User-Agent**: Sender agent. Always `Lumin Sign API`
+**User-Agent**: Sender agent. Always `Lumin Sign API`.
 
 **X-Signature**: A hex digest SHA256 signature of the request's JSON payload, generated using your **App's Signing Secret**
 You can view your app's signing secret in **Developer Settings → Integration apps → Application details** modal.
@@ -85,4 +85,4 @@ Content-Type: application/json
 - **Timeout responses** (>30 seconds) will be retried
 - **Connection failures** will be retried with exponential backoff
 
-For detailed retry schedules and failure handling, see [Retry rules and failure handling](/docs/api/webhooks/webhook-overview#retry-rules-and-failure-handling).
+For detailed retry schedules and failure handling, see **[Retry rules and failure handling](/docs/api/webhooks/webhook-overview#retry-rules-and-failure-handling)**.
