@@ -35,6 +35,13 @@ const sidebars = {
         },
       ],
     },
+    {
+      type: 'category',
+      label: 'Webhooks',
+      items: [
+        'beta/api/webhooks/app-callbacks',
+      ],
+    },
   ],
 };
 

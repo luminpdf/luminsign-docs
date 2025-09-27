@@ -1,0 +1,130 @@
+---
+title: Webhook Overview
+sidebar_position: 1
+sidebar_label: Overview
+---
+
+# Webhooks
+
+Webhooks allow your application to automatically react to events in Lumin, eliminating the need for continuous API polling. **Lumin** pushes real-time notifications to your system when key events occur, such as a **signature request being approved** or a **document being ready for download**.
+
+When a webhook event is triggered, Lumin sends an **HTTP POST request** with a JSON payload to your specified webhook endpoint. Your receiving application can then use this information to run business logic, trigger workflows, or store records.
+
+## Types of webhooks in Lumin
+
+Lumin currently supports **Account-level webhooks**
+    - Configured once at the **Workspace level** (Workspace Owner sets it under **API Key → Account callback**).
+    - Covers all users and events in the Workspace, **independent of which API key or user initiated them**.
+    - Events (e.g., `signature_request_created`, `signature_request_viewed`) are always validated using the **Primary API key**.
+    - **Use case**: Internal tools, single-tenant systems, full Workspace monitoring.
+
+## How the event flow works
+
+Most webhook integrations follow this general pattern:
+
+1. **User action triggers an event:** Something happens in Lumin — e.g., a user sends a signature request.
+2. **Lumin sends a notification:** Lumin POSTS a JSON payload to your webhook endpoint describing the event.
+3. **Your server acknowledges:** Your endpoint returns an HTTP `200 OK` to confirm receipt.
+4. **Your logic runs:** Your system decides how to respond — e.g., send an internal notification, update CRM data, or archive documents.
+5. **Additional API calls (if needed):** Your server can call Lumin APIs to fetch more details or take follow-up actions.
+
+### Example: Signature request workflow
+
+Let's walk through a signature request scenario:
+
+1. A user creates and sends a **signature request** in Lumin Sign.
+2. All required signers complete the signing process.
+3. Lumin sends a `signature_request_approved` webhook event to your endpoint.
+4. Your server responds with `200 OK` to confirm receipt.
+5. Your app then calls `GET /signature_request/{id}/file` to download the **Certificate of Completion** and the **signed PDF**, storing them securely in your system.
+
+With webhooks, your app can do things beyond just receiving events:
+- Automate document workflows as soon as events occur.
+- Keep external systems (like Salesforce, HubSpot, or internal CRMs) up to date.
+- Notify team members or customers in real-time.
+- Archive and track compliance documents immediately after completion.
+
+## Event types and Retry rules
+
+### Supported event types
+
+Lumin supports the following webhook events across both webhook types:
+
+| Event Name | Description | Attached API Object |
+|------------|-------------|-------------------|
+| `signature_request_created` | The signature request is created successfully | [Signature Request](/api/get-signature-request/) |
+| `signature_request_viewed` | A signer opens the document | [Signature Request](/api/get-signature-request/) |
+| `signature_request_approved` | The document has been signed by all signers | [Signature Request](/api/get-signature-request/) |
+| `signature_request_declined` | A signer declines the document. This will turn the `status` of the `signature_request` to `REJECTED` | [Signature Request](/api/get-signature-request/) |
+| `signature_request_signed` | The document has been signed by a signer | [Signature Request](/api/get-signature-request/) |
+| `signature_request_downloadable` | The signed document and/or certificate of completion is ready for download | [Signature Request](/api/get-signature-request/) |
+| `signature_request_invalid` | An error occurred while processing the signature request data on our back-end i.e. invalid text tags | [Signature Request Error](/api/get-signature-request/) |
+| `signature_request_canceled` | The signature request is canceled | [Signature Request Error](/api/get-signature-request/) |
+| `signature_request_cancel_failed` | The signature request cancelation failed | [Signature Request Error](/api/get-signature-request/) |
+
+### Event payload structure
+
+All webhook events follow this consistent structure:
+
+```json
+{
+  "event": {
+    "event_time": 1758812586180,
+    "event_type": "signature_request_downloadable",
+    "event_metadata": {
+      "workspace_id": "68d417dcdeaecfae84872de8"
+    }
+  },
+  "signature_request": {
+    "signature_request_id": "68d558daa153cb3c30718518",
+    "title": "Test webhook",
+    "created_at": 1758812378277,
+    "updated_at": 1758812574883,
+    "expires_at": 1827510980694,
+    "status": "APPROVED",
+    "signers": [
+      {
+        "name": "Thu Le",
+        "email": "thula@luminpdf.com",
+        "status": "APPROVED",
+        "is_approved": true
+      }
+    ]
+  },
+  "details_url": "https://sign.luminpdf.com/auth?mode=view-contract&token=..."
+}
+```
+
+### Retry rules and failure handling
+
+Our webhook delivery system implements robust retry mechanisms to ensure reliable event delivery:
+
+#### Retry schedule
+| Retry Attempt | Delay After Previous Attempt |
+|---------------|------------------------------|
+| First         | 5 minutes                    |
+| Second        | 15 minutes                   |
+| Third         | 45 minutes                   |
+| Fourth        | 2 hours 15 minutes           |
+| Fifth         | 6 hours 45 minutes           |
+| Sixth         | 20 hours 15 minutes           |
+
+#### Failure conditions
+- **Timeout**: Requests timeout after 30 seconds
+- **HTTP Errors**: Any non-200 response status
+- **Connection Failures**: Network connectivity issues
+
+#### Best practices for webhook handling
+- **Respond quickly**: Keep response times under 30 seconds
+- **Return HTTP 200**: Acknowledge receipt with success status
+- **Implement idempotency**: Handle duplicate events gracefully
+- **Log all events**: Maintain audit trails for debugging
+- **Verify signatures**: Always validate webhook authenticity
+
+## Event subscription rules
+
+**By default, Account webhook URLs subscribe to all supported events automatically** - there's no opt-out mechanism.
+
+## Next steps
+
+- See **Account Webhooks** for details on configuring Account-level callbacks.
