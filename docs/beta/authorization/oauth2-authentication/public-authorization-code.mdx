@@ -1,0 +1,102 @@
+---
+title: Public Authentication Code Grant Flow
+sidebar_position: 3
+---
+
+import ApiSchema from '@theme/ApiSchema';
+
+# Public Authentication Code Grant Flow
+
+The **Public Authorization Code Grant with PKCE** is an OAuth 2.0 flow designed for applications that cannot securely store a client secret. This includes single-page applications (SPAs), mobile apps, and desktop apps.
+
+Unlike private (confidential) flows, this method uses **PKCE (Proof Key for Code Exchange)** to ensure security without requiring a client secret. Lumin supports the **S256 (SHA-256)** method for PKCE.
+
+:::warning
+**Note:** The Public (PKCE) flow **does not** issue refresh tokens. If your application requires long-lived sessions or background processing (e.g., refreshing access without user interaction), create a **Private (Server) OAuth 2.0 application** instead. Private apps can securely store a client secret and support refresh tokens, while public apps cannot.
+:::
+
+## Prerequisites
+
+- A Public (PKCE) OAuth 2.0 application has been created in Lumin. See: [Creating an OAuth 2.0 Application in Lumin](./creating-oauth2-application)
+- You have the following values from the Developer settings page:
+  - **Client ID**
+  - **Redirect URI** (must exactly match one of the URIs registered for your app)
+
+## Step-by-step walkthrough
+
+### Step 1: Generate PKCE Code Verifier and Challenge
+
+1. Create a `code_verifier` as a random string
+2. Generate a `code_challenge` by hashing the `code_verifier` using **SHA-256** and then encoding the result with Base64URL
+3. Specify `code_challenge_method=S256`
+
+#### Example
+
+```bash
+code_verifier = "R8zFoqsØyeysd881QITZs3dK1YsdIvFNBf04D1bukBw"
+code_challenge = "RqN6kvc2f99WD-BQG3SzsDfQcX54BxuyuM40alAt8b5M"
+```
+
+### Step 2: Redirect user to Authorization Endpoint
+
+Redirect the user to Lumin's OAuth 2.0 authorization endpoint.
+
+#### Example Request
+
+```bash
+GET https://auth.luminpdf.com/oauth2/auth?
+client_id=YOUR_CLIENT_ID&
+response_type=code&
+redirect_uri=YOUR_REDIRECT_URI&
+scope=openid sign:requests&
+state=5a7a4c98-40e2-4e2a-a0d5-979fb639b5b5&
+code_challenge=CODE_CHALLENGE&
+code_challenge_method=S256
+```
+
+#### Query Parameters
+
+<ApiSchema id="oauth2-yml" pointer="#/components/schemas/PublicAuthorizationCode" />
+
+After the user approves, Lumin redirects them back to your `redirect_uri` with an `authorization code`.
+
+### Step 3: Exchange Authorization Code for Tokens
+
+Exchange the authorization code for an access token. For public apps, **no client secret is required**; instead, provide the `code_verifier`.
+
+#### Example Request
+
+```bash
+curl --request POST \
+--url https://auth.luminpdf.com/oauth2/token \
+-d 'grant_type=authorization_code' \
+-d 'code=$YOUR_AUTHORIZATION_CODE' \
+-d 'client_id=$YOUR_CLIENT_ID' \
+-d 'redirect_uri=$YOUR_REDIRECT_URI' \
+-d 'code_verifier=$YOUR_CODE_VERIFIER' \
+--header 'Content-Type: application/x-www-form-urlencoded'
+```
+
+#### Response
+
+```json
+{
+  "access_token": "ory_at__aqzPqv1z0Uw...",
+  "expires_in": 3598,
+  "token_type": "bearer",
+  "scope": "openid sign:requests"
+}
+```
+
+### Step 4: Call Lumin APIs with Bearer Token
+
+Use the access token in the `Authorization` header to call Lumin APIs.
+
+#### Example Request
+
+```bash
+curl --request GET \
+--url https://api.luminpdf.com/v1/signature_request/send \
+--header "Authorization: Bearer $ACCESS_TOKEN" \
+--header "Content-Type: application/json"
+```

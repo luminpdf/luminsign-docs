@@ -1,6 +1,6 @@
 openapi: 3.0.0
 servers:
-  - url: https://kratos-auth-test.luminpdf.com
+  - url: https://auth.luminpdf.com
     description: OAuth2 server
 info:
   description: |
@@ -18,7 +18,11 @@ components:
       $ref: 'components/implicit.yml#/components/schemas/Implicit'
       xml:
         name: Implicit
-    AuthorizationCode:
-      $ref: 'components/authorization_code.yml#/components/schemas/AuthorizationCode'
+    PrivateAuthorizationCode:
+      $ref: 'components/authorization_code.yml#/components/schemas/PrivateAuthorizationCode'
       xml:
-        name: AuthorizationCode
+        name: PrivateAuthorizationCode
+    PublicAuthorizationCode:
+      $ref: 'components/authorization_code.yml#/components/schemas/PublicAuthorizationCode'
+      xml:
+        name: PublicAuthorizationCode

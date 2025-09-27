@@ -1,0 +1,8 @@
+{
+  "label": "OAuth 2.0 Authentication",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "Learn how to implement OAuth 2.0 authentication flows."
+  }
+}
