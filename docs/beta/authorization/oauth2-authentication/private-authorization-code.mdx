@@ -1,0 +1,98 @@
+---
+title: Private Authentication Code Grant Flow
+sidebar_position: 2
+---
+
+import ApiSchema from '@theme/ApiSchema';
+
+# Private Authentication Code Grant Flow
+
+The **Private Authorization Code Grant** is an OAuth 2.0 flow for confidential (server-based) applications. It securely exchanges an **authorization code** for an **access token** and a **refresh token**.
+
+Your app **must be server-side** because the flow requires the **Client Secret**, which must always be kept secure on your server.
+
+## Prerequisites
+
+- A Private (Confidential) OAuth 2.0 application has been created in Lumin. See: [Creating an OAuth 2.0 Application in Lumin](/docs/beta/authorization/oauth2-authentication/creating-oauth2-application)
+- You have the following values from the Developer settings page:
+  - **Client ID**
+  - **Client Secret**
+  - **Redirect URI** (must exactly match one of the URIs registered for your app)
+
+## Step-by-step walkthrough
+
+### Step 1: Get an Authorization Code
+
+Your app must first redirect the user to the Lumin authorization endpoint to request consent.
+
+#### Example Request
+
+```bash
+GET https://auth.luminpdf.com/oauth2/auth?
+client_id=YOUR_CLIENT_ID&
+response_type=code&
+redirect_uri=YOUR_REDIRECT_URI&
+scope=openid offline_access sign:requests&
+state=state&
+nonce=nonce
+```
+
+#### Query Parameters
+
+<ApiSchema id="oauth2-yml" pointer="#/components/schemas/PrivateAuthorizationCode" />
+
+After the user approves the request, Lumin redirects them back to your `redirect_uri` with an `authorization code`.
+
+### Step 2: Exchange Authorization Code for Tokens
+
+Once you have the code, exchange it for an access token and refresh token by making a server-to-server POST request.
+
+#### Example Request
+
+```bash
+curl --request POST \
+--url https://auth.luminpdf.com/oauth2/token \
+-d 'grant_type=authorization_code' \
+-d 'code=$YOUR_AUTHORIZATION_CODE' \
+-d 'client_id=$YOUR_CLIENT_ID' \
+-d 'client_secret=$YOUR_CLIENT_SECRET' \
+-d 'redirect_uri=$YOUR_REDIRECT_URI' \
+--header 'Content-Type: application/x-www-form-urlencoded'
+```
+
+#### Response
+
+```json
+{
+  "access_token": "eyJhbGci0i...",
+  "expires_in": 3600,
+  "refresh_token": "def502...",
+  "token_type": "bearer",
+  "scope": "openid offline_access sign:requests"
+}
+```
+
+### Step 3: Call Lumin APIs with Bearer Token
+
+Include the access token in the `Authorization` header of your API calls.
+
+```bash
+curl --request GET \
+--url https://api.luminpdf.com/v1/signature_request/send \
+--header 'Authorization: Bearer $ACCESS_TOKEN' \
+--header 'Content-Type: application/json'
+```
+
+### Step 4: Refresh the Access Token
+
+Access tokens expire after a short time (e.g., 1 hour). Use the `refresh_token` to obtain a new access token without requiring user interaction.
+
+```bash
+curl --request POST \
+--url https://auth.luminpdf.com/oauth2/token \
+-d 'grant_type=refresh_token' \
+-d 'refresh_token=$YOUR_REFRESH_TOKEN' \
+-d 'client_id=$YOUR_CLIENT_ID' \
+-d 'client_secret=$YOUR_CLIENT_SECRET' \
+--header 'Content-Type: application/x-www-form-urlencoded'
+```

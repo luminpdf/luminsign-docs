@@ -12,7 +12,11 @@ const config = {
   url: 'https://luminpdf.github.io',
   baseUrl: '/',
   onBrokenLinks: 'warn',
-  onBrokenMarkdownLinks: 'warn',
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+    },
+  },
   favicon: 'img/favicon-32x32.png',
   trailingSlash: true,
   
@@ -74,6 +78,7 @@ const config = {
       "docusaurus-preset-openapi",
       /** @type {import('docusaurus-preset-openapi').Options} */
       ({
+        proxy: false,
         api: {
           path: "openapi.yaml",
           routeBasePath: "/api",
@@ -82,8 +87,8 @@ const config = {
           sidebarPath: require.resolve("./sidebars.js"),
           sidebarCollapsible: false,
           // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/luminpdf/luminsign-docs/blob/main/',
+          // editUrl:
+          //   'https://github.com/luminpdf/luminsign-docs/blob/main/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -109,11 +114,13 @@ const config = {
     ],
   ],
 
-  plugins: [["docusaurus-plugin-openapi", {
-    id: 'beta',
-    path: 'pdf.openapi.yaml',
-    routeBasePath: '/api-beta',
-  }]],
+  plugins: [
+    ["docusaurus-plugin-openapi", {
+      id: 'beta',
+      path: 'pdf.openapi.yaml',
+      routeBasePath: '/api-beta',
+    }],
+  ],
 
 
   themeConfig:
@@ -192,7 +199,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Lumin PDF, Inc`,
+        copyright: `Copyright © ${new Date().getFullYear()} Lumin, Inc`,
       },
       prism: {
         additionalLanguages: ['http', 'bash'],
