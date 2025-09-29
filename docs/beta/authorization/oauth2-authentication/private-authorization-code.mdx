@@ -3,8 +3,6 @@ title: Private Authentication Code Grant Flow
 sidebar_position: 2
 ---
 
-import ApiSchema from '@theme/ApiSchema';
-
 # Private Authentication Code Grant Flow
 
 The **Private Authorization Code Grant** is an OAuth 2.0 flow for confidential (server-based) applications. It securely exchanges an **authorization code** for an **access token** and a **refresh token**.
@@ -36,10 +34,6 @@ scope=openid offline_access sign:requests&
 state=state&
 nonce=nonce
 ```
-
-#### Query Parameters
-
-<ApiSchema id="oauth2-yml" pointer="#/components/schemas/PrivateAuthorizationCode" />
 
 After the user approves the request, Lumin redirects them back to your `redirect_uri` with an `authorization code`.
 

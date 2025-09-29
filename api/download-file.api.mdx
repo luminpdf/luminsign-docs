@@ -1,0 +1,71 @@
+---
+id: download-file
+title: "Download File"
+description: "Obtain the file of the Signature Request by id. Returns a PDF file."
+sidebar_label: "Download File"
+hide_title: true
+hide_table_of_contents: true
+api: eJytVttu4zYQ/RVinhKAtrJFn/TUFMku0hbYIBe0gGMklDSyuJZILknZcQUB/Yh+Yb+kGFJyfEtv6EtCUnM5czvjDgp0uZXGS60ghc+ZF1IxXyErZY1Ml+F8LxdK+NYiu8OvLTrPsg2TxZTdoW+tckyw26uPQWUKHBzmrZV+A+msg0sjf0Q6znvewfcoLNrL1lfhZc7Bi4WDdAZHPmDOwQgrGvRoXbAlCaMRvgIOSjQIKbhR7dlGtWdZEIS8wkZA2oHfmCDnrVQL6DmQnLRYQOpti/wgAzdX7wftNVugB0Jt0RmtHDpy8c3FBf3bN3T9ajD3WLBRlNQFW4la0lsMkUOulUflSV8YU8tckH5iipKe3guDQ6ltIzykkEkl7Ab6vu85fPv6eozkUeGIBa3V9n2vXxwpnHCrsy+YE9y35M0gGHvOdYHAh0uDzokFhtJZbdB6GVO0I3uqJvvaxxI9By99TU/XIYQ+xtugr3QBKVBdeGyNFJKjpkioNV3SneqWPnSsXY1N1toaUqi8Ny5NEmHktG4bqUxRTnPdJKsPcNgzt1YXbU4XFg0BtfqRnYkTqsj069/au49yW2Pzt5G6p8rElI6DtU2WiA88jkmFokD7Nii/TC5vbyZR4Aj+ShbINrq17PL2hi1xwwYWeKFR1Vb+GhrkhUWrnOF0MeUHX1NSnixx8zJ9UlTV3WHfoqSEjANK9ywI/TUor5eo/hukiIH98PNDRNVTekpNgKji0dmH6cX0At567CcqUEjFHZZoUeV4BPChQnZCjpkInDgx142xWKFycoXMoQ/UonXtiAuk8riwwiMrdN42qDxba7ssa7127I/ffmdS5XVbSLVgWEgv1YIz3JKS40yogonW6yaEOqh4HVO2M9Zu+qSe1KPDsq1ZLdXSpU9qwmZXo9s7NNpJr+1mfjb260L6qs1Ch47tGg80QpNC5+48GKHgr7CUSpKrf6OfZLXOkkZIlWiDigZtI5p6MNv6CpUfImCfWlng/CwJesLIROx9T86fFJUPbeM+l/doVzLHneFbr9f7QxckJ7qctA6TgQ9FHvhwGBeK6741RlsiFmyEpGkeaya1+m7XIPCDca+wNnsuQ+cZ7Xwj1I6bK71WtRYF+yjrox7r3nj6f9rMwwx6fPWJqYUMYxqQdwN5zo43Km0bok/gkJ5ct3MOlXaelLsuEw4fbd339Py1RRt2P4eVsFJkNF6zDgrp6FxAWoraHS7h3bjP7oaNc87+wWp+J8KRIBWR30rULd2Aw5L48/RPiH7e85FDCXEUvcxzNH7HyOHOJq7eLqVP1w/AQezznzByGUh4OJDxk/h2CTt6p7+0WU6Kd13k/77fysdP72psN0SUplTN+77/E95fhsY=
+sidebar_class_name: "get api-method"
+info_path: api/lumin-api-reference
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Download File"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/signature_request/files/{signature_request_id}"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Obtain the file of the Signature Request by id. Returns a PDF file.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"in":"path","name":"signature_request_id","schema":{"type":"string"},"required":true,"description":"ID of the Signature Request to get"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Expected response to a valid request","content":{"application/pdf":{"schema":{"type":"string","format":"binary"}}}},"4xx":{"description":"Unexpected error","content":{"application/json":{"schema":{"type":"object","required":["error_code","error_message"],"properties":{"error_code":{"type":"string"},"error_message":{"type":"string"}},"title":"Error"}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

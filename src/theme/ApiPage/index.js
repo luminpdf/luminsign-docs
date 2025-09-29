@@ -1,5 +1,5 @@
 import React from 'react';
-import ApiPage from '@theme-original/ApiPage';
+// import ApiPage from '@theme-original/ApiPage';
 import Head from '@docusaurus/Head';
 
 const MapDescription = {
@@ -14,7 +14,7 @@ export default function ApiPageWrapper(props) {
       <Head>
         <meta property="og:description" content={description} />
       </Head>
-      <ApiPage {...props} />
+      {/* <ApiPage {...props} /> */}
     </>
   );
 }

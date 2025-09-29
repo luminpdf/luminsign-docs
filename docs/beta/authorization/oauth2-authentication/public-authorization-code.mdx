@@ -3,8 +3,6 @@ title: Public Authentication Code Grant Flow
 sidebar_position: 3
 ---
 
-import ApiSchema from '@theme/ApiSchema';
-
 # Public Authentication Code Grant Flow
 
 The **Public Authorization Code Grant with PKCE** is an OAuth 2.0 flow designed for applications that cannot securely store a client secret. This includes single-page applications (SPAs), mobile apps, and desktop apps.
@@ -17,7 +15,7 @@ Unlike private (confidential) flows, this method uses **PKCE (Proof Key for Code
 
 ## Prerequisites
 
-- A Public (PKCE) OAuth 2.0 application has been created in Lumin. See: [Creating an OAuth 2.0 Application in Lumin](./creating-oauth2-application)
+- A Public (PKCE) OAuth 2.0 application has been created in Lumin. See: [Creating an OAuth 2.0 Application in Lumin](/docs/beta/authorization/oauth2-authentication/creating-oauth2-application/)
 - You have the following values from the Developer settings page:
   - **Client ID**
   - **Redirect URI** (must exactly match one of the URIs registered for your app)
@@ -53,10 +51,6 @@ state=5a7a4c98-40e2-4e2a-a0d5-979fb639b5b5&
 code_challenge=CODE_CHALLENGE&
 code_challenge_method=S256
 ```
-
-#### Query Parameters
-
-<ApiSchema id="oauth2-yml" pointer="#/components/schemas/PublicAuthorizationCode" />
 
 After the user approves, Lumin redirects them back to your `redirect_uri` with an `authorization code`.
 

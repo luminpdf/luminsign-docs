@@ -1,0 +1,71 @@
+---
+id: download-file-as-file-url
+title: "Download File as File URL"
+description: "Obtain the file of the Signature Request by id as a file URL. Returns a JSON object with a url to the file"
+sidebar_label: "Download File as File URL"
+hide_title: true
+hide_table_of_contents: true
+api: eJy9Vttu4zYQ/RVinnYD2sq2fdJTUyTdZrvoBnaCFkgMLy2NLa4lkktSvqwhoB/RL+yXFENKjm05vQLNQ0yRczkznDnDHeToMiuNl1pBCh9mXkjFfIFsLktkeh7WY7lQwtcW2Qg/1+g8m22ZzJlwTETBh9H7IRuhr62ivXfjDz8xPfuEmWdr6QsmWG1L5vXeNHBwmNVW+i2kjzu4MvJHpOWk4Tv4DoVFe1X7IuxMOHixcJA+Qg8KTDgYYUWFHq0LtiSFYoQvgIMSFUIKrlOb2qg2lTlByAqsBKQ78FsT5LyVagENB5KTFnNIva2RnyTq9vrl3HjNFuiBUFt0RiuHjlx8dXlJP8eGbjYGM48560RJXbCVKCXtxRA5ZFp5VJ70hTGlzATpJ58cGdn144i5Bw7GaoPWywiBMj+tbdmP+DRACgtz9sP9/d2Ybpdg5XqtSi3yEHeus7pC5YfsZmOkRcekYl9fskqq2qMbUg4xnkyFP3AolccFWuAw17aiI6iV3AzQ6Kzo4XhQcsPCEfOyQudFZdjFhVTMYaZV7i4u2LrAWLMugia4reshNOGPwzebTT/7Dwq7/KO12v6XTD8XzCMEY9NM51Tn8aNC58QCQ7ke3cmB7Lk6PNbuSzQcvPQlbd2EENp4K/SFziEFqkUe2yGFpNcICdWEmwo37Yoj2Z3rliZ0rF11TRaqCArvjUuTRBg5LOtKKpPPh5muktWb3lXeWZ3XGX2waAio1Xt2Bk6ofKY3f2lvHOX2xibPlDKmW4rp7YhlnzgRN3ikiQJFHoqxJYpfBld3t4Mo0IO/kjmyra4tu7q7ZUvcspYsPxJVaSu/hGL5yKJVznC4GPKT05SUB0vcfhw+KbrhQ7Lbo6SEdARF37Mg9OegvF6i+neQIgb27uf7iKqh9Mw1AaIbj87eDC+Hl/Bcb+/pgkIqRjhHiyrDHsD7AtkZOWYicBoWma6MxQKVkytkDn2gVq1LR6QT6MIK/8w4bK3tcl7qtWO///obkyor61yqBcNceqkWnOGelB1nQuVM1F5XIdRWxeuYsoMWd8Mn9aQeHM7rkpVSLV36pAbs8bpzO0KjnfTabievunpdSF/Us1ChXbnGBbXQINeZex2MUPDXOJdKkqt/op/MSj1LKiFVog0qarStqMrWbO0LVL6NgL2tZY6TV0nQE0Ym4ug8ef2k6PrQVu7DfIx2JTM8aL71en3cdEFyoOeD2mHScqPIAje27UJxjWtjtCWSwUrIsqN4G3x+e2gQ+Em7F1iaI5eh8ox2vhLqwM11N3m+p8eGcPH3YfT+tN52z/z9/z5m2rb1uPGJKYUMnd1O2si9j/1HCM3AU/YFDunZ18qEQ6GdJ0O73Uw4fLBl09D25xpteDpxWAkrxYy683EHuXS0ziGdi9KdvmEOU/Vq1A6v1+xvvGxeiLbjV0XcuRJlTV/AYUn0e/4F1kwa3lEwIY6iV1mGxh8Y6Q1i4vr9gHt7cw8cxDF/CiOXgcTbBVk/C/CQ8KN7+k+T6az4bhfnR9Ps5ePRixr7CROlKVeTpmn+AO5bBIA=
+sidebar_class_name: "get api-method"
+info_path: api/lumin-api-reference
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Download File as File URL"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/signature_request/files_as_file_url/{signature_request_id}"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Obtain the file of the Signature Request by id as a file URL. Returns a JSON object with a url to the file
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"in":"path","name":"signature_request_id","schema":{"type":"string"},"required":true,"description":"ID of the Signature Request to get"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Expected response to a valid request","content":{"application/json":{"schema":{"type":"object","properties":{"file_url":{"type":"string","description":"Signed HTTPS URL to download the document. Expires in 30 minutes."},"expires_at":{"type":"integer","format":"unix-epoch","description":"Unix epoch timestamp **in seconds** when the signed URL expires."}}}}}},"4xx":{"description":"Unexpected error","content":{"application/json":{"schema":{"type":"object","required":["error_code","error_message"],"properties":{"error_code":{"type":"string"},"error_message":{"type":"string"}},"title":"Error"}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

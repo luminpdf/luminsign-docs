@@ -1,9 +1,10 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 const {themes} = require('prism-react-renderer');
+import type * as OpenApiPlugin from "docusaurus-plugin-openapi-docs";
 
-const lightCodeTheme = themes.shadesOfPurple;
-const darkCodeTheme = themes.dracula;
+const lightCodeTheme = themes.oneLight;
+const darkCodeTheme = themes.oneDark;
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -12,11 +13,11 @@ const config = {
   url: 'https://luminpdf.github.io',
   baseUrl: '/',
   onBrokenLinks: 'warn',
-  markdown: {
-    hooks: {
-      onBrokenMarkdownLinks: 'warn',
-    },
-  },
+  // markdown: {
+  //   hooks: {
+  //     onBrokenMarkdownLinks: 'warn',
+  //   },
+  // },
   favicon: 'img/favicon-32x32.png',
   trailingSlash: true,
   
@@ -71,55 +72,58 @@ const config = {
     locales: ['en'],
   },
 
-  themes: ['docusaurus-theme-redoc'],
+  // themes: ["docusaurus-theme-openapi-docs"],
 
   presets: [
     [
-      "docusaurus-preset-openapi",
-      /** @type {import('docusaurus-preset-openapi').Options} */
-      ({
-        proxy: false,
-        api: {
-          path: "openapi.yaml",
-          routeBasePath: "/api",
-        },
-        docs: {
+      './presets/docusaurus-preset-multi-docs.js',
+      {
+        docs1: {
+          id: "docs-api",
+          path: 'docs/api',
+          routeBasePath: 'docs/api',
           sidebarPath: require.resolve("./sidebars.js"),
           sidebarCollapsible: false,
-          // Remove this to remove the "edit this page" links.
-          // editUrl:
-          //   'https://github.com/luminpdf/luminsign-docs/blob/main/',
+          docItemComponent: "@theme/ApiItem",
         },
-        theme: {
-          customCss: require.resolve('./src/css/custom.css'),
+        docs2: {
+          id: "docs-openapi",
+          path: 'api',
+          routeBasePath: 'api',
+          sidebarPath: require.resolve("./api/sidebar.ts"),
+          sidebarCollapsible: false,
+          docItemComponent: "@theme/ApiItem",
         },
-      }),
-    ],
-
-    [
-      'redocusaurus',
-      {
-        config: '/Users/mac/Documents/Project/luminsign-docs/redocly.yaml',
-        specs: [
-          {
-            id: 'oauth2-yml',
-            spec: 'openapi/oauth2/openapi.yaml',
-          },
-          {
-            id: 'contract-yml',
-            spec: 'openapi/contract/openapi.yaml',
-          },
-        ],
-      }
+        docs3: {
+          id: "docs-beta",
+          path: 'docs/beta',
+          routeBasePath: 'docs/beta',
+          sidebarCollapsible: false,
+          sidebarPath: require.resolve("./sidebars.js"),
+          docItemComponent: "@theme/ApiItem",
+        },
+      },
     ],
   ],
 
   plugins: [
-    ["docusaurus-plugin-openapi", {
-      id: 'beta',
-      path: 'pdf.openapi.yaml',
-      routeBasePath: '/api-beta',
-    }],
+    [
+      'docusaurus-plugin-openapi-docs',
+      {
+        id: "api",
+        docsPluginId: "classic",
+        config: {
+          api: {
+            specPath: "openapi.yaml",
+            outputDir: "api",
+            sidebarOptions: {
+              groupPathsBy: "tag",
+              categoryLinkSource: "tag",
+            },
+          } satisfies OpenApiPlugin.Options,
+        }
+      },
+    ],
   ],
 
 
@@ -139,15 +143,19 @@ const config = {
           //   position: 'left',
           //   label: 'Docs (Beta)',
           // },
+          // {
+          //   type: 'doc',
+          //   docId: 'api/intro',
+          //   position: 'left',
+          //   label: 'Docs',
+          // },
           {
-            type: 'doc',
-            docId: 'api/intro',
-            position: 'left',
+            to: 'docs/api/intro',
             label: 'Docs',
           },
           {
             label: 'API Reference',
-            to: '/api',
+            to: '/api/lumin-api-reference',
           },
           {
             href: 'https://github.com/luminpdf/luminsign-docs',
@@ -172,7 +180,7 @@ const config = {
               },
               {
                 label: 'API Reference',
-                to: '/api',
+                to: '/api/lumin-api-reference',
               },
             ],
           },

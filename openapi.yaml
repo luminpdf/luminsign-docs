@@ -387,14 +387,15 @@ components:
   securitySchemes:
     ApiKey:
       type: apiKey
-      name: X-API-KEY
       in: header
-      description: |
+      name: X-API-Key
+      description: >
         Provide your API key in the `Authorization` header, e.g., `Authorization: API-key`.
     BearerAuth:
       type: http
-      scheme: Bearer
-      bearerFormat: JWT
+      scheme: bearer
+      description: >
+        Provide your token in the `Authorization` header, e.g., `Authorization: Bearer JWT`.
   schemas:
     Signer:
       type: object

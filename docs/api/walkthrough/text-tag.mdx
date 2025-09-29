@@ -38,7 +38,7 @@ A Text Tag will be wrapped between a pair of square brackets `[ ]`, and contains
 ### Text Tags validation
 Text Tags are detected by parsing the documents for any text that meets the syntax requirement presented in the section above. A tag that is missing any of the required identifiers will NOT be considered a Text Tag, thus you would not receive any errors as these tags are not converted into form fields.
 
-In case of an invalid Text Tag i.e. wrong requirement type or unidentified signer, you would not receive an immediate error in the API response. Instead, the error will come back later in the webhook event `signature_request_invalid`. You can read more about our events in the [Events and Callbacks](/docs/api/events/) section.
+In case of an invalid Text Tag i.e. wrong requirement type or unidentified signer, you would not receive an immediate error in the API response. Instead, the error will come back later in the webhook event `signature_request_invalid`. You can read more about our events in the [Events and Callbacks](/docs/api/webhooks/webhook-overview) section.
 
 ### Form field properties
 The size of the form fields created will be defined as follows:

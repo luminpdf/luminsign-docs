@@ -1,0 +1,63 @@
+---
+id: get-user-information
+title: "Get User Information"
+description: "Get information of current user by API Key"
+sidebar_label: "Get User Information"
+hide_title: true
+hide_table_of_contents: true
+api: eJytVdtu20YQ/ZXFPCXASnSKPvGpbmIYbgvUiGw0gC3UK3JETkTubvYiWyUI9CP6hf2SYJaULFmqixT1g03PzuXM2ZmzHZToC0c2kNGQwyUGQXppXKvYIsxSFNE51EFEj04sNuL8+kr8jBuQ4LGIjsIG8rsOzi2xNb+b97KDH1E5dOcx1MkylxBU5SG/g1uPDuYSHHprtEcPeQffnZ3xn0MsF08Wi4Cl2LqKYIQSa9UQ275E9AEkFEYH1IHjlbUNFQl59tlzkg58UWOr+CtsLEIOZvEZCw7kFOSwZFRxRGWdsegCDbCS9QjXe6ODIu0PiFILE4NQgtubgny1GLaKGpBAJUjQqsXjylTuIfbBka6gl2PkqZOU5viglxAoNGxKxPfpR8L3T0/Hjd1q3FKOzhn3f5Gbkv1emBJBjv+06L2qTjS+53uSgIPoV/u9SC2M/bYYalNCDhUyOqt4MCHjC874GtM0uzU6n4Y5ugZyqEOwPs8yZWnaxJa0LZfTwrTZ+h3IF9xdO1PGIo3CkAh4DY7yTLzS5cI8/Wu+2eC3SzZ/XrcZkz6wtV26HQ9qMEggTlKjKtFthyyHT5Pz66vJ4HAEf00lio2JLm34CjeCtAg1igdeY+Poj3T3D2LIKgVOq6l8cZpz8GSFm4fpveYL2xeCHUomhBlPjUAOi+T0OqhgVqj/G6QBg/jpt5sBVc/0LA0D4hsfir2bnk3P4Hl8fuELSlR8xCU61AUeAbypUZzwE3YA7oUShWmtwxq1pzUKj4ElNRjTeFYz0gErpwKK0hSxZZl9NG61bMyjF3//+ZcgXTSxJF0JLCmQrqTAGVVahejQS6F0KVQMZlShISSYgbK9jfXTe32vbz0uYyMa0iuf3+uJuPuwLfsRrfEUjNvM32zntaJQx0Wa0O24Dh+eKj0pTeHfpiTc/AdckiYu9S3x2aIxi6xVpDNjUfOibVTbjGljqFGHsQNxGanE+ZssxSlLmTo4z97ea74+dK3/dTlDt6YC95bv8fHxcOmS58QsJ9FjNkqdKpLUjevCfc2itcaxZozaC9s7I6N/2E8I8sW619jYg5Jp8qzxoVV6rwy/uSzO4ur5PXk5at2zEn/bGz1uXMCnkNlGUVrKhLMbVXB8/MadmEuojQ9s7rqF8njrmr5n85eILr3vEtbKkVrwmvBrv5UZFs4VqxGcFwVa5mytmjjI0ou3g/Vsp8mXFzcgQR1qhLK0Sh2MH5x9e6Q3e7n3RW0oz79ZfU+6d92gkX2/8x+O/jFip6KDN1M47/v+K3swNtM=
+sidebar_class_name: "get api-method"
+info_path: api/lumin-api-reference
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get User Information"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/user/info"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Get information of current user by API Key
+
+<ParamsDetails
+  parameters={undefined}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Expected response to a valid request","content":{"application/json":{"schema":{"type":"object","required":["user"],"properties":{"user":{"description":"Contains information about a User.","type":"object","required":["email","id","name"],"properties":{"id":{"type":"string"},"email":{"type":"string"},"name":{"type":"string"}},"title":"User"}}}}}},"4xx":{"description":"Unexpected error","content":{"application/json":{"schema":{"type":"object","required":["error_code","error_message"],"properties":{"error_code":{"type":"string"},"error_message":{"type":"string"}},"title":"Error"}}}}}}
+>
+  
+</StatusCodes>
+
+
+      
