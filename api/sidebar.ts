@@ -34,6 +34,12 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
+          id: "get-signature-request-file",
+          label: "Get Signature Request File",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
           id: "download-file-as-file-url",
           label: "Download File as File URL",
           className: "api-method get",
