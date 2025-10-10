@@ -149,10 +149,77 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /signature_request/{signature_request_id}/file:
+    get:
+      summary: Get Signature Request File
+      description: |
+        Obtain the file of the Signature Request by id. This endpoint supports returning different types of files:
+        - The **agreement** itself
+        - The **Certificate of Completion (CoC)**
+        - A **merged PDF** which combines both the agreement and the CoC
+
+        **Preconditions by file type:**
+        - For `agreement` file type: None
+        - For `coc` file type: Requires the status to be **APPROVED** and a certificate must exist for that request
+        - For `merged` file type: Requires the status to be **APPROVED** and both artifacts must exist. Lazy-generation is not performed for legacy requests, and developers should see errors in such cases.
+      security:
+        - ApiKey: []
+        - BearerAuth: []
+      tags:
+        - Signature Request
+      parameters:
+        - in: path
+          name: signature_request_id
+          schema:
+            type: string
+          required: true
+          description: ID of the Signature Request.
+        - in: query
+          name: type
+          schema:
+            type: string
+            enum: [agreement, coc, merged]
+            default: agreement
+          required: false
+          description: |
+            Which artifact to return:
+            - `agreement`: The completed/signed agreement PDF
+            - `coc`: The Certificate of Completion PDF  
+            - `merged`: A single PDF with agreement **followed by** the CoC
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  signed_url:
+                    type: string
+                    description: Signed HTTPS URL to the requested artifact. Expires in 30 minutes.
+                  expires_at:
+                    type: integer
+                    format: unix-epoch
+                    description: Unix epoch timestamp (in seconds) indicating when `signed_url` will no longer work.
+              example:
+                signed_url: "https://files.luminpdf.com/download/nda-acmecorp-abc123.pdf?expires=20..."
+                expires_at: 1766726700
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+              description: Returns binary PDF data
+        '4xx':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /signature_request/files_as_file_url/{signature_request_id}:
     get:
       summary: Download File as File URL
       description: Obtain the file of the Signature Request by id as a file URL. Returns a JSON object with a url to the file
+      deprecated: true
       security:
         - ApiKey: []
         - BearerAuth: []
@@ -190,6 +257,7 @@ paths:
     get:
       summary: Download File
       description: Obtain the file of the Signature Request by id. Returns a PDF file.
+      deprecated: true
       security:
         - ApiKey: []
         - BearerAuth: []
