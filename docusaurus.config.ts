@@ -111,7 +111,7 @@ const config = {
       'docusaurus-plugin-openapi-docs',
       {
         id: "api",
-        docsPluginId: "classic",
+        docsPluginId: "docs2",
         config: {
           api: {
             specPath: "openapi.yaml",
