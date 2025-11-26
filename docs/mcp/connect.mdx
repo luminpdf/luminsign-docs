@@ -1,0 +1,39 @@
+---
+title: Connecting to Lumin MCP
+sidebar_position: 1
+sidebar_label: Connecting to Lumin MCP
+---
+
+# Connecting to Lumin MCP
+
+Learn how to get started and plug Lumin into your AI tool.
+
+This guide walks you through connecting your AI tool to Lumin using the Model Context Protocol (MCP).
+
+Once connected, your tool can request live context from a user’s Lumin based on their access and permissions.
+
+## Connect through your AI tool
+
+We are providing a Streamable HTTP protocol for Lumin MCP. You can use this protocol to connect your AI tool to Lumin.
+
+To connect, search for "Lumin MCP" in your tool's MCP directory or use the following connection method:
+
+```json
+{
+  "mcpServers": {
+    "Lumin": {
+      "url": "https://mcp.luminpdf.com/mcp"
+    }
+  }
+}
+```
+
+## Troubleshooting connection issues
+
+If you're experiencing issues connecting your AI tool to Lumin MCP, here are some common solutions:
+
+**1. Confirm MCP Client Compatibility**: ensure your AI tool includes built-in MCP client functionality and can connect to MCP servers. Not all tools currently offer this capability.
+
+**2. Check Remote Server Connectivity**: some AI tools support MCP clients but cannot connect to remote servers.
+
+**3. Ask for MCP Support if Needed**: if your AI tool lacks MCP support entirely, consider contacting its developers to request MCP server integration. Encouraging broader MCP compatibility helps strengthen the overall ecosystem.

@@ -102,6 +102,14 @@ const config = {
           sidebarPath: require.resolve("./sidebars.js"),
           docItemComponent: "@theme/ApiItem",
         },
+        docs4: {
+          id: "docs-mcp",
+          path: 'docs/mcp',
+          routeBasePath: 'docs/mcp',
+          sidebarCollapsible: false,
+          sidebarPath: require.resolve("./sidebars.js"),
+          docItemComponent: "@theme/ApiItem",
+        },
       },
     ],
   ],
@@ -158,6 +166,10 @@ const config = {
             to: '/api/lumin-api-reference',
           },
           {
+            to: 'docs/mcp/connect',
+            label: 'Lumin MCP',
+          },
+          {
             href: 'https://github.com/luminpdf/luminsign-docs',
             label: 'GitHub',
             position: 'right',
@@ -181,6 +193,10 @@ const config = {
               {
                 label: 'API Reference',
                 to: '/api/lumin-api-reference',
+              },
+              {
+                label: 'Lumin MCP',
+                to: '/docs/mcp/connect',
               },
             ],
           },

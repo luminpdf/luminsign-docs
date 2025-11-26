@@ -10,7 +10,7 @@
     "@mdx-js/react": "^3.0.1",
     "clsx": "^1.1.1",
     "docusaurus-plugin-openapi": "^0.7.6",
-    "docusaurus-plugin-openapi-docs": "^4.5.1",
+    "docusaurus-plugin-openapi-docs": "4.4.0",
     "docusaurus-theme-openapi-docs": "^4.5.1",
     "prism-react-renderer": "^2.1.0",
     "prismjs": "^1.29.0",
@@ -40,5 +40,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

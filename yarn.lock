@@ -4352,10 +4352,10 @@ dns-packet@^5.2.2:
   dependencies:
     "@leichtgewicht/ip-codec" "^2.0.1"
 
-docusaurus-plugin-openapi-docs@^4.5.1:
-  version "4.5.1"
-  resolved "https://registry.yarnpkg.com/docusaurus-plugin-openapi-docs/-/docusaurus-plugin-openapi-docs-4.5.1.tgz#b1133b0e03e284a6ade47fa2c3fcf5eab8ec6911"
-  integrity sha512-3I6Sjz19D/eM86a24/nVkYfqNkl/zuXSP04XVo7qm/vlPeCpHVM4li2DLj7PzElr6dlS9RbaS4HVIQhEOPGBRQ==
+docusaurus-plugin-openapi-docs@4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/docusaurus-plugin-openapi-docs/-/docusaurus-plugin-openapi-docs-4.4.0.tgz#010b2bfc57aeac1b62c41bf1ef386dcc52c5e91f"
+  integrity sha512-VFW0euAyM6i6U6Q2WrNXkp1LnxQFGszZbmloMFYrs1qwBjPLkuHfQ4OJMXGDsGcGl4zNDJ9cwODmJlmdwl1hwg==
   dependencies:
     "@apidevtools/json-schema-ref-parser" "^11.5.4"
     "@redocly/openapi-core" "^1.10.5"

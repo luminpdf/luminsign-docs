@@ -41,13 +41,10 @@ Obtain the file of the Signature Request by id. This endpoint supports returning
 - The **Certificate of Completion (CoC)**
 - A **merged PDF** which combines both the agreement and the CoC
 
-:::info Preconditions by file type
-
-- **For `agreement` file type:** None
-- **For `coc` file type:** Requires the status to be **APPROVED** and a certificate must exist for that request
-- **For `merged` file type:** Requires the status to be **APPROVED** and both artifacts must exist. Lazy-generation is not performed for legacy requests, and developers should see errors in such cases.
-
-:::
+**Preconditions by file type:**
+- For `agreement` file type: None
+- For `coc` file type: Requires the status to be **APPROVED** and a certificate must exist for that request
+- For `merged` file type: Requires the status to be **APPROVED** and both artifacts must exist. Lazy-generation is not performed for legacy requests, and developers should see errors in such cases.
 
 
 <Heading

@@ -1,0 +1,48 @@
+---
+title: Common MCP Client
+sidebar_position: 3
+sidebar_label: Common MCP Client
+---
+
+# Common MCP Client
+
+We are providing a common MCP client for Lumin MCP. You can use this client to connect your AI tool to Lumin.
+
+## Cursor Users
+Add the following configuration to your `.cursor/mcp.json` file:
+```json
+{
+  "mcpServers": {
+    "Lumin": {
+      "command": "npx",
+      "args": ["mcp-remote", "https://mcp.luminpdf.com/mcp"]
+    }
+  }
+}
+```
+
+## Claude Users
+Add the following configuration to your `claude_desktop_config.json` file:
+
+**macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`  
+**Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
+
+```json
+{
+  "mcpServers": {
+    "Lumin": {
+      "command": "npx",
+      "args": ["mcp-remote", "https://mcp.luminpdf.com/mcp"]
+    }
+  }
+}
+```
+
+Installation instructions for other MCP clients will be provided soon.
+
+## Troubleshooting
+
+If you encounter issues during installation with Cursor, try clearing cached credentials located at:
+```
+/Users/<your-username>/.mcp-auth/
+```
