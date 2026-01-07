@@ -1,0 +1,236 @@
+---
+id: get-template-details
+title: "Get Template Details"
+description: "Returns essential template details for a specific template."
+sidebar_label: "Get Template Details"
+hide_title: true
+hide_table_of_contents: true
+api: PLACEHOLDER_API_DATA
+sidebar_class_name: "get api-method"
+info_path: api/lumin-api-reference
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get Template Details"}
+></Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/templates/{template_id}"}
+  context={"endpoint"}
+></MethodEndpoint>
+
+Returns essential information for a specific template.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+></Heading>
+
+<ParamsDetails
+  parameters={[
+    {
+      in: "path",
+      name: "template_id",
+      schema: { type: "string" },
+      required: true,
+      description: "ID of the template to get details for, returned by the List Templates endpoint.",
+    },
+  ]}
+></ParamsDetails>
+
+<RequestSchema title={"Body"} body={undefined}></RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{
+    "200": {
+      description: "Information about the template",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            "x-expanded": true,
+            properties: {
+              template_id: {
+                type: "string",
+                description: "The unique identifier for the template.",
+              },
+              type: {
+                type: "string",
+                description: "Template file type.",
+                enum: ["pdf", "lumin"],
+              },
+              name: { type: "string", description: "Name of the template." },
+              signing_type: {
+                type: "string",
+                description:
+                  "Recipient signing flow. AgreementGen and PDF templates currently only supports `signing_type` as `SAME_TIME`.",
+                enum: ["ORDER", "SAME_TIME"],
+              },
+              signer_roles: {
+                type: "array",
+                description:
+                  "Signer roles defined in the template.",
+                items: {
+                  type: "object",
+                  properties: {
+                    name: {
+                      type: "string",
+                      description:
+                        'The name of the signer role.',
+                    },
+                    group: {
+                      type: "integer",
+                      description:
+                        "The signing order of signer when the template is used to create a signature request.",
+                    },
+                  },
+                },
+              },
+              tags: {
+                type: "array",
+                description: "Merge tags embedded in the Sign template.",
+                items: {
+                  type: "object",
+                  properties: {
+                    name: {
+                      type: "string",
+                      description: "The name/label of the tag.",
+                    },
+                    type: {
+                      type: "string",
+                      description: "The type of the text tag. Must be `merge_tag`.",
+                    },
+                    is_required: {
+                      type: "boolean",
+                      description:
+                        "Indicates whether the text tag needs to be prefilled before the signature request/document can be completed.",
+                    },
+                  },
+                },
+              },
+              fields: {
+                type: "array",
+                description: "Form fields that appear in the template.",
+                items: {
+                  type: "object",
+                  properties: {
+                    name: {
+                      type: "string",
+                      description: "The name/label of the form field.",
+                    },
+                    type: {
+                      type: "string",
+                      description: "Type of form field.",
+                      enum: ["text", "checkbox"],
+                    },
+                    is_required: {
+                      type: "boolean",
+                      description:
+                        "Indicates whether the signer must complete the form field before the signature request/document can be completed.",
+                    },
+                    assigned_role: {
+                      type: "string",
+                      description:
+                        "The signer role to which this form field is assigned. If not set, the form field may not be linked to a specific signer role and will be dismissed during request creation.",
+                    },
+                  },
+                },
+              },
+              variables: {
+                type: "array",
+                description:
+                  "Variables that appear in the AgreementGen template.",
+                items: {
+                  type: "object",
+                  properties: {
+                    name: {
+                      type: "string",
+                      description: "The name/label of the variable.",
+                    },
+                  },
+                },
+              },
+              created_at: {
+                type: "integer",
+                format: "unix-epoch",
+                description:
+                  "The timestamp (in milliseconds) the template was created.",
+              },
+              updated_at: {
+                type: "integer",
+                format: "unix-epoch",
+                description:
+                  "The timestamp (in milliseconds) the template was last updated.",
+              },
+            },
+            title: "TemplateDetail",
+          },
+          example: {
+            template_id: "ag_123456",
+            type: "lumin",
+            name: "Mutual NDA",
+            signing_type: "SAME_TIME",
+            signer_roles: [
+              { name: "Tenant", group: 1 },
+              { name: "Client", group: 1 },
+            ],
+            tags: [],
+            fields: [
+              {
+                name: "Client.Name",
+                type: "text",
+                is_required: true,
+                assigned_role: "Client",
+              },
+            ],
+            variables: [
+              { name: "Company.Name" },
+              { name: "Document.Name" },
+            ],
+            created_at: 1748456885430,
+            updated_at: 1748456885430,
+          },
+        },
+      },
+    },
+    "4xx": {
+      description: "Unexpected error",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            "x-expanded": true,
+            required: ["error_code", "error_message"],
+            properties: {
+              error_code: {
+                type: "string",
+                description: "The error code indicating the type of error.",
+              },
+              error_message: {
+                type: "string",
+                description: "A human-readable message describing the error.",
+              },
+            },
+            title: "Error",
+          },
+        },
+      },
+    },
+  }}
+></StatusCodes>

@@ -20,12 +20,16 @@ servers:
   - url: https://api-sandbox.luminpdf.com/v1
     description: Sandbox server
 tags:
-  - name: Signature Request
-    description: Everything about Signature Request
-  - name: User
-    description: Everything about User
-  - name: Template
-    description: Everything about Template
+  - name: Signature Requests
+    description: Everything about Signature Requests
+  - name: Users
+    description: Everything about Users
+  - name: Templates
+    description: Everything about Templates
+  - name: Documents
+    description: Everything about Documents
+  - name: Workspaces
+    description: Everything about Workspaces
 paths:
   /signature_request/{signature_request_id}:
     get:
@@ -35,7 +39,7 @@ paths:
         - ApiKey: []
         - BearerAuth: []
       tags:
-        - Signature Request
+        - Signature Requests
       parameters:
         - in: path
           name: signature_request_id
@@ -62,6 +66,59 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+    patch:
+      summary: Update Signature Request
+      description: |
+        Update the due date of an existing signature request.
+
+        Update the **due date** (`expires_at`) of an existing signature request **only when**:
+        - The request **status** is `NEED_TO_SIGN` or `WAITING_FOR_OTHERS`, and
+        - The caller is the **creator** of the signature request.
+
+        Requests in any **terminal or final status** (e.g., `APPROVED`, `REJECTED`, `FAILED`, `CANCELLED`, `WAITING_FOR_PROCESSING`) **cannot** be updated.
+      security:
+        - ApiKey: []
+        - BearerAuth: []
+      tags:
+        - Signature Requests
+      parameters:
+        - in: path
+          name: signature_request_id
+          schema:
+            type: string
+          required: true
+          description: ID of the Signature Request to update.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignatureRequestUpdateRequest'
+            example:
+              expires_at: 1927510980000
+      responses:
+        '200':
+          description: Partial update applied successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  signature_request:
+                    description: Signature request details with the updated data
+                    $ref: '#/components/schemas/SignatureRequest'
+              example:
+                signature_request:
+                  signature_request_id: "1234567890"
+                  title: Title Here
+                  created_at: 1756887739247
+                  expires_at: 1927510980000
+                  status: WAITING_FOR_OTHERS
+        '4xx':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /signature_request/send:
     post:
       summary: Send Signature Request
@@ -70,7 +127,7 @@ paths:
         - ApiKey: []
         - BearerAuth: []
       tags:
-        - Signature Request
+        - Signature Requests
       requestBody:
         content:
           application/json:
@@ -119,7 +176,7 @@ paths:
         - ApiKey: []
         - BearerAuth: []
       tags:
-        - Signature Request
+        - Signature Requests
       parameters:
         - in: path
           name: signature_request_id
@@ -166,7 +223,7 @@ paths:
         - ApiKey: []
         - BearerAuth: []
       tags:
-        - Signature Request
+        - Signature Requests
       parameters:
         - in: path
           name: signature_request_id
@@ -224,7 +281,7 @@ paths:
         - ApiKey: []
         - BearerAuth: []
       tags:
-        - Signature Request
+        - Signature Requests
       parameters:
         - in: path
           name: signature_request_id
@@ -262,7 +319,7 @@ paths:
         - ApiKey: []
         - BearerAuth: []
       tags:
-        - Signature Request
+        - Signature Requests
       parameters:
         - in: path
           name: signature_request_id
@@ -292,7 +349,7 @@ paths:
         - ApiKey: []
         - BearerAuth: []
       tags:
-        - User
+        - Users
       responses:
         '200':
           description: Expected response to a valid request
@@ -315,12 +372,13 @@ paths:
   /templates:
     get: 
       summary: List Templates
-      description: Returns a paginated list of Lumin templates with essential details embedded for each item.
+      description: |
+        Returns a paginated list of templates in a Lumin Workspace, including AgreementGen, Sign and PDF templates.
       security:
         - ApiKey: []
         - BearerAuth: []
       tags:
-        - Template
+        - Templates
       parameters:
         - name: page
           in: query
@@ -331,47 +389,101 @@ paths:
           required: false
         - name: limit
           in: query
-          description: The number of templates to return per page. One of 10, 25, or 50.
+          description: Specify how many templates to return: one of 10, 25, 50.
           schema:
             type: integer
             enum: [10, 25, 50]
           required: false
+        - name: X-Lumin-API-Version
+          in: header
+          description: API version header
+          schema:
+            type: string
+            default: "1.1"
+          required: true
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/TemplateListResponse"
+                $ref: '#/components/schemas/TemplateListResponse'
               example:
                 page: 1
                 limit: 25
-                total_count: 1
+                total_count: 3
                 data:
-                  - template_id: sign_123
+                  - template_id: sign_123456
+                    type: pdf
                     name: Mutual NDA
-                    signing_type: ORDER
-                    signer_roles:
-                      - name: Tenant
-                        group: 1
-                      - name: Customer
-                        group: 2
-                    fields:
-                      - name: CustomerName
-                        type: text
-                        is_required: true
-                      - name: HasCompleted
-                        type: checkbox
-                        is_required: true
-                    tags:
-                      - name: ClientName
-                        type: merge_tag
-                        is_required: true
-                      - name: EffectiveDate
-                        type: merge_tag
-                        is_required: true
                     created_at: 1748456885430
                     updated_at: 1748456885430
+                  - template_id: ag_456789
+                    type: lumin
+                    name: Lease Agreement
+                    created_at: 1748456885430
+                    updated_at: 1748456885430
+                  - template_id: pdf_456789
+                    type: pdf
+                    name: Onboarding Form
+                    created_at: 1748456885430
+                    updated_at: 1748456885430
+        '4xx':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /templates/{template_id}:
+    get:
+      summary: Get Template Details
+      description: |
+        Returns essential template details for a specific template.
+      security:
+        - ApiKey: []
+        - BearerAuth: []
+      tags:
+        - Templates
+      parameters:
+        - in: path
+          name: template_id
+          schema:
+            type: string
+          required: true
+          description: ID of the template to get
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateDetail'
+              example:
+                template_id: sign_123456
+                type: pdf
+                name: Mutual NDA
+                signing_type: ORDER
+                signer_roles:
+                  - name: Tenant
+                    group: 1
+                  - name: Client
+                    group: 2
+                tags:
+                  - name: owner.name
+                    type: merge_tag
+                    is_required: true
+                fields:
+                  - name: hasCompleted
+                    type: checkbox
+                    is_required: true
+                    assigned_role: Tenant
+                variables:
+                  - name: Company.Name
+                    value: ACME Corp
+                  - name: Document.Name
+                    value: NDA Document
+                created_at: 1748456885430
+                updated_at: 1748456885430
         '4xx':
           description: Unexpected error
           content:
@@ -382,16 +494,14 @@ paths:
     post:
       summary: Generate Document from Template
       description: |
-        Generates a downloadable PDF document from a specified Lumin template.
+        Creates a downloadable PDF document from an existing Lumin template.
 
-        This endpoint takes an existing template identified by `template_id` and produces a static document based on its content and structure.  
-
-        Currently, this operation supports **Lumin Sign templates**, allowing you to prefill merge text tags and form fields, and create a finalized PDF ready for distribution or archiving.
+        If a template contains **required tags or fields**, you must include these tags and fields in the request payload along with their corresponding values to generate the PDF document.
       security:
         - ApiKey: []
         - BearerAuth: []
       tags:
-        - Template
+        - Templates
       parameters:
         - in: path
           name: template_id
@@ -403,48 +513,177 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TemplateDTO'
-            example:
-              default:
-                template_id: sign_123
+              type: object
+              properties:
                 tags:
-                  ClientName: ACME Corp
-                  EffectiveDate: 2025-01-01
+                  type: object
+                  description: |
+                    Key–value pairs for **Merge Tags** defined in the Sign template. Keys must match tag names. Values replace the corresponding tags and are rendered as plain text in the generated document.
                 fields:
-                  CustomerName: John Doe
-                  AgreeToTerms: true
-                document_name: Mutual NDA
+                  type: object
+                  description: |
+                    Key–value pairs for **Form Fields** defined in the template. Keys must match field names. Values prefill the corresponding fields in the generated document.
+                variables:
+                  type: object
+                  description: |
+                    Key–value pairs for **Variables** defined in the AgreementGen template. Keys must match variable names. Values prefill the corresponding variables and are rendered as plain text in the generated document.
+                    - **System variables** are predefined by Lumin and **cannot be overwritten** via API input.
+                    - **Custom variables** can be **overridden** when values are passed through the API. However, these overridden values **only apply to the generated document** - they **do not modify** stored values in the original template.
+                document_name:
+                  type: string
+                  description: Optional name for the generated document. If omitted, the document name defaults to the template's name.
+            example:
+              tags:
+                Client.Name: Acme Corp
+                Effective.Date: "2025-08-01"
+              fields:
+                CustomerName: John Doe
+                AgreeToTerms: true
+              variables:
+                Company.Name: ACME Corp
+                Document.Name: NDA Document
+              document_name: My Contract
       responses:
         '200':
           description: Successfully generated document from template
           content:
             application/json:
               schema:
-                type: object
-                required:
-                  - document_name
-                  - signed_url
-                  - expires_at
-                properties:
-                  document_name:
-                    type: string
-                    description: Name of the generated document (from input or default).
-                  signed_url:
-                    type: string
-                    format: uri
-                    description: Signed HTTPS URL to download the generated document. Expires in 30 minutes.
-                  expires_at:
-                    type: integer
-                    format: unix-epoch
-                    description: Unix epoch timestamp **in seconds** when the signed URL expires.
+                $ref: '#/components/schemas/DocumentGenerateResponse'
               example:
-                document_name: Mutual NDA
-                document_url: https://files.luminpdf.com/download/nda-acmecorp-abc123.pdf?expires=2025-08-24T10:45:00Z
-                expires_at: 1757219429466
+                document_name: NDA_AcmeCorp
+                signed_url: https://files.luminpdf.com/download/nda-acmecorp-abc123.pdf?expires=2025-08-24T10:45:00Z
+                expires_at: 1766726700
             application/pdf:
               schema:
                 type: string
                 format: binary
+              description: Returns binary PDF data
+        '4xx':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /documents:
+    post:
+      summary: Upload Document
+      description: |
+        Upload a document to the user's Workspace.
+        The document can be saved to:
+        - The Workspace's shared document list, optionally inside a folder
+        - A specific Space's shared document list, optionally inside a folder
+        - The user's Personal document list
+      security:
+        - ApiKey: []
+        - BearerAuth: []
+      tags:
+        - Documents
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DocumentCreateRequest'
+            example:
+              method: file-upload
+              document_name: Patient Form
+              location:
+                type: workspace
+                folder_id: "123456"
+              document_data:
+                file_url: https://files.luminpdf.com/download/nda-acmecorp-abc123.pdf
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DocumentCreateRequest'
+      responses:
+        '201':
+          description: Returns the summary of the created document.
+          content:
+            application/json:
+              schema:
+                type: object
+        '4xx':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /workspaces/info:
+    get:
+      summary: Get Workspace Information
+      description: Return information of the authorized Workspace.
+      security:
+        - ApiKey: []
+        - BearerAuth: []
+      tags:
+        - Workspaces
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceInfo'
+        '4xx':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /workspaces/members:
+    get:
+      summary: Get Workspace Members
+      description: Return a paginated list of members in a Workspace.
+      security:
+        - ApiKey: []
+        - BearerAuth: []
+      tags:
+        - Workspaces
+      parameters:
+        - name: page
+          in: query
+          description: Specify which page of the dataset to return (min = 1).
+          schema:
+            type: integer
+            minimum: 1
+          required: true
+        - name: limit
+          in: query
+          description: Specify how many records to return: one of 10, 25, 50.
+          schema:
+            type: integer
+            enum: [10, 25, 50]
+          required: true
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceMembersResponse'
+              example:
+                page: 1
+                limit: 25
+                total_count: "123"
+                data:
+                  - user_id: "655f..."
+                    email: thula@luminpdf.com
+                    name: thula
+                    role: owner
+                    joined_at: 1748456885430
+                    last_active_at: 1748456885430
+                  - user_id: "655f..."
+                    email: thula+1@luminpdf.com
+                    name: thula 1
+                    role: admin
+                    joined_at: 1748456885430
+                    last_active_at: 1748456885430
+                  - user_id: "655f..."
+                    email: thula+2@luminpdf.com
+                    name: thula 2
+                    role: member
+                    joined_at: 1748456885430
+                    last_active_at: 1748456885430
         '4xx':
           description: Unexpected error
           content:
@@ -778,22 +1017,271 @@ components:
         updated_at:
           type: string
           description: The time the template was last updated.
+    TemplateListItem:
+      type: object
+      properties:
+        template_id:
+          type: string
+          description: Unique identifier for the template
+        type:
+          type: string
+          description: Template file type. One of: pdf, lumin
+          enum: [pdf, lumin]
+        name:
+          type: string
+          description: Name of the template
+        created_at:
+          type: integer
+          format: unix-epoch
+          description: The Unix timestamp when the template was first created.
+        updated_at:
+          type: integer
+          format: unix-epoch
+          description: The Unix timestamp of the last update to the template.
+    TemplateDetail:
+      type: object
+      properties:
+        template_id:
+          type: string
+          description: Unique identifier for the template
+        type:
+          type: string
+          description: Template file type. One of: pdf, lumin
+          enum: [pdf, lumin]
+        name:
+          type: string
+          description: Name of the template
+        signing_type:
+          type: string
+          description: |
+            Defines how recipients are expected to sign:
+            - ORDER: Signers sign in a specific sequence.
+            - SAME_TIME: All signers can sign in parallel.
+            AgreementGen and PDF templates currently only supports signing_type as SAME_TIME.
+          enum: [ORDER, SAME_TIME]
+        signer_roles:
+          type: array
+          description: Describes the signer roles defined in the template.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: A label for the role (e.g., "Tenant", "Manager").
+              group:
+                type: integer
+                description: Indicates signing order group (e.g., 1 = sign first, 2 = sign second).
+        tags:
+          type: array
+          description: |
+            Merge tags embedded in the Sign template.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The label or identifier of the tag.
+              type:
+                type: string
+                description: Type of tag, one of: merge_tag, text_tag
+                enum: [merge_tag, text_tag]
+              is_required:
+                type: boolean
+                description: Indicates whether the merge tag needs to be prefilled before the signature request can be completed.
+        fields:
+          type: array
+          description: The form fields that appear in the template.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The label or identifier of the form field.
+              type:
+                type: string
+                description: Type of field, one of: text, checkbox
+                enum: [text, checkbox]
+              is_required:
+                type: boolean
+                description: Indicates whether the assigned signer must complete the field before the signature request can be completed.
+              assigned_role:
+                type: string
+                description: The role (as defined in the template) to which this field is assigned. If not set, the field may not be linked to a specific role and will be dismissed during request creation.
+        variables:
+          type: array
+          description: |
+            Variables that appear in the AgreementGen template.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The label or identifier of the variable.
+              value:
+                type: string
+                description: The value of the variable (optional, shown in examples).
+        created_at:
+          type: integer
+          format: unix-epoch
+          description: The Unix timestamp when the template was first created.
+        updated_at:
+          type: integer
+          format: unix-epoch
+          description: The Unix timestamp of the last update to the template.
     TemplateListResponse:
       type: object
       properties:
         page:
           type: integer
-          description: The page number of the dataset.
+          description: The current page of results being returned.
         limit:
           type: integer
-          description: The number of templates to return per page.
+          description: The maximum number of template records shown per page (e.g., 10, 25, or 50).
         total_count:
           type: integer
-          description: The total number of templates.
+          description: The total number of template records returned.
         data:
           type: array
+          description: The list of templates returned. Each object contains full details about one template.
           items:
-            $ref: "#/components/schemas/Template"
+            $ref: "#/components/schemas/TemplateListItem"
+    DocumentLocation:
+      type: object
+      required:
+        - type
+      properties:
+        type:
+          type: string
+          description: Location type. One of: personal, space, workspace
+          enum: [personal, space, workspace]
+        space_id:
+          type: string
+          description: ID of a specific Space in the Workspace. Required if type = space
+        folder_id:
+          type: string
+          description: ID of a specific folder within the chosen location.
+    DocumentData:
+      type: object
+      description: Method-specific payload. Schema depends on the method chosen.
+      properties:
+        file:
+          type: string
+          format: binary
+          description: Upload binary file (PDF). Required if file_url not provided
+        file_url:
+          type: string
+          format: uri
+          description: HTTPS URL to download the source file. Required if file not provided
+    DocumentCreateRequest:
+      type: object
+      required:
+        - method
+        - document_name
+        - location
+        - document_data
+      properties:
+        method:
+          type: string
+          description: Creation method. Must be `file-upload`.
+          enum: [file-upload]
+        document_name:
+          type: string
+          minLength: 1
+          maxLength: 255
+          description: Human-friendly title of the document (1–255 characters).
+        location:
+          $ref: '#/components/schemas/DocumentLocation'
+        document_data:
+          $ref: '#/components/schemas/DocumentData'
+    SignatureRequestUpdateRequest:
+      type: object
+      required:
+        - expires_at
+      properties:
+        expires_at:
+          type: integer
+          format: unix-epoch
+          description: The expiration time of the signature request, expressed as a Unix epoch timestamp in milliseconds. This value must represent a future point in time.
+    WorkspaceMember:
+      type: object
+      properties:
+        user_id:
+          type: string
+        email:
+          type: string
+        name:
+          type: string
+        role:
+          type: string
+          description: Role of the member. One of: owner, admin, member
+          enum: [owner, admin, member]
+        joined_at:
+          type: integer
+          format: unix-epoch
+        last_active_at:
+          type: integer
+          format: unix-epoch
+    WorkspaceInfo:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the Workspace
+        name:
+          type: string
+          description: Human-readable Workspace name
+        owner:
+          type: string
+          description: Email address of the Workspace owner
+        created_at:
+          type: integer
+          format: unix-epoch
+          description: Unix timestamp (milliseconds) when created
+        user_role:
+          type: string
+          description: Role of the current user in the Workspace
+          enum: [owner, admin, member]
+        total_members:
+          type: integer
+          description: Number of Workspace members
+        total_spaces:
+          type: integer
+          description: Number of Spaces in the Workspace
+    WorkspaceMembersResponse:
+      type: object
+      properties:
+        page:
+          type: integer
+          description: The current page of results being returned.
+        limit:
+          type: integer
+          description: The maximum number of records shown per page (e.g., 10, 25, or 50).
+        total_count:
+          type: string
+          description: The total number of records returned for the request.
+        data:
+          type: array
+          description: List of workspace members returned for the requested page.
+          items:
+            $ref: '#/components/schemas/WorkspaceMember'
+    DocumentGenerateResponse:
+      type: object
+      required:
+        - document_name
+        - signed_url
+        - expires_at
+      properties:
+        document_name:
+          type: string
+          description: Name of the generated document (from input or default).
+        signed_url:
+          type: string
+          format: uri
+          description: Signed HTTPS URL to download the generated document. Expires in 30 minutes.
+        expires_at:
+          type: integer
+          format: unix-epoch
+          description: Unix epoch timestamp (in seconds) indicating when signed_url will no longer work.
     Error:
       type: object
       required:

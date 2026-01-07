@@ -1,7 +1,7 @@
 ---
 id: get-signature-request-file
 title: "Get Signature Request File"
-description: "Obtain the file of the Signature Request by id. This endpoint supports returning different types of files:"
+description: "Obtain the file of a signature request. This endpoint supports returning different types of files:"
 sidebar_label: "Get Signature Request File"
 hide_title: true
 hide_table_of_contents: true
@@ -23,20 +23,15 @@ import Heading from "@theme/Heading";
   as={"h1"}
   className={"openapi__heading"}
   children={"Get Signature Request File"}
->
-</Heading>
+></Heading>
 
 <MethodEndpoint
   method={"get"}
   path={"/signature_request/{signature_request_id}/file"}
   context={"endpoint"}
->
-  
-</MethodEndpoint>
+></MethodEndpoint>
 
-
-
-Obtain the file of the Signature Request by id. This endpoint supports returning different types of files:
+Obtain the file of a signature request. This endpoint supports returning different types of files:
 - The **agreement** itself
 - The **Certificate of Completion (CoC)**
 - A **merged PDF** which combines both the agreement and the CoC
@@ -44,37 +39,94 @@ Obtain the file of the Signature Request by id. This endpoint supports returning
 **Preconditions by file type:**
 - For `agreement` file type: None
 - For `coc` file type: Requires the status to be **APPROVED** and a certificate must exist for that request
-- For `merged` file type: Requires the status to be **APPROVED** and both artifacts must exist. Lazy-generation is not performed for legacy requests, and developers should see errors in such cases.
-
+- For `merged` file type: Requires the status to be **APPROVED** and both artifacts must exist. File generation is not performed for legacy signature requests, and developers should see errors in such cases.
 
 <Heading
   id={"request"}
   as={"h2"}
   className={"openapi-tabs__heading"}
   children={"Request"}
->
-</Heading>
+></Heading>
 
 <ParamsDetails
-  parameters={[{"in":"path","name":"signature_request_id","schema":{"type":"string"},"required":true,"description":"ID of the Signature Request."},{"in":"query","name":"type","schema":{"type":"string","enum":["agreement","coc","merged"],"default":"agreement"},"required":false,"description":"Which artifact to return:\n- `agreement`: The completed/signed agreement PDF\n- `coc`: The Certificate of Completion PDF  \n- `merged`: A single PDF with agreement **followed by** the CoC\n"}]}
->
-  
-</ParamsDetails>
+  parameters={[
+    {
+      in: "path",
+      name: "signature_request_id",
+      schema: { type: "string" },
+      required: true,
+      description: "ID of the signature request.",
+    },
+    {
+      in: "query",
+      name: "type",
+      schema: {
+        type: "string",
+        enum: ["agreement", "coc", "merged"],
+        default: "agreement",
+      },
+      required: false,
+      description:
+        "Which artifact to return.",
+    },
+  ]}
+></ParamsDetails>
 
-<RequestSchema
-  title={"Body"}
-  body={undefined}
->
-  
-</RequestSchema>
+<RequestSchema title={"Body"} body={undefined}></RequestSchema>
 
 <StatusCodes
   id={undefined}
   label={undefined}
-  responses={{"200":{"description":"Expected response to a valid request","content":{"application/json":{"schema":{"type":"object","properties":{"signed_url":{"type":"string","description":"Signed HTTPS URL to the requested artifact. Expires in 30 minutes."},"expires_at":{"type":"integer","format":"unix-epoch","description":"Unix epoch timestamp (in seconds) indicating when `signed_url` will no longer work."}}},"example":{"signed_url":"https://files.luminpdf.com/download/nda-acmecorp-abc123.pdf?expires=20...","expires_at":1766726700}},"application/pdf":{"schema":{"type":"string","format":"binary"},"description":"Returns binary PDF data"}}},"4xx":{"description":"Unexpected error","content":{"application/json":{"schema":{"type":"object","required":["error_code","error_message"],"properties":{"error_code":{"type":"string"},"error_message":{"type":"string"}},"title":"Error"}}}}}}
->
-  
-</StatusCodes>
-
-
-      
+  responses={{
+    "200": {
+      description: "Download URL of the requested artifact",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            "x-expanded": true,
+            properties: {
+              signed_url: {
+                type: "string",
+                description:
+                  "Signed HTTPS URL to the requested artifact. Expires in 30 minutes.",
+              },
+              expires_at: {
+                type: "integer",
+                format: "unix-epoch",
+                description:
+                  "Unix epoch timestamp (in milliseconds) indicating when `signed_url` will no longer work.",
+              },
+            },
+          },
+          example: {
+            signed_url:
+              "https://files.luminpdf.com/download/nda-acmecorp-abc123.pdf?expires=20...",
+            expires_at: 1766726700000,
+          },
+        },
+        "application/pdf": {
+          schema: { type: "string", "x-expanded": true, format: "binary" },
+          description: "Returns binary PDF data",
+        },
+      },
+    },
+    "4xx": {
+      description: "Unexpected error",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            "x-expanded": true,
+            required: ["error_code", "error_message"],
+            properties: {
+              error_code: { type: "string", description: "The error code indicating the type of error." },
+              error_message: { type: "string", description: "A human-readable message describing the error." },
+            },
+            title: "Error",
+          },
+        },
+      },
+    },
+  }}
+></StatusCodes>

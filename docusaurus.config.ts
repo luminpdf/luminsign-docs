@@ -83,7 +83,7 @@ const config = {
           path: 'docs/api',
           routeBasePath: 'docs/api',
           sidebarPath: require.resolve("./sidebars.js"),
-          sidebarCollapsible: false,
+          sidebarCollapsible: true,
           docItemComponent: "@theme/ApiItem",
         },
         docs2: {
@@ -91,7 +91,7 @@ const config = {
           path: 'api',
           routeBasePath: 'api',
           sidebarPath: require.resolve("./api/sidebar.ts"),
-          sidebarCollapsible: false,
+          sidebarCollapsible: true,
           docItemComponent: "@theme/ApiItem",
         },
         docs3: {

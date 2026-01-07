@@ -66,7 +66,7 @@ Obtain the file of the Signature Request by id. Returns a PDF file.
 <StatusCodes
   id={undefined}
   label={undefined}
-  responses={{"200":{"description":"Expected response to a valid request","content":{"application/pdf":{"schema":{"type":"string","format":"binary"}}}},"4xx":{"description":"Unexpected error","content":{"application/json":{"schema":{"type":"object","required":["error_code","error_message"],"properties":{"error_code":{"type":"string"},"error_message":{"type":"string"}},"title":"Error"}}}}}}
+  responses={{"200":{"description":"Expected response to a valid request","content":{"application/pdf":{"schema":{"type":"string","x-expanded":true,"format":"binary"}}}},"4xx":{"description":"Unexpected error","content":{"application/json":{"schema":{"type":"object","x-expanded":true,"required":["error_code","error_message"],"properties":{"error_code":{"type":"string"},"error_message":{"type":"string"}},"title":"Error"}}}}}}
 >
   
 </StatusCodes>
