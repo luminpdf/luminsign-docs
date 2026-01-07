@@ -48,7 +48,7 @@ With webhooks, your app can do things beyond just receiving events:
 
 ### Supported event types
 
-Lumin supports the following webhook events across both webhook types:
+Lumin supports the following webhook events:
 
 | Event Name | Description | Attached API Object |
 |------------|-------------|-------------------|
@@ -61,6 +61,7 @@ Lumin supports the following webhook events across both webhook types:
 | `signature_request_invalid` | An error occurred while processing the signature request data on our back-end i.e. invalid text tags | [Signature Request Error](/api/get-signature-request/) |
 | `signature_request_canceled` | The signature request is canceled | [Signature Request Error](/api/get-signature-request/) |
 | `signature_request_cancel_failed` | The signature request cancelation failed | [Signature Request Error](/api/get-signature-request/) |
+| `signature_request_due_date_updated` | The signature request due date is updated | [Signature Request](/api/get-signature-request/) |
 
 ### Event payload structure
 
@@ -84,8 +85,8 @@ All webhook events follow this consistent structure:
     "status": "APPROVED",
     "signers": [
       {
-        "name": "Thu Le",
-        "email": "thula@luminpdf.com",
+        "name": "John Doe",
+        "email": "john.doe@example.com",
         "status": "APPROVED",
         "is_approved": true
       }
