@@ -389,11 +389,11 @@ paths:
           required: false
         - name: limit
           in: query
-          description: Specify how many templates to return: one of 10, 25, 50.
+          description: "Specify how many templates to return: one of 10, 25, 50."
+          required: false
           schema:
             type: integer
             enum: [10, 25, 50]
-          required: false
         - name: X-Lumin-API-Version
           in: header
           description: API version header
@@ -649,7 +649,7 @@ paths:
           required: true
         - name: limit
           in: query
-          description: Specify how many records to return: one of 10, 25, 50.
+          description: "Specify how many records to return: one of 10, 25, 50."
           schema:
             type: integer
             enum: [10, 25, 50]
@@ -1025,7 +1025,7 @@ components:
           description: Unique identifier for the template
         type:
           type: string
-          description: Template file type. One of: pdf, lumin
+          description: "Template file type. One of: pdf, lumin"
           enum: [pdf, lumin]
         name:
           type: string
@@ -1046,7 +1046,7 @@ components:
           description: Unique identifier for the template
         type:
           type: string
-          description: Template file type. One of: pdf, lumin
+          description: "Template file type. One of: pdf, lumin"
           enum: [pdf, lumin]
         name:
           type: string
@@ -1083,7 +1083,7 @@ components:
                 description: The label or identifier of the tag.
               type:
                 type: string
-                description: Type of tag, one of: merge_tag, text_tag
+                description: "Type of tag, one of: merge_tag, text_tag"
                 enum: [merge_tag, text_tag]
               is_required:
                 type: boolean
@@ -1099,7 +1099,7 @@ components:
                 description: The label or identifier of the form field.
               type:
                 type: string
-                description: Type of field, one of: text, checkbox
+                description: "Type of field, one of: text, checkbox"
                 enum: [text, checkbox]
               is_required:
                 type: boolean
@@ -1152,7 +1152,7 @@ components:
       properties:
         type:
           type: string
-          description: Location type. One of: personal, space, workspace
+          description: "Location type. One of: personal, space, workspace"
           enum: [personal, space, workspace]
         space_id:
           type: string
@@ -1213,7 +1213,7 @@ components:
           type: string
         role:
           type: string
-          description: Role of the member. One of: owner, admin, member
+          description: "Role of the member. One of: owner, admin, member"
           enum: [owner, admin, member]
         joined_at:
           type: integer

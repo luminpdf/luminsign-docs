@@ -12,7 +12,7 @@ const sidebar: SidebarsConfig = {
       collapsed: true,
       link: {
         type: "doc",
-        id: "signature-request",
+        id: "signature-requests",
       },
       items: [
         {
@@ -65,7 +65,7 @@ const sidebar: SidebarsConfig = {
       collapsed: true,
       link: {
         type: "doc",
-        id: "user",
+        id: "users",
       },
       items: [
         {
@@ -82,7 +82,7 @@ const sidebar: SidebarsConfig = {
       collapsed: true,
       link: {
         type: "doc",
-        id: "template",
+        id: "templates",
       },
       items: [
         {
@@ -111,7 +111,7 @@ const sidebar: SidebarsConfig = {
       collapsed: true,
       link: {
         type: "doc",
-        id: "document",
+        id: "documents",
       },
       items: [
         {
@@ -128,12 +128,12 @@ const sidebar: SidebarsConfig = {
       collapsed: true,
       link: {
         type: "doc",
-        id: "workspace",
+        id: "workspaces",
       },
       items: [
         {
           type: "doc",
-          id: "get-workspace-info",
+          id: "get-workspace-information",
           label: "Get Workspace Information",
           className: "api-method get",
         },
