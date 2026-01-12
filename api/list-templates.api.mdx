@@ -1,7 +1,7 @@
 ---
 id: list-templates
 title: "List Templates"
-description: "Returns a paginated list of Lumin templates with essential details embedded for each item."
+description: "Returns a paginated list of templates in a Lumin Workspace, including AgreementGen, Sign and PDF templates."
 sidebar_label: "List Templates"
 hide_title: true
 hide_table_of_contents: true
@@ -23,49 +23,169 @@ import Heading from "@theme/Heading";
   as={"h1"}
   className={"openapi__heading"}
   children={"List Templates"}
->
-</Heading>
+></Heading>
 
 <MethodEndpoint
   method={"get"}
   path={"/templates"}
   context={"endpoint"}
->
-  
-</MethodEndpoint>
+></MethodEndpoint>
 
-
-
-Returns a paginated list of Lumin templates with essential details embedded for each item.
+Returns a paginated list of templates in a Lumin Workspace, including AgreementGen, Sign and PDF templates.
 
 <Heading
   id={"request"}
   as={"h2"}
   className={"openapi-tabs__heading"}
   children={"Request"}
->
-</Heading>
+></Heading>
 
 <ParamsDetails
-  parameters={[{"name":"page","in":"query","description":"Specify which page of the dataset to return (min = 1).","schema":{"type":"integer","minimum":1},"required":false},{"name":"limit","in":"query","description":"The number of templates to return per page. One of 10, 25, or 50.","schema":{"type":"integer","enum":[10,25,50]},"required":false}]}
->
-  
-</ParamsDetails>
+  parameters={[
+    {
+      name: "page",
+      in: "query",
+      description: "Specify which page of the dataset to return (min = 1).",
+      schema: { type: "integer", minimum: 1 },
+      required: false,
+    },
+    {
+      name: "limit",
+      in: "query",
+      description: "Specify how many templates to return: one of 10, 25, 50.",
+      schema: { type: "integer", enum: [10, 25, 50] },
+      required: false,
+    },
+    {
+      name: "X-Lumin-API-Version",
+      in: "header",
+      description: "API version header",
+      schema: { type: "string", default: "1.1" },
+      required: true,
+    },
+  ]}
+></ParamsDetails>
 
-<RequestSchema
-  title={"Body"}
-  body={undefined}
->
-  
-</RequestSchema>
+<RequestSchema title={"Body"} body={undefined}></RequestSchema>
 
 <StatusCodes
   id={undefined}
   label={undefined}
-  responses={{"200":{"description":"OK","content":{"application/json":{"schema":{"type":"object","properties":{"page":{"type":"integer","description":"The page number of the dataset."},"limit":{"type":"integer","description":"The number of templates to return per page."},"total_count":{"type":"integer","description":"The total number of templates."},"data":{"type":"array","items":{"type":"object","required":["template_id","name","tags","fields","created_at","updated_at"],"properties":{"template_id":{"type":"string","description":"The unique identifier for the template."},"name":{"type":"string","description":"The name of the template."},"signing_type":{"allOf":[{"type":"string","description":"Recipient signing flow.","enum":["SAME_TIME","ORDER"]},{"description":"Recipient signing flow."}]},"signer_roles":{"type":"array","description":"Signer roles defined in the template.","items":{"type":"object","properties":{"name":{"type":"string","description":"The name of the signer role."},"group":{"type":"integer","description":"The signing order of signer for the Signature Request with `signing_type` is `ORDER`."}}}},"tags":{"type":"array","description":"Text Tags embedded in the template, which are placeholders added directly in the document using the syntax `[text-merge|req|sender|object.field]`.","items":{"type":"object","properties":{"name":{"type":"string","description":"The name/label of the tag."},"type":{"type":"string","description":"The type of the text tag.","enum":["text-merge","merge_tag"]},"is_required":{"type":"boolean","description":"Whether the tag must be filled before completing the document."}}}},"fields":{"type":"array","description":"Form fields defined in the template.","items":{"type":"object","properties":{"name":{"type":"string","description":"The name/label of the form field."},"type":{"type":"string","description":"The type of the form field.","enum":["text","checkbox","signature","radio_button"]},"is_required":{"type":"boolean","description":"Whether the form field must be filled before completing the document."}}}},"created_at":{"type":"string","description":"The time the template was created."},"updated_at":{"type":"string","description":"The time the template was last updated."}},"title":"Template"}}},"title":"TemplateListResponse"},"example":{"page":1,"limit":25,"total_count":1,"data":[{"template_id":"sign_123","name":"Mutual NDA","signing_type":"ORDER","signer_roles":[{"name":"Tenant","group":1},{"name":"Customer","group":2}],"fields":[{"name":"CustomerName","type":"text","is_required":true},{"name":"HasCompleted","type":"checkbox","is_required":true}],"tags":[{"name":"ClientName","type":"merge_tag","is_required":true},{"name":"EffectiveDate","type":"merge_tag","is_required":true}],"created_at":1748456885430,"updated_at":1748456885430}]}}}},"4xx":{"description":"Unexpected error","content":{"application/json":{"schema":{"type":"object","required":["error_code","error_message"],"properties":{"error_code":{"type":"string"},"error_message":{"type":"string"}},"title":"Error"}}}}}}
->
-  
-</StatusCodes>
-
-
-      
+  responses={{
+    "200": {
+      description: "List of templates",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            "x-expanded": true,
+            required: ["page", "limit", "total_count", "data"],
+            properties: {
+              page: {
+                type: "integer",
+                description: "The current page of results being returned.",
+              },
+              limit: {
+                type: "integer",
+                description:
+                  "The maximum number of template records shown per page (e.g., 10, 25, or 50).",
+              },
+              total_count: {
+                type: "integer",
+                description: "The total number of template records returned.",
+              },
+              data: {
+                type: "array",
+                description:
+                  "The list of templates returned. Each object contains full details about one template.",
+                items: {
+                  type: "object",
+                  properties: {
+                    template_id: {
+                      type: "string",
+                      description: "Unique identifier for the template.",
+                    },
+                    type: {
+                      type: "string",
+                      description: "Template file type.",
+                      enum: ["pdf", "lumin"],
+                    },
+                    name: {
+                      type: "string",
+                      description: "Name of the template.",
+                    },
+                    created_at: {
+                      type: "integer",
+                      format: "unix-epoch",
+                      description:
+                        "The Unix timestamp (in milliseconds) when the template was created.",
+                    },
+                    updated_at: {
+                      type: "integer",
+                      format: "unix-epoch",
+                      description:
+                        "The Unix timestamp (in milliseconds) when the template was last updated.",
+                    },
+                  },
+                  title: "TemplateListItem",
+                },
+              },
+            },
+            title: "TemplateListResponse",
+          },
+          example: {
+            page: 1,
+            limit: 25,
+            total_count: 3,
+            data: [
+              {
+                template_id: "sign_123456",
+                type: "pdf",
+                name: "Mutual NDA",
+                created_at: 1748456885430,
+                updated_at: 1748456885430,
+              },
+              {
+                template_id: "ag_456789",
+                type: "lumin",
+                name: "Lease Agreement",
+                created_at: 1748456885430,
+                updated_at: 1748456885430,
+              },
+              {
+                template_id: "pdf_456789",
+                type: "pdf",
+                name: "Onboarding Form",
+                created_at: 1748456885430,
+                updated_at: 1748456885430,
+              },
+            ],
+          },
+        },
+      },
+    },
+    "4xx": {
+      description: "Unexpected error",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            "x-expanded": true,
+            required: ["error_code", "error_message"],
+            properties: {
+              error_code: {
+                type: "string",
+                description: "The error code indicating the type of error.",
+              },
+              error_message: {
+                type: "string",
+                description: "A human-readable message describing the error.",
+              },
+            },
+            title: "Error",
+          },
+        },
+      },
+    },
+  }}
+></StatusCodes>

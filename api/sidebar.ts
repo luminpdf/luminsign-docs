@@ -8,7 +8,8 @@ const sidebar: SidebarsConfig = {
     },
     {
       type: "category",
-      label: "Signature Request",
+      label: "Signature Requests",
+      collapsed: true,
       link: {
         type: "doc",
         id: "signature-request",
@@ -19,6 +20,12 @@ const sidebar: SidebarsConfig = {
           id: "get-signature-request",
           label: "Get Signature Request",
           className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "update-signature-request",
+          label: "Update Signature Request",
+          className: "api-method patch",
         },
         {
           type: "doc",
@@ -54,7 +61,8 @@ const sidebar: SidebarsConfig = {
     },
     {
       type: "category",
-      label: "User",
+      label: "Users",
+      collapsed: true,
       link: {
         type: "doc",
         id: "user",
@@ -70,7 +78,8 @@ const sidebar: SidebarsConfig = {
     },
     {
       type: "category",
-      label: "Template",
+      label: "Templates",
+      collapsed: true,
       link: {
         type: "doc",
         id: "template",
@@ -84,9 +93,55 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
+          id: "get-template-details",
+          label: "Get Template Details",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
           id: "generate-document-from-template",
           label: "Generate Document from Template",
           className: "api-method post",
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "Documents",
+      collapsed: true,
+      link: {
+        type: "doc",
+        id: "document",
+      },
+      items: [
+        {
+          type: "doc",
+          id: "upload-document",
+          label: "Upload Document",
+          className: "api-method post",
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "Workspaces",
+      collapsed: true,
+      link: {
+        type: "doc",
+        id: "workspace",
+      },
+      items: [
+        {
+          type: "doc",
+          id: "get-workspace-info",
+          label: "Get Workspace Information",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "get-workspace-members",
+          label: "Get Workspace Members",
+          className: "api-method get",
         },
       ],
     },

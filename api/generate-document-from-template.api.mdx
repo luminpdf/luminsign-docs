@@ -1,7 +1,7 @@
 ---
 id: generate-document-from-template
 title: "Generate Document from Template"
-description: "Generates a downloadable PDF document from a specified Lumin template."
+description: "Creates a downloadable PDF document from an existing Lumin template."
 sidebar_label: "Generate Document from Template"
 hide_title: true
 hide_table_of_contents: true
@@ -23,54 +23,157 @@ import Heading from "@theme/Heading";
   as={"h1"}
   className={"openapi__heading"}
   children={"Generate Document from Template"}
->
-</Heading>
+></Heading>
 
 <MethodEndpoint
   method={"post"}
   path={"/templates/{template_id}/generate-document"}
   context={"endpoint"}
->
-  
-</MethodEndpoint>
+></MethodEndpoint>
 
-
-
-Generates a downloadable PDF document from a specified Lumin template.
-
-This endpoint takes an existing template identified by `template_id` and produces a static document based on its content and structure.  
-
-Currently, this operation supports **Lumin Sign templates**, allowing you to prefill merge text tags and form fields, and create a finalized PDF ready for distribution or archiving.
-
+Creates a downloadable PDF document from an existing Lumin template.
+{/* :::inf?o */}
+If a template contains **required tags or fields**, you must include these tags and fields along with their corresponding values in the request payload.
+{/* ::: */}
 
 <Heading
   id={"request"}
   as={"h2"}
   className={"openapi-tabs__heading"}
   children={"Request"}
->
-</Heading>
+></Heading>
 
 <ParamsDetails
-  parameters={[{"in":"path","name":"template_id","schema":{"type":"string"},"required":true,"description":"ID of the template to generate document from"}]}
->
-  
-</ParamsDetails>
+  parameters={[
+    {
+      in: "path",
+      name: "template_id",
+      schema: { type: "string" },
+      required: true,
+      description: "ID of the template to generate document from",
+    },
+  ]}
+></ParamsDetails>
 
 <RequestSchema
   title={"Body"}
-  body={{"content":{"application/json":{"schema":{"type":"object","required":["template_id"],"properties":{"tags":{"type":"object","items":{"type":"object"},"description":"Key–value pairs for **Merge Text Tags** defined in the template.\nKeys must match tag names. Values replace those tags in the generated document.\nCurrently supports merge tags with syntax: `[text-merge|req|sender|object.field]`.\n"},"fields":{"type":"object","items":{"type":"object"},"description":"Key–value pairs for **Form Fields** defined in the template.\nKeys must match field names. Values prefill the corresponding fields.\n"},"document_name":{"type":"string","description":"Optional custom name for the generated document. Defaults to the template's name if omitted."}},"description":"At least one of `tags` or `fields` may be required when the template defines required tags/fields.\n","title":"TemplateDTO"},"example":{"default":{"template_id":"sign_123","tags":{"ClientName":"ACME Corp","EffectiveDate":"2025-01-01"},"fields":{"CustomerName":"John Doe","AgreeToTerms":true},"document_name":"Mutual NDA"}}}}}}
->
-  
-</RequestSchema>
+  body={{
+    content: {
+      "application/json": {
+        schema: {
+          type: "object",
+          properties: {
+            tags: {
+              type: "object",
+              description:
+                "Key–value pairs for **Merge tags** defined in the Sign template. Keys must match tag names. Values replace the corresponding tags and are rendered as plain text in the generated document.",
+            },
+            fields: {
+              type: "object",
+              description:
+                "Key–value pairs for **Form fields** defined in the template. Keys must match field names. Values prefill the corresponding fields in the generated document.",
+            },
+            variables: {
+              type: "object",
+              description:
+                "Key–value pairs for **Variables** defined in the AgreementGen template. Keys must match variable names. Values prefill the corresponding variables and are rendered as plain text in the generated document.",
+            },
+            document_name: {
+              type: "string",
+              description:
+                "Optional name for the generated document. If omitted, the document name defaults to the template's name.",
+            },
+          },
+          example: {
+            tags: {
+              "Client.Name": "Acme Corp",
+              "Effective.Date": "2025-08-01",
+            },
+            fields: { CustomerName: "John Doe", AgreeToTerms: true },
+            variables: {
+              "Company.Name": "ACME Corp",
+              "Document.Name": "NDA Document",
+            },
+            document_name: "My Contract",
+          },
+        },
+      },
+    },
+  }}
+></RequestSchema>
 
 <StatusCodes
   id={undefined}
   label={undefined}
-  responses={{"200":{"description":"Successfully generated document from template","content":{"application/json":{"schema":{"type":"object","required":["document_name","signed_url","expires_at"],"properties":{"document_name":{"type":"string","description":"Name of the generated document (from input or default)."},"signed_url":{"type":"string","format":"uri","description":"Signed HTTPS URL to download the generated document. Expires in 30 minutes."},"expires_at":{"type":"integer","format":"unix-epoch","description":"Unix epoch timestamp **in seconds** when the signed URL expires."}}},"example":{"document_name":"Mutual NDA","document_url":"https://files.luminpdf.com/download/nda-acmecorp-abc123.pdf?expires=2025-08-24T10:45:00Z","expires_at":1757219429466}},"application/pdf":{"schema":{"type":"string","format":"binary"}}}},"4xx":{"description":"Unexpected error","content":{"application/json":{"schema":{"type":"object","required":["error_code","error_message"],"properties":{"error_code":{"type":"string"},"error_message":{"type":"string"}},"title":"Error"}}}}}}
->
-  
-</StatusCodes>
-
-
-      
+  responses={{
+    "200": {
+      description: "Successfully generated document from template",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            "x-expanded": true,
+            required: ["document_name", "signed_url", "expires_at"],
+            properties: {
+              document_name: {
+                type: "string",
+                description:
+                  "Name of the generated document (from input or default).",
+              },
+              signed_url: {
+                type: "string",
+                format: "uri",
+                description:
+                  "Signed HTTPS URL to download the generated document. Expires in 30 minutes.",
+              },
+              expires_at: {
+                type: "integer",
+                format: "unix-epoch",
+                description:
+                  "Unix epoch timestamp (in milliseconds) indicating when `signed_url` will no longer work.",
+              },
+            },
+            title: "DocumentGenerateResponse",
+          },
+          example: {
+            document_name: "NDA_AcmeCorp",
+            signed_url:
+              "https://files.luminpdf.com/download/nda-acmecorp-abc123.pdf?expires=2025-08-24T10:45:00Z",
+            expires_at: 1766726700000,
+          },
+        },
+        "application/pdf": {
+          schema: {
+            type: "string",
+            "x-expanded": true,
+            format: "binary",
+          },
+          description: "Returns binary PDF data",
+        },
+      },
+    },
+    "4xx": {
+      description: "Unexpected error",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            "x-expanded": true,
+            required: ["error_code", "error_message"],
+            properties: {
+              error_code: {
+                type: "string",
+                description: "The error code indicating the type of error.",
+              },
+              error_message: {
+                type: "string",
+                description: "A human-readable message describing the error.",
+              },
+            },
+            title: "Error",
+          },
+        },
+      },
+    },
+  }}
+></StatusCodes>

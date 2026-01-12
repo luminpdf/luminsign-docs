@@ -1,7 +1,7 @@
 ---
 id: cancel-signature-request
 title: "Cancel Signature Request"
-description: "Cancel Signature Request by id."
+description: "Cancel a signature request."
 sidebar_label: "Cancel Signature Request"
 hide_title: true
 hide_table_of_contents: true
@@ -23,49 +23,83 @@ import Heading from "@theme/Heading";
   as={"h1"}
   className={"openapi__heading"}
   children={"Cancel Signature Request"}
->
-</Heading>
+></Heading>
 
 <MethodEndpoint
   method={"put"}
   path={"/signature_request/cancel/{signature_request_id}"}
   context={"endpoint"}
->
-  
-</MethodEndpoint>
+></MethodEndpoint>
 
-
-
-Cancel Signature Request by id.
+Cancel a signature request.
 
 <Heading
   id={"request"}
   as={"h2"}
   className={"openapi-tabs__heading"}
   children={"Request"}
->
-</Heading>
+></Heading>
 
 <ParamsDetails
-  parameters={[{"in":"path","name":"signature_request_id","schema":{"type":"string"},"required":true,"description":"ID of the Signature Request to cancel"}]}
->
-  
-</ParamsDetails>
+  parameters={[
+    {
+      in: "path",
+      name: "signature_request_id",
+      schema: { type: "string" },
+      required: true,
+      description: "ID of the signature request to cancel",
+    },
+  ]}
+></ParamsDetails>
 
-<RequestSchema
-  title={"Body"}
-  body={undefined}
->
-  
-</RequestSchema>
+<RequestSchema title={"Body"} body={undefined}></RequestSchema>
 
 <StatusCodes
   id={undefined}
   label={undefined}
-  responses={{"200":{"description":"Expected response to a valid request","content":{"application/json":{"schema":{"type":"object","properties":{"signature_request_id":{"type":"string","description":"The unique identifier for the Signature Request."},"status":{"type":"string","description":"The status of the Signature Request.","enum":["CANCELLED"]}}}}}},"4xx":{"description":"Unexpected error","content":{"application/json":{"schema":{"type":"object","required":["error_code","error_message"],"properties":{"error_code":{"type":"string"},"error_message":{"type":"string"}},"title":"Error"}}}}}}
->
-  
-</StatusCodes>
-
-
-      
+  responses={{
+    "200": {
+      description: "Information about the canceled signature request",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            "x-expanded": true,
+            properties: {
+              signature_request_id: {
+                type: "string",
+                description: "The unique identifier for the signature request.",
+              },
+              status: {
+                type: "string",
+                description: "The status of the signature request.",
+                enum: ["CANCELLED"],
+              },
+            },
+          },
+          example: {
+            signature_request_id: "1234567890",
+            status: "CANCELLED",
+          },
+        },
+      },
+    },
+    "4xx": {
+      description: "Unexpected error",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            "x-expanded": true,
+            required: ["error_code", "error_message"],
+            properties: {
+              error_code: { type: "string" },
+              error_message: { type: "string" },
+            },
+            title: "Error",
+          },
+        },
+      },
+    },
+  }}
+></StatusCodes>

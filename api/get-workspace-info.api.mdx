@@ -1,0 +1,150 @@
+---
+id: get-workspace-info
+title: "Get Workspace Information"
+description: "Return information of the authorized Workspace."
+sidebar_label: "Get Workspace Information"
+hide_title: true
+hide_table_of_contents: true
+api: PLACEHOLDER_API_DATA
+sidebar_class_name: "get api-method"
+info_path: api/lumin-api-reference
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get Workspace Information"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/workspaces/info"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Return information of the authorized Workspace.
+
+<ParamsDetails
+  parameters={undefined}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{
+    "200": {
+      description: "Information about the authorized Workspace",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            "x-expanded": true,
+            required: ["workspace"],
+            properties: {
+              workspace: {
+                description: "Contains information about the authorized Workspace.",
+                type: "object",
+                required: ["id", "name", "owner", "created_at", "user_role", "total_members", "total_spaces"],
+                properties: {
+                  id: {
+                    type: "string",
+                    description: "Unique identifier of the Workspace."
+                  },
+                  name: {
+                    type: "string",
+                    description: "Human-readable Workspace name."
+                  },
+                  owner: {
+                    type: "string",
+                    description: "Email address of the Workspace owner."
+                  },
+                  created_at: {
+                    type: "integer",
+                    format: "unix-epoch",
+                    description: "Unix timestamp (milliseconds) when the Workspace was created."
+                  },
+                  user_role: {
+                    type: "string",
+                    description: "Role of the current user in the Workspace.",
+                    enum: ["owner", "admin", "member"]
+                  },
+                  total_members: {
+                    type: "integer",
+                    description: "Number of Workspace members."
+                  },
+                  total_spaces: {
+                    type: "integer",
+                    description: "Number of Spaces in the Workspace."
+                  }
+                },
+                title: "WorkspaceInfo"
+              }
+            }
+          },
+          example: {
+            workspace: {
+              id: "1234567890",
+              name: "My Workspace",
+              owner: "john.doe@example.com",
+              created_at: 1756887739247,
+              user_role: "owner",
+              total_members: 1,
+              total_spaces: 1,
+            },
+          },
+        }
+      }
+    },
+    "4xx": {
+      description: "Unexpected error",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            "x-expanded": true,
+            required: ["error_code", "error_message"],
+            properties: {
+              error_code: {
+                type: "string",
+                description: "The error code indicating the type of error."
+              },
+              error_message: {
+                type: "string",
+                description: "A human-readable message describing the error."
+              }
+            },
+            title: "Error"
+          }
+        }
+      }
+    }
+  }}
+>
+  
+</StatusCodes>
+
+
+
