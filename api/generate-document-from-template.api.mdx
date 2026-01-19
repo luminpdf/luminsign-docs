@@ -46,6 +46,7 @@ If a template contains **required tags or fields**, you must include these tags 
   as={"h2"}
   className={"openapi-tabs__heading"}
   children={"Request"}
+  description={"If a template contains **required tags or fields**, you must include these tags and fields in the request payload along with their corresponding values to generate the PDF document."}
 >
 </Heading>
 
@@ -57,7 +58,7 @@ If a template contains **required tags or fields**, you must include these tags 
 
 <RequestSchema
   title={"Body"}
-  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"tags":{"type":"object","description":"Key–value pairs for **Merge Tags** defined in the Sign template. Keys must match tag names. Values replace the corresponding tags and are rendered as plain text in the generated document.\n"},"fields":{"type":"object","description":"Key–value pairs for **Form Fields** defined in the template. Keys must match field names. Values prefill the corresponding fields in the generated document.\n"},"variables":{"type":"object","description":"Key–value pairs for **Variables** defined in the AgreementGen template. Keys must match variable names. Values prefill the corresponding variables and are rendered as plain text in the generated document.\n- **System variables** are predefined by Lumin and **cannot be overwritten** via API input.\n- **Custom variables** can be **overridden** when values are passed through the API. However, these overridden values **only apply to the generated document** - they **do not modify** stored values in the original template.\n"},"document_name":{"type":"string","description":"Optional name for the generated document. If omitted, the document name defaults to the template's name."}}},"example":{"tags":{"Client.Name":"Acme Corp","Effective.Date":"2025-08-01"},"fields":{"CustomerName":"John Doe","AgreeToTerms":true},"variables":{"Company.Name":"ACME Corp","Document.Name":"NDA Document"},"document_name":"My Contract"}}}}}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"tags":{"type":"object","description":"Key–value pairs for **Merge Tags** defined in the Sign template. Keys must match tag names. Values replace the corresponding tags and are rendered as **plain text** in the generated document.\n"},"fields":{"type":"object","description":"Key–value pairs for **Form Fields** defined in the template. Keys must match field names. Values prefill the corresponding fields in the generated document.\n"},"variables":{"type":"object","description":"Key–value pairs for **Variables** defined in the AgreementGen template. Keys must match variable names. Values prefill the corresponding variables and are rendered as **plain text** in the generated document."},"document_name":{"type":"string","description":"Optional name for the generated document. If omitted, the document name defaults to the template's name."}}},"example":{"tags":{"Client.Name":"Acme Corp","Effective.Date":"2025-08-01"},"fields":{"CustomerName":"John Doe","AgreeToTerms":true},"variables":{"Company.Name":"ACME Corp","Document.Name":"NDA Document"},"document_name":"My Contract"}}}}}
 >
   
 </RequestSchema>

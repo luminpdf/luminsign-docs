@@ -23,14 +23,20 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
+          id: "send-signature-request",
+          label: "Send Signature Request",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
           id: "update-signature-request",
           label: "Update Signature Request",
           className: "api-method patch",
         },
         {
           type: "doc",
-          id: "send-signature-request",
-          label: "Send Signature Request",
+          id: "send-reminder-emails",
+          label: "Send Reminder Emails",
           className: "api-method post",
         },
         {
