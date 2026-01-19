@@ -206,6 +206,90 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /signature_request/remind/{signature_request_id}:
+    post:
+      operationId: send-reminder-emails
+      summary: Send Reminder Emails
+      description: |
+        Send reminder emails to selected signers under a signature request whose signer status is `NEED_TO_SIGN`.
+
+        **Notes:**
+        - Reminders sent to signers who already signed will be ignored (no email sent).
+        - You can send reminders to up to 10 reminders per signer per day.
+      security:
+        - ApiKey: []
+        - BearerAuth: []
+      tags:
+        - Signature Requests
+      parameters:
+        - in: path
+          name: signature_request_id
+          schema:
+            type: string
+          required: true
+          description: ID of the signature request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignatureRequestRemindRequest'
+            example:
+              emails:
+                - john@example.com
+                - jane@example.com
+      responses:
+        '200':
+          description: Returns signature request details and per-email reminder results.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - signature_request
+                  - reminders
+                properties:
+                  signature_request:
+                    description: Contains information about a Signature Request.
+                    $ref: '#/components/schemas/SignatureRequest'
+                  reminders:
+                    type: array
+                    description: List of reminder email results for requested signer emails.
+                    items:
+                      $ref: '#/components/schemas/ReminderResult'
+              example:
+                signature_request:
+                  signature_request_id: "696d007913f3b8..."
+                  title: Signature request
+                  created_at: 1768751225657
+                  expires_at: 1927510980694
+                  status: WAITING_FOR_OTHERS
+                  signers:
+                    - name: John Doe
+                      email_address: john@example.com
+                      status: WAITING_FOR_OTHERS
+                      is_approved: true
+                      group: 1
+                    - name: Jane Doe
+                      email_address: jane@example.com
+                      status: NEED_TO_SIGN
+                      is_approved: false
+                      group: 2
+                  updated_at: 1768751357064
+                  details_url: "https://sign.luminpdf.com/auth?mode=view-contract&token=8647b08b..."
+                  signing_type: ORDER
+                reminders:
+                  - email: john@example.com
+                    signer_status: WAITING_FOR_OTHERS
+                    email_status: BOUNCE
+                  - email: jane@example.com
+                    signer_status: NEED_TO_SIGN
+                    email_status: SENT
+        '4xx':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /signature_request/{signature_request_id}/file:
     get:
       summary: Get Signature Request File
@@ -527,8 +611,6 @@ paths:
                   type: object
                   description: |
                     Key–value pairs for **Variables** defined in the AgreementGen template. Keys must match variable names. Values prefill the corresponding variables and are rendered as plain text in the generated document.
-                    - **System variables** are predefined by Lumin and **cannot be overwritten** via API input.
-                    - **Custom variables** can be **overridden** when values are passed through the API. However, these overridden values **only apply to the generated document** - they **do not modify** stored values in the original template.
                 document_name:
                   type: string
                   description: Optional name for the generated document. If omitted, the document name defaults to the template's name.
@@ -932,16 +1014,13 @@ components:
           items:
             type: object
           description: |
-            Key–value pairs for **Merge Text Tags** defined in the template.
-            Keys must match tag names. Values replace those tags in the generated document.
-            Currently supports merge tags with syntax: `[text-merge|req|sender|object.field]`.
+            Key–value pairs for **Merge Tags** defined in the template. Keys must match tag names. Values replace the corresponding tags and are rendered as plain text in the generated document.
         fields:
           type: object
           items:
             type: object
           description: |
-            Key–value pairs for **Form Fields** defined in the template.
-            Keys must match field names. Values prefill the corresponding fields.
+            Key–value pairs for **Form Fields** defined in the template. Keys must match field names. Values prefill the corresponding fields in the generated document.
         document_name:
           type: string
           description: Optional custom name for the generated document. Defaults to the template's name if omitted.
@@ -981,7 +1060,7 @@ components:
                 description: The signing order of signer for the Signature Request with `signing_type` is `ORDER`.
         tags:
           type: array
-          description: Text Tags embedded in the template, which are placeholders added directly in the document using the syntax `[text-merge|req|sender|object.field]`.
+          description: Merge Tags embedded in the template.
           items:
             type: object
             properties:
@@ -991,7 +1070,7 @@ components:
               type:
                 type: string
                 description: The type of the text tag.
-                enum: [text-merge, merge_tag]
+                enum: [merge_tag]
               is_required:
                 type: boolean
                 description: Whether the tag must be filled before completing the document.
@@ -1007,7 +1086,7 @@ components:
               type:
                 type: string
                 description: The type of the form field.
-                enum: [text, checkbox, signature, radio_button]
+                enum: [text, checkbox]
               is_required:
                 type: boolean
                 description: Whether the form field must be filled before completing the document.
@@ -1083,8 +1162,8 @@ components:
                 description: The label or identifier of the tag.
               type:
                 type: string
-                description: "Type of tag, one of: merge_tag, text_tag"
-                enum: [merge_tag, text_tag]
+                description: "Type of tag, one of: merge_tag"
+                enum: [merge_tag]
               is_required:
                 type: boolean
                 description: Indicates whether the merge tag needs to be prefilled before the signature request can be completed.
@@ -1202,6 +1281,43 @@ components:
           type: integer
           format: unix-epoch
           description: The expiration time of the signature request, expressed as a Unix epoch timestamp in milliseconds. This value must represent a future point in time.
+    SignatureRequestRemindRequest:
+      type: object
+      required:
+        - emails
+      properties:
+        emails:
+          type: array
+          description: List of emails to send reminder.
+          items:
+            type: string
+            format: email
+    ReminderResult:
+      type: object
+      required:
+        - email
+        - signer_status
+        - email_status
+      properties:
+        email:
+          type: string
+          format: email
+          description: The signer email that the reminder request targets.
+        signer_status:
+          type: string
+          description: "The signer status at the time of sending the reminder. One of: NEED_TO_SIGN, APPROVED, REJECTED, WAITING_FOR_OTHERS"
+          enum: [NEED_TO_SIGN, APPROVED, REJECTED, WAITING_FOR_OTHERS]
+        email_status:
+          type: string
+          description: |
+            Result of reminder email delivery attempt.
+            - `SENT` – Sent an email successfully
+            - `EXCEED_DAILY_LIMIT` – Email not sent due to daily limit (**10 emails/signer/day**)
+            - `BOUNCE` – Email not sent because the signer already signed or is not in turn to sign
+          enum:
+            - SENT
+            - EXCEED_DAILY_LIMIT
+            - BOUNCE
     WorkspaceMember:
       type: object
       properties:
