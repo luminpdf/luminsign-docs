@@ -30,11 +30,13 @@ tags:
     description: Everything about Documents
   - name: Workspaces
     description: Everything about Workspaces
+  - name: Agreements
+    description: Everything about Agreements
 paths:
   /signature_request/{signature_request_id}:
     get:
       summary: Get Signature Request
-      description: Get Signature Request by id.
+      description: Returns the information of the signature request.
       security:
         - ApiKey: []
         - BearerAuth: []
@@ -46,10 +48,10 @@ paths:
           schema:
             type: string
           required: true
-          description: ID of the Signature Request to get
+          description: ID of the signature request.
       responses:
-        '200':
-          description: Expected response to a valid request
+        "200":
+          description: Returns the information of the signature request.
           content:
             application/json:
               schema:
@@ -58,14 +60,14 @@ paths:
                   - signature_request
                 properties:
                   signature_request:
-                    description: Contains information about a Signature Request.
-                    $ref: '#/components/schemas/SignatureRequest'
-        '4xx':
+                    description: Contains information about a signature request.
+                    $ref: "#/components/schemas/SignatureRequest"
+        "4xx":
           description: Unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
     patch:
       summary: Update Signature Request
       description: |
@@ -87,25 +89,25 @@ paths:
           schema:
             type: string
           required: true
-          description: ID of the Signature Request to update.
+          description: ID of the signature request.
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SignatureRequestUpdateRequest'
+              $ref: "#/components/schemas/SignatureRequestUpdateRequest"
             example:
               expires_at: 1927510980000
       responses:
-        '200':
-          description: Partial update applied successfully.
+        "200":
+          description: Returns the updated signature request.
           content:
             application/json:
               schema:
                 type: object
                 properties:
                   signature_request:
-                    description: Signature request details with the updated data
-                    $ref: '#/components/schemas/SignatureRequest'
+                    description: Signature request details with the updated data.
+                    $ref: "#/components/schemas/SignatureRequest"
               example:
                 signature_request:
                   signature_request_id: "1234567890"
@@ -113,16 +115,16 @@ paths:
                   created_at: 1756887739247
                   expires_at: 1927510980000
                   status: WAITING_FOR_OTHERS
-        '4xx':
+        "4xx":
           description: Unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
   /signature_request/send:
     post:
       summary: Send Signature Request
-      description: Creates and sends a new Signature Request with the submitted documents.
+      description: Creates and sends a new signature request with the submitted documents.
       security:
         - ApiKey: []
         - BearerAuth: []
@@ -132,46 +134,51 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SignatureRequestDTO'
+              $ref: "#/components/schemas/SignatureRequestDTO"
       responses:
-        '201':
-          description: Expected response to a valid request
+        "201":
+          description: Returns the information of the created signature request.
           content:
             application/json:
               schema:
-                type: object
-                required:
-                  - signature_request
-                properties:
-                  signature_request:
-                    description: Contains information about a Signature Request.
-                    required:
-                      - signature_request_id
-                      - created_at
-                      - status
-                    properties:
-                      signature_request_id:
-                        type: string
-                        description: The unique identifier for the Signature Request.
-                      created_at:
-                        type: string
-                        description: The time the Signature Request was created.
-                      status:
-                        type: string
-                        description: The status of the Signature Request.
-                        enum:
-                          - WAITING_FOR_PROCESSING
-                          - FAILED
-        '4xx':
+                $ref: "#/components/schemas/SignatureRequestCreateResponse"
+        "4xx":
           description: Unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
+  /signature_request/send-from-template:
+    post:
+      summary: Send Signature Request from Template
+      description: Creates and sends a new signature request from a template with the submitted template data.
+      security:
+        - ApiKey: []
+        - BearerAuth: []
+      tags:
+        - Signature Requests
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignatureRequestFromTemplateDTO"
+      responses:
+        "201":
+          description: Returns the information of the created signature request.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SignatureRequestCreateResponse"
+        "4xx":
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /signature_request/cancel/{signature_request_id}:
     put:
       summary: Cancel Signature Request
-      description: Cancel Signature Request by id.
+      description: Cancel a signature request.
       security:
         - ApiKey: []
         - BearerAuth: []
@@ -183,10 +190,10 @@ paths:
           schema:
             type: string
           required: true
-          description: ID of the Signature Request to cancel
+          description: ID of the signature request.
       responses:
-        '200':
-          description: Expected response to a valid request
+        "200":
+          description: Returns the information of the cancelled signature request.
           content:
             application/json:
               schema:
@@ -194,18 +201,18 @@ paths:
                 properties:
                   signature_request_id:
                     type: string
-                    description: The unique identifier for the Signature Request.
+                    description: The unique identifier for the signature request.
                   status:
                     type: string
-                    description: The status of the Signature Request.
+                    description: The status of the signature request.
                     enum:
                       - CANCELLED
-        '4xx':
+        "4xx":
           description: Unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
   /signature_request/remind/{signature_request_id}:
     post:
       operationId: send-reminder-emails
@@ -232,13 +239,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SignatureRequestRemindRequest'
+              $ref: "#/components/schemas/SignatureRequestRemindRequest"
             example:
               emails:
                 - john@example.com
                 - jane@example.com
       responses:
-        '200':
+        "200":
           description: Returns signature request details and per-email reminder results.
           content:
             application/json:
@@ -249,13 +256,13 @@ paths:
                   - reminders
                 properties:
                   signature_request:
-                    description: Contains information about a Signature Request.
-                    $ref: '#/components/schemas/SignatureRequest'
+                    description: Contains information about a signature request.
+                    $ref: "#/components/schemas/SignatureRequest"
                   reminders:
                     type: array
                     description: List of reminder email results for requested signer emails.
                     items:
-                      $ref: '#/components/schemas/ReminderResult'
+                      $ref: "#/components/schemas/ReminderResult"
               example:
                 signature_request:
                   signature_request_id: "696d007913f3b8..."
@@ -284,12 +291,12 @@ paths:
                   - email: jane@example.com
                     signer_status: NEED_TO_SIGN
                     email_status: SENT
-        '4xx':
+        "4xx":
           description: Unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
   /signature_request/{signature_request_id}/file:
     get:
       summary: Get Signature Request File
@@ -328,8 +335,8 @@ paths:
             - `coc`: The Certificate of Completion PDF  
             - `merged`: A single PDF with agreement **followed by** the CoC
       responses:
-        '200':
-          description: Expected response to a valid request
+        "200":
+          description: Returns the downloadable file of the Signature Request.
           content:
             application/json:
               schema:
@@ -350,12 +357,12 @@ paths:
                 type: string
                 format: binary
               description: Returns binary PDF data
-        '4xx':
+        "4xx":
           description: Unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
   /signature_request/files_as_file_url/{signature_request_id}:
     get:
       summary: Download File as File URL
@@ -374,7 +381,7 @@ paths:
           required: true
           description: ID of the Signature Request to get
       responses:
-        '200':
+        "200":
           description: Expected response to a valid request
           content:
             application/json:
@@ -388,12 +395,12 @@ paths:
                     type: integer
                     format: unix-epoch
                     description: Unix epoch timestamp **in seconds** when the signed URL expires.
-        '4xx':
+        "4xx":
           description: Unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
   /signature_request/files/{signature_request_id}:
     get:
       summary: Download File
@@ -412,31 +419,31 @@ paths:
           required: true
           description: ID of the Signature Request to get
       responses:
-        '200':
+        "200":
           description: Expected response to a valid request
           content:
             application/pdf:
               schema:
                 type: string
                 format: binary
-        '4xx':
+        "4xx":
           description: Unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
   /user/info:
     get:
       summary: Get User Information
-      description: Get information of current user by API Key
+      description: Get information of current user
       security:
         - ApiKey: []
         - BearerAuth: []
       tags:
         - Users
       responses:
-        '200':
-          description: Expected response to a valid request
+        "200":
+          description: Returns the information of the current user.
           content:
             application/json:
               schema:
@@ -445,16 +452,16 @@ paths:
                   - user
                 properties:
                   user:
-                    description: Contains information about a User.
-                    $ref: '#/components/schemas/User'
-        '4xx':
+                    description: Information of current user.
+                    $ref: "#/components/schemas/User"
+        "4xx":
           description: Unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
   /templates:
-    get: 
+    get:
       summary: List Templates
       description: |
         Returns a paginated list of templates in a Lumin Workspace, including AgreementGen, Sign and PDF templates.
@@ -486,12 +493,12 @@ paths:
             default: "1.1"
           required: true
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TemplateListResponse'
+                $ref: "#/components/schemas/TemplateListResponse"
               example:
                 page: 1
                 limit: 25
@@ -512,12 +519,12 @@ paths:
                     name: Onboarding Form
                     created_at: 1748456885430
                     updated_at: 1748456885430
-        '4xx':
+        "4xx":
           description: Unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
   /templates/{template_id}:
     get:
       summary: Get Template Details
@@ -534,14 +541,14 @@ paths:
           schema:
             type: string
           required: true
-          description: ID of the template to get
+          description: ID of the template.
       responses:
-        '200':
-          description: Expected response to a valid request
+        "200":
+          description: Returns the template details.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TemplateDetail'
+                $ref: "#/components/schemas/TemplateDetail"
               example:
                 template_id: sign_123456
                 type: pdf
@@ -568,12 +575,12 @@ paths:
                     value: NDA Document
                 created_at: 1748456885430
                 updated_at: 1748456885430
-        '4xx':
+        "4xx":
           description: Unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
   /templates/{template_id}/generate-document:
     post:
       summary: Generate Document from Template
@@ -592,7 +599,7 @@ paths:
           schema:
             type: string
           required: true
-          description: ID of the template to generate document from
+          description: ID of the template to generate document from.
       requestBody:
         content:
           application/json:
@@ -626,12 +633,12 @@ paths:
                 Document.Name: NDA Document
               document_name: My Contract
       responses:
-        '200':
-          description: Successfully generated document from template
+        "200":
+          description: Returns the generated document.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DocumentGenerateResponse'
+                $ref: "#/components/schemas/DocumentGenerateResponse"
               example:
                 document_name: NDA_AcmeCorp
                 signed_url: https://files.luminpdf.com/download/nda-acmecorp-abc123.pdf?expires=2025-08-24T10:45:00Z
@@ -641,12 +648,12 @@ paths:
                 type: string
                 format: binary
               description: Returns binary PDF data
-        '4xx':
+        "4xx":
           description: Unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
   /documents:
     post:
       summary: Upload Document
@@ -665,7 +672,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DocumentCreateRequest'
+              $ref: "#/components/schemas/DocumentCreateRequest"
             example:
               method: file-upload
               document_name: Patient Form
@@ -676,20 +683,20 @@ paths:
                 file_url: https://files.luminpdf.com/download/nda-acmecorp-abc123.pdf
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/DocumentCreateRequest'
+              $ref: "#/components/schemas/DocumentCreateRequest"
       responses:
-        '201':
+        "201":
           description: Returns the summary of the created document.
           content:
             application/json:
               schema:
                 type: object
-        '4xx':
+        "4xx":
           description: Unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
   /workspaces/info:
     get:
       summary: Get Workspace Information
@@ -700,18 +707,18 @@ paths:
       tags:
         - Workspaces
       responses:
-        '200':
-          description: Expected response to a valid request
+        "200":
+          description: Returns the information of the authorized Workspace.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WorkspaceInfo'
-        '4xx':
+                $ref: "#/components/schemas/WorkspaceInfo"
+        "4xx":
           description: Unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
   /workspaces/members:
     get:
       summary: Get Workspace Members
@@ -737,12 +744,12 @@ paths:
             enum: [10, 25, 50]
           required: true
       responses:
-        '200':
-          description: Expected response to a valid request
+        "200":
+          description: Returns the list of members in the Workspace.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WorkspaceMembersResponse'
+                $ref: "#/components/schemas/WorkspaceMembersResponse"
               example:
                 page: 1
                 limit: 25
@@ -766,12 +773,103 @@ paths:
                     role: member
                     joined_at: 1748456885430
                     last_active_at: 1748456885430
-        '4xx':
+        "4xx":
           description: Unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
+  /agreements:
+    post:
+      summary: Create Agreement
+      description: |
+        Create a new AgreementGen document from a AgreementGen template.
+      security:
+        - ApiKey: []
+        - BearerAuth: []
+      tags:
+        - Agreements
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AgreementCreateRequest"
+            example:
+              method: template
+              agreement_name: NDA Agreement
+              agreement_data:
+                template_id: ag_12312321
+                fields:
+                  Client.Name: Acme Corp
+                  Document.EffectiveDate: "2025-08-01"
+                variables:
+                  Client.Name: Acme Corp
+                  Document.EffectiveDate: "2025-08-01"
+                linked_objects:
+                  - integration: salesforce
+                    entity_type: opportunity
+                    record_id: "0065g00000Vh123ABC"
+                    reference_url: "https://lumin-uat-dev-ed.develop.lightning.force.com/lightning/r/Account/001QE00000eDhhjYAC/view"
+      responses:
+        "201":
+          description: Returns the Agreement summary object data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AgreementSummary"
+        "4xx":
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /agreements/{agreement_id}/file:
+    get:
+      summary: Get Agreement File
+      description: |
+        Obtain a downloadable file or binary PDF data from an AgreementGen document.
+      security:
+        - ApiKey: []
+        - BearerAuth: []
+      tags:
+        - Agreements
+      parameters:
+        - in: path
+          name: agreement_id
+          schema:
+            type: string
+          required: true
+          description: ID of the AgreementGen document.
+      responses:
+        "200":
+          description: Returns the downloadable file or binary PDF data of the AgreementGen document.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  signed_url:
+                    type: string
+                    format: uri
+                    description: Signed HTTPS URL to download the agreement file. Expires in 30 minutes.
+                  expires_at:
+                    type: integer
+                    format: unix-epoch
+                    description: Unix epoch timestamp (in seconds) indicating when `signed_url` will no longer work.
+              example:
+                signed_url: "https://files.luminpdf.com/download/agreement-abc123.pdf?expires=2025-08-24T10:45:00Z"
+                expires_at: 1766726700000
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+              description: Returns binary PDF data
+        "4xx":
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 components:
   securitySchemes:
     ApiKey:
@@ -794,18 +892,102 @@ components:
       properties:
         email_address:
           type: string
+          description: Email address of the signer.
         name:
           type: string
+          description: Name of the signer.
         group:
-          type: number
+          type: string
           description: |
-            The signing order of signer for the Signature Request with `signing_type` is `ORDER`. Required if `signing_type` is `ORDER`.
-
-            Only signers in `1st Signers` group will receive email/notification, signers in subsequent groups will receive email/notification when all signers in previous group has signed.
-            
-            Group starts incrementing at 1.
-            
-            The default value for group always is 1 if `signing_type` is `SAME_TIME.`
+            The signing order of signer for signature request with `signing_type` is ORDER. Required if `signing_type` is ORDER. Group starts at 1. Only signers in first group will receive email/notification, signers in subsequent groups will receive email/notification when all signers in previous group has signed.
+        verification:
+          type: object
+          description: |
+            Defines the identity verification method for a signer before they can complete the signing process. This allows stronger assurance of signer authenticity.
+          properties:
+            method:
+              type: string
+              enum: [vc]
+              description: |
+                The verification method used. Required when the `verification` object is present.
+            payload:
+              type: object
+              description: |
+                Payload parameters required by the verification method. Required when the `verification` object is present.
+              properties:
+                doc_type:
+                  type: string
+                  enum: [driver_license, photo_id, nz_business_passport]
+                  description: |
+                    The type of credential requested from the signer. If omitted, verifiable credential (VC) verification is optional.
+                claims:
+                  type: array
+                  description: |
+                    The specific attributes requested from the credential. Required when the `verification` object is present. Required claims (always): `given_name` - Signer's name as input by sender validated against verified name on credential, `family_name` - Signer's family name as input by sender validated against verified name on credential. Optional claims: `issuing_country` - Country where the credential was issued, `issuing_authority` - The issuing authority that ties to the root certificate which was used to sign the Digital Signature Certificate, `document_number` - The ID/number of the credential
+                  items:
+                    type: string
+                    enum:
+                      [
+                        given_name,
+                        family_name,
+                        issuing_country,
+                        issuing_authority,
+                        document_number,
+                      ]
+    SignerWithRole:
+      type: object
+      required:
+        - email_address
+        - name
+      properties:
+        email_address:
+          type: string
+          description: Email address of the signer.
+        name:
+          type: string
+          description: Name of the signer.
+        group:
+          type: string
+          description: |
+            The signing order of signer for signature request with `signing_type` is ORDER. Required if `signing_type` is ORDER. Group starts at 1. Only signers in first group will receive email/notification, signers in subsequent groups will receive email/notification when all signers in previous group has signed.
+        signer_role:
+          type: string
+          description: |
+            The name of the signer role defined in the template. Must match a signer role in the template. Required when the template has defined signer roles.
+        verification:
+          type: object
+          description: |
+            Defines the identity verification method for a signer before they can complete the signing process. This allows stronger assurance of signer authenticity.
+          properties:
+            method:
+              type: string
+              enum: [vc]
+              description: |
+                The verification method used. Required when the `verification` object is present.
+            payload:
+              type: object
+              description: |
+                Payload parameters required by the verification method. Required when the `verification` object is present.
+              properties:
+                doc_type:
+                  type: string
+                  enum: [driver_license, photo_id, nz_business_passport]
+                  description: |
+                    The type of credential requested from the signer. If omitted, verifiable credential (VC) verification is optional.
+                claims:
+                  type: array
+                  description: |
+                    The specific attributes requested from the credential. Required when the `verification` object is present. Required claims (always): `given_name` - Signer's name as input by sender validated against verified name on credential, `family_name` - Signer's family name as input by sender validated against verified name on credential. Optional claims: `issuing_country` - Country where the credential was issued, `issuing_authority` - The issuing authority that ties to the root certificate which was used to sign the DSC, `document_number` - The ID/number of the credential
+                  items:
+                    type: string
+                    enum:
+                      [
+                        given_name,
+                        family_name,
+                        issuing_country,
+                        issuing_authority,
+                        document_number,
+                      ]
     Viewer:
       type: object
       required:
@@ -830,25 +1012,25 @@ components:
       properties:
         signature_request_id:
           type: string
-          description: The unique identifier for the Signature Request.
+          description: The unique identifier for the signature request.
         title:
           type: string
-          description: The title of the Signature Request.
+          description: The title of the signature request.
         created_at:
           type: string
-          description: The time the Signature Request was created.
+          description: The time the signature request was created.
         updated_at:
           type: string
-          description: The time the Signature Request was last updated.
+          description: The time the signature request was last updated.
         expires_at:
           type: string
-          description: The time the Signature Request will expire.
+          description: The time the signature request will expire.
         details_url:
           type: string
-          description: The url to view the Signature Request in the browser.
+          description: The url to view the signature request in the browser.
         status:
           type: string
-          description: The status of the Signature Request.
+          description: The status of the signature request.
           enum:
             - NEED_TO_SIGN
             - WAITING_FOR_OTHERS
@@ -859,7 +1041,7 @@ components:
             - CANCELLED
         reason:
           type: string
-          description: The reason for the status FAILED or REJECTED of the Signature Request.
+          description: The reason for the status FAILED or REJECTED of the signature request.
         signing_type:
           type: string
           description: Recipient signing flow.
@@ -877,16 +1059,16 @@ components:
               group:
                 type: number
                 description: |
-                  The signing order of signer for the Signature Request with `signing_type` is `ORDER`. Required if `signing_type` is `ORDER`.
+                  The signing order of signer for the signature request with `signing_type` is `ORDER`. Required if `signing_type` is `ORDER`.
 
                   Only signers in `1st Signers` group will receive email/notification, signers in subsequent groups will receive email/notification when all signers in previous group has signed.
-                  
+
                   Group starts incrementing at 1.
-                  
+
                   The default value for group always is 1 if `signing_type` is `SAME_TIME.`
               is_approved:
                 type: boolean
-                description: Whether the Signer has approved the Signature Request.
+                description: Whether the signer has approved the signature request.
               status:
                 type: string
                 description: The status of the Signer.
@@ -895,7 +1077,7 @@ components:
               #   properties:
               #     is_approved:
               #       type: boolean
-              #       description: Whether the Signer has approved the Signature Request.
+              #       description: Whether the Signer has approved the signature request.
               #     status:
               #       type: string
               #       description: The status of the Signer.
@@ -904,7 +1086,7 @@ components:
               #         - APPROVED
               #         - REJECTED
               #         - WAITING_FOR_OTHERS
-          description: The Signers of the Signature Request.
+          description: The signers of the signature request.
     User:
       type: object
       required:
@@ -914,10 +1096,13 @@ components:
       properties:
         id:
           type: string
+          description: The unique identifier for the user.
         email:
           type: string
+          description: The email address of the user.
         name:
           type: string
+          description: The name of the user.
     SignatureRequestDTO:
       type: object
       required:
@@ -931,7 +1116,7 @@ components:
         file:
           type: string
           format: binary
-          description:  A single uploaded file to be sent for signature. This field is mutually exclusive with `file_url`, `files`, and `file_urls`. Only one of these fields should be provided in the request.
+          description: A single uploaded file to be sent for signature. This field is mutually exclusive with `file_url`, `files`, and `file_urls`. Only one of these fields should be provided in the request.
         file_urls:
           type: array
           description: An array of URLs of files to be downloaded and signed. This field is mutually exclusive with `file`, `files`, and `file_url`. Only one of these fields should be provided in the request.
@@ -945,28 +1130,28 @@ components:
         signers:
           type: array
           items:
-            $ref: '#/components/schemas/Signer'
-          description: Add Signers to your Signature Request.
+            $ref: "#/components/schemas/Signer"
+          description: Signers of the signature request.
         viewers:
           type: array
           items:
-            $ref: '#/components/schemas/Viewer'
-          description: Add Viewers to your Signature Request.
+            $ref: "#/components/schemas/Viewer"
+          description: Viewers of the signature request.
         title:
           type: string
           minLength: 1
           maxLength: 255
-          description: The title you want to give the Signature Request.
+          description: The title of the signature request.
         expires_at:
           type: integer
           format: unix-epoch
-          description: When the Signature Request will expire. This is a unix epoch timestamp (miliseconds). Should be later than today.
+          description: When the signature request will expire. This is a unix epoch timestamp (miliseconds). Should be later than today.
         use_text_tags:
           type: boolean
           description: Set to `true` to enable Text Tag parsing in your document. Your Text Tags will be converted into UI components for the user to interact with. Defaults to `false`.
         signing_type:
           type: string
-          description: The signing order for the Signature Request. Defaults to `SAME_TIME`.
+          description: The signing order for the signature request. Defaults to `SAME_TIME`.
           enum:
             - SAME_TIME
             - ORDER
@@ -987,23 +1172,73 @@ components:
         file_url: https://lumin-assets-production.s3.us-east-1.amazonaws.com/api-demo/Direct+Debit+form.pdf
         title: Financial Year-End Report Authorization
         signers:
-          - email_address: tuyen_ptt@luminpdf.com
-            name: Tuyen Phan
+          - email_address: john.doe@example.com
+            name: John Doe
             group: 1
-          - email_address: son_lt@luminpdf.com
-            name: Thi Son
+          - email_address: jane.doe@example.com
+            name: Jane Doe
             group: 2
         viewers:
-          - email_address: tin_tt@luminpdf.com
-            name: Tezca Tin
-          - email_address: bac_pth@luminpdf.com
-            name: Bac Pham
-          - email_address: hau_lt@luminpdf.com
-            name: Holly Hau
-
+          - email_address: jane.doe@example.com
+            name: Jane Doe
         expires_at: 1927510980694
         use_text_tags: false
         signing_type: ORDER
+    SignatureRequestFromTemplateDTO:
+      type: object
+      required:
+        - template_id
+        - signers
+        - title
+        - expires_at
+      properties:
+        template_id:
+          type: string
+          description: ID of the template. ID needs to include the prefix returned by the template list endpoint.
+        title:
+          type: string
+          minLength: 1
+          maxLength: 255
+          description: The title of the signature request.
+        tags:
+          type: object
+          description: |
+            Key–value pairs for **Merge Tags** defined in the Sign template. Keys must match tag names. Values replace the corresponding tags and are rendered as **plain text** in the sent agreement.
+        fields:
+          type: object
+          description: |
+            Key–value pairs for **Form Fields** defined in the template. Keys must match field names. Values prefill the corresponding fields in the sent agreement.
+        variables:
+          type: object
+          description: |
+            Key–value pairs for **Variables** defined in the AgreementGen template. Keys must match variable names. Values prefill the corresponding variables and are rendered as **plain text** in the sent agreement.
+        signers:
+          type: array
+          items:
+            $ref: "#/components/schemas/SignerWithRole"
+          description: Signers of the signature request.
+        viewers:
+          type: array
+          items:
+            $ref: "#/components/schemas/Viewer"
+          description: Viewers of the signature request.
+        custom_email:
+          type: object
+          description: Custom email content for the email sent to signers.
+          properties:
+            sender_email:
+              type: string
+              description: The email address of the sender.
+            subject_name:
+              type: string
+              description: The subject of the email.
+            title:
+              type: string
+              description: The title of the email.
+        expires_at:
+          type: integer
+          format: unix-epoch
+          description: When the signature request will expire. This is a unix epoch timestamp (miliseconds). Should be later than today.
     TemplateDTO:
       type: object
       required:
@@ -1011,14 +1246,15 @@ components:
       properties:
         tags:
           type: object
-          items:
-            type: object
+
           description: |
             Key–value pairs for **Merge Tags** defined in the template. Keys must match tag names. Values replace the corresponding tags and are rendered as plain text in the generated document.
         fields:
           type: object
-          items:
-            type: object
+          additionalProperties:
+            oneOf:
+              - type: string
+              - type: boolean
           description: |
             Key–value pairs for **Form Fields** defined in the template. Keys must match field names. Values prefill the corresponding fields in the generated document.
         document_name:
@@ -1044,7 +1280,7 @@ components:
           description: The name of the template.
         signing_type:
           allOf:
-            - $ref: '#/components/schemas/SignatureRequest/properties/signing_type'
+            - $ref: "#/components/schemas/SignatureRequest/properties/signing_type"
             - description: Recipient signing flow.
         signer_roles:
           type: array
@@ -1057,7 +1293,7 @@ components:
                 description: The name of the signer role.
               group:
                 type: integer
-                description: The signing order of signer for the Signature Request with `signing_type` is `ORDER`.
+                description: The signing order of signer for the signature request with `signing_type` is `ORDER`.
         tags:
           type: array
           description: Merge Tags embedded in the template.
@@ -1185,20 +1421,15 @@ components:
                 description: Indicates whether the assigned signer must complete the field before the signature request can be completed.
               assigned_role:
                 type: string
-                description: The role (as defined in the template) to which this field is assigned. If not set, the field may not be linked to a specific role and will be dismissed during request creation.
+                description: The role (as defined in the template) to which this field is assigned. If not set, the field may not be linked to a specific role and will be dismissed during signature request creation.
         variables:
-          type: array
+          type: object
           description: |
-            Variables that appear in the AgreementGen template.
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-                description: The label or identifier of the variable.
-              value:
-                type: string
-                description: The value of the variable (optional, shown in examples).
+            The variables defined in the AgreementGen template.
+          properties:
+            name:
+              type: string
+              description: The label or identifier of the variable.
         created_at:
           type: integer
           format: unix-epoch
@@ -1231,7 +1462,7 @@ components:
       properties:
         type:
           type: string
-          description: "Location type. One of: personal, space, workspace"
+          description: "Location type."
           enum: [personal, space, workspace]
         space_id:
           type: string
@@ -1269,9 +1500,9 @@ components:
           maxLength: 255
           description: Human-friendly title of the document (1–255 characters).
         location:
-          $ref: '#/components/schemas/DocumentLocation'
+          $ref: "#/components/schemas/DocumentLocation"
         document_data:
-          $ref: '#/components/schemas/DocumentData'
+          $ref: "#/components/schemas/DocumentData"
     SignatureRequestUpdateRequest:
       type: object
       required:
@@ -1281,6 +1512,33 @@ components:
           type: integer
           format: unix-epoch
           description: The expiration time of the signature request, expressed as a Unix epoch timestamp in milliseconds. This value must represent a future point in time.
+    SignatureRequestSummary:
+      type: object
+      required:
+        - signature_request_id
+        - created_at
+        - status
+      properties:
+        signature_request_id:
+          type: string
+          description: The unique identifier for the signature request.
+        created_at:
+          type: string
+          description: The time the signature request was created.
+        status:
+          type: string
+          description: The status of the signature request.
+          enum:
+            - WAITING_FOR_PROCESSING
+            - FAILED
+    SignatureRequestCreateResponse:
+      type: object
+      required:
+        - signature_request
+      properties:
+        signature_request:
+          description: Contains information about a signature request.
+          $ref: "#/components/schemas/SignatureRequestSummary"
     SignatureRequestRemindRequest:
       type: object
       required:
@@ -1323,46 +1581,51 @@ components:
       properties:
         user_id:
           type: string
+          description: The unique identifier for the user.
         email:
           type: string
+          description: The email address of the user.
         name:
           type: string
+          description: The name of the user.
         role:
           type: string
-          description: "Role of the member. One of: owner, admin, member"
+          description: "Role of the member."
           enum: [owner, admin, member]
         joined_at:
           type: integer
           format: unix-epoch
+          description: The time the user joined the Workspace.
         last_active_at:
           type: integer
           format: unix-epoch
+          description: The time the user was last active in Lumin.
     WorkspaceInfo:
       type: object
       properties:
         id:
           type: string
-          description: Unique identifier of the Workspace
+          description: The unique identifier of the Workspace.
         name:
           type: string
-          description: Human-readable Workspace name
+          description: The name of the Workspace.
         owner:
           type: string
-          description: Email address of the Workspace owner
+          description: The email address of the Workspace owner.
         created_at:
           type: integer
           format: unix-epoch
-          description: Unix timestamp (milliseconds) when created
+          description: The time the Workspace was created.
         user_role:
           type: string
-          description: Role of the current user in the Workspace
+          description: The role of the current user in the Workspace.
           enum: [owner, admin, member]
         total_members:
           type: integer
-          description: Number of Workspace members
+          description: The number of Workspace members.
         total_spaces:
           type: integer
-          description: Number of Spaces in the Workspace
+          description: The number of Spaces in the Workspace.
     WorkspaceMembersResponse:
       type: object
       properties:
@@ -1377,9 +1640,9 @@ components:
           description: The total number of records returned for the request.
         data:
           type: array
-          description: List of workspace members returned for the requested page.
+          description: List of Workspace members returned for the requested page.
           items:
-            $ref: '#/components/schemas/WorkspaceMember'
+            $ref: "#/components/schemas/WorkspaceMember"
     DocumentGenerateResponse:
       type: object
       required:
@@ -1398,6 +1661,90 @@ components:
           type: integer
           format: unix-epoch
           description: Unix epoch timestamp (in seconds) indicating when signed_url will no longer work.
+    LinkedObject:
+      type: object
+      properties:
+        integration:
+          type: string
+          description: |
+            The external system or integration where the linked object lives. Example: salesforce, hubspot.
+        entity_type:
+          type: string
+          description: |
+            The type of the linked object in that provider's data model. Example: opportunity, contact, deal.
+        record_id:
+          type: string
+          description: |
+            The unique identifier of the linked object in the provider system. Example: 0065g00000Vh123ABC (Salesforce record ID).
+        reference_url:
+          type: string
+          format: uri
+          description: The reference URL of the linked object in the provider system.
+    AgreementTemplateData:
+      type: object
+      required:
+        - template_id
+      properties:
+        template_id:
+          type: string
+          description: Unique identifier of the AG template. Obtainable from the template list API.
+        variables:
+          type: object
+          description: |
+            Key-value map of Variables in the template. Pass values for the variables to render them into the created document or leave values blank to make them available for insertion later.
+        fields:
+          type: object
+          description: |
+            Key-value pairs for Form Fields defined in the template. Keys must match field names. Values prefill the corresponding form fields in the generated document. Currently supports: `text` and `checkbox` fields.
+        linked_objects:
+          type: array
+          description: CRM or external objects linked to the Agreement.
+          items:
+            $ref: "#/components/schemas/LinkedObject"
+    AgreementCreateRequest:
+      type: object
+      required:
+        - method
+        - agreement_data
+      properties:
+        method:
+          type: string
+          enum: [template]
+          description: Must be set to `template`.
+        agreement_name:
+          type: string
+          minLength: 1
+          maxLength: 255
+          description: |
+            Human-friendly title of the agreement (1-255 chars). Defaults to input name or "New document" if not provided in the request body.
+        agreement_data:
+          $ref: "#/components/schemas/AgreementTemplateData"
+    AgreementSummary:
+      type: object
+      required:
+        - id
+        - name
+        - created_at
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the agreement.
+        name:
+          type: string
+          description: The name of the agreement.
+        preview_url:
+          type: string
+          format: uri
+          description: The URL to preview the agreement in the browser.
+        created_at:
+          type: integer
+          format: unix-epoch
+          description: The time the agreement was created (Unix timestamp in milliseconds).
+        linked_objects:
+          type: array
+          description: CRM or external objects linked to the agreement.
+          items:
+            $ref: "#/components/schemas/LinkedObject"
     Error:
       type: object
       required:
@@ -1406,5 +1753,7 @@ components:
       properties:
         error_code:
           type: string
+          description: The system error code.
         error_message:
           type: string
+          description: The human-readable error message.

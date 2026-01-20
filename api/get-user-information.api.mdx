@@ -23,41 +23,78 @@ import Heading from "@theme/Heading";
   as={"h1"}
   className={"openapi__heading"}
   children={"Get User Information"}
->
-</Heading>
+></Heading>
 
 <MethodEndpoint
   method={"get"}
   path={"/user/info"}
   context={"endpoint"}
->
-  
-</MethodEndpoint>
+></MethodEndpoint>
 
+Get information of current authorized user.
 
+<ParamsDetails parameters={undefined}></ParamsDetails>
 
-Get information of current user by API Key
-
-<ParamsDetails
-  parameters={undefined}
->
-  
-</ParamsDetails>
-
-<RequestSchema
-  title={"Body"}
-  body={undefined}
->
-  
-</RequestSchema>
+<RequestSchema title={"Body"} body={undefined}></RequestSchema>
 
 <StatusCodes
   id={undefined}
   label={undefined}
-  responses={{"200":{"description":"Expected response to a valid request","content":{"application/json":{"schema":{"type":"object","required":["user"],"properties":{"user":{"description":"Contains information about a User.","type":"object","required":["email","id","name"],"properties":{"id":{"type":"string"},"email":{"type":"string"},"name":{"type":"string"}},"title":"User"}}}}}},"4xx":{"description":"Unexpected error","content":{"application/json":{"schema":{"type":"object","required":["error_code","error_message"],"properties":{"error_code":{"type":"string"},"error_message":{"type":"string"}},"title":"Error"}}}}}}
->
-  
-</StatusCodes>
-
-
-      
+  responses={{
+    "200": {
+      description: "Returns the information of the current user.",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            required: ["user"],
+            properties: {
+              user: {
+                description: "Returns information about the current user.",
+                type: "object",
+                required: ["email", "id", "name"],
+                properties: {
+                  id: {
+                    type: "string",
+                    description: "Unique identifier of the user.",
+                  },
+                  email: {
+                    type: "string",
+                    description: "Email address of the user.",
+                  },
+                  name: {
+                    type: "string",
+                    description: "Name of the user.",
+                  },
+                },
+                title: "User",
+              },
+            },
+          },
+        },
+      },
+    },
+    "4xx": {
+      description: "Unexpected error",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            required: ["error_code", "error_message"],
+            properties: {
+              error_code: {
+                type: "string",
+                description: "The system error code.",
+              },
+              error_message: {
+                type: "string",
+                description: "The human-readable error message.",
+              },
+            },
+            title: "Error",
+          },
+        },
+      },
+    },
+  }}
+></StatusCodes>

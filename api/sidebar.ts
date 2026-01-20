@@ -8,6 +8,29 @@ const sidebar: SidebarsConfig = {
     },
     {
       type: "category",
+      label: "Agreements",
+      collapsed: true,
+      link: {
+        type: "doc",
+        id: "agreements",
+      },
+      items: [
+        {
+          type: "doc",
+          id: "create-agreement",
+          label: "Create Agreement",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "get-agreement-file",
+          label: "Get Agreement File",
+          className: "api-method get",
+        },
+      ],
+    },
+    {
+      type: "category",
       label: "Signature Requests",
       collapsed: true,
       link: {
@@ -25,6 +48,12 @@ const sidebar: SidebarsConfig = {
           type: "doc",
           id: "send-signature-request",
           label: "Send Signature Request",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "send-signature-request-from-template",
+          label: "Send Signature Request from Template",
           className: "api-method post",
         },
         {

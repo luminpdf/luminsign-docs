@@ -23,50 +23,209 @@ import Heading from "@theme/Heading";
   as={"h1"}
   className={"openapi__heading"}
   children={"Get Template Details"}
->
-</Heading>
+></Heading>
 
 <MethodEndpoint
   method={"get"}
   path={"/templates/{template_id}"}
   context={"endpoint"}
->
-  
-</MethodEndpoint>
-
-
+></MethodEndpoint>
 
 Returns essential template details for a specific template.
-
 
 <Heading
   id={"request"}
   as={"h2"}
   className={"openapi-tabs__heading"}
   children={"Request"}
->
-</Heading>
+></Heading>
 
 <ParamsDetails
-  parameters={[{"in":"path","name":"template_id","schema":{"type":"string"},"required":true,"description":"ID of the template to get"}]}
->
-  
-</ParamsDetails>
+  parameters={[
+    {
+      in: "path",
+      name: "template_id",
+      schema: { type: "string" },
+      required: true,
+      description: "ID of the template.",
+    },
+  ]}
+></ParamsDetails>
 
-<RequestSchema
-  title={"Body"}
-  body={undefined}
->
-  
-</RequestSchema>
+<RequestSchema title={"Body"} body={undefined}></RequestSchema>
 
 <StatusCodes
   id={undefined}
   label={undefined}
-  responses={{"200":{"description":"Expected response to a valid request","content":{"application/json":{"schema":{"type":"object","properties":{"template_id":{"type":"string","description":"Unique identifier for the template"},"type":{"type":"string","description":"Template file type. One of: pdf, lumin","enum":["pdf","lumin"]},"name":{"type":"string","description":"Name of the template"},"signing_type":{"type":"string","description":"Defines how recipients are expected to sign:\n- ORDER: Signers sign in a specific sequence.\n- SAME_TIME: All signers can sign in parallel.\nAgreementGen and PDF templates currently only supports signing_type as SAME_TIME.\n","enum":["ORDER","SAME_TIME"]},"signer_roles":{"type":"array","description":"Describes the signer roles defined in the template.","items":{"type":"object","properties":{"name":{"type":"string","description":"A label for the role (e.g., \"Tenant\", \"Manager\")."},"group":{"type":"integer","description":"Indicates signing order group (e.g., 1 = sign first, 2 = sign second)."}}}},"tags":{"type":"array","description":"Merge tags embedded in the Sign template.\n","items":{"type":"object","properties":{"name":{"type":"string","description":"The label or identifier of the tag."},"type":{"type":"string","description":"Type of tag, one of: merge_tag, text_tag","enum":["merge_tag","text_tag"]},"is_required":{"type":"boolean","description":"Indicates whether the merge tag needs to be prefilled before the signature request can be completed."}}}},"fields":{"type":"array","description":"The form fields that appear in the template.","items":{"type":"object","properties":{"name":{"type":"string","description":"The label or identifier of the form field."},"type":{"type":"string","description":"Type of field, one of: text, checkbox","enum":["text","checkbox"]},"is_required":{"type":"boolean","description":"Indicates whether the assigned signer must complete the field before the signature request can be completed."},"assigned_role":{"type":"string","description":"The role (as defined in the template) to which this field is assigned. If not set, the field may not be linked to a specific role and will be dismissed during request creation."}}}},"variables":{"type":"array","description":"Variables that appear in the AgreementGen template.\n","items":{"type":"object","properties":{"name":{"type":"string","description":"The label or identifier of the variable."},"value":{"type":"string","description":"The value of the variable (optional, shown in examples)."}}}},"created_at":{"type":"integer","format":"unix-epoch","description":"The Unix timestamp when the template was first created."},"updated_at":{"type":"integer","format":"unix-epoch","description":"The Unix timestamp of the last update to the template."}},"title":"TemplateDetail"},"example":{"template_id":"sign_123456","type":"pdf","name":"Mutual NDA","signing_type":"ORDER","signer_roles":[{"name":"Tenant","group":1},{"name":"Client","group":2}],"tags":[{"name":"owner.name","type":"merge_tag","is_required":true}],"fields":[{"name":"hasCompleted","type":"checkbox","is_required":true,"assigned_role":"Tenant"}],"variables":[{"name":"Company.Name","value":"ACME Corp"},{"name":"Document.Name","value":"NDA Document"}],"created_at":1748456885430,"updated_at":1748456885430}}}},"4xx":{"description":"Unexpected error","content":{"application/json":{"schema":{"type":"object","required":["error_code","error_message"],"properties":{"error_code":{"type":"string"},"error_message":{"type":"string"}},"title":"Error"}}}}}}
->
-  
-</StatusCodes>
-
-
-      
+  responses={{
+    "200": {
+      description: "Returns the details of the template.",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            properties: {
+              template_id: {
+                type: "string",
+                description: "Unique identifier of the template.",
+              },
+              type: {
+                type: "string",
+                description: "Lumin template type. AgreementGen templates are `lumin` and PDF/Sign templates are `pdf`.",
+                enum: ["pdf", "lumin"],
+              },
+              name: { type: "string", description: "Name of the template." },
+              signing_type: {
+                type: "string",
+                description:
+                  "Defines how recipients are expected to sign:\n- `ORDER`: Signers sign in a specific sequence.\n- `SAME_TIME`: All signers can sign in parallel.\nAgreementGen and PDF templates currently only supports `signing_type` as `SAME_TIME`.",
+                enum: ["ORDER", "SAME_TIME"],
+              },
+              signer_roles: {
+                type: "array",
+                description:
+                  "Describes the signer roles defined in the template.",
+                items: {
+                  type: "object",
+                  properties: {
+                    name: {
+                      type: "string",
+                      description:
+                        'Name of the signer role (e.g., `Tenant`, `Manager`).',
+                    },
+                    group: {
+                      type: "integer",
+                      description:
+                        "Indicates signing order group (e.g., 1 = sign first, 2 = sign second).",
+                    },
+                  },
+                },
+              },
+              tags: {
+                type: "array",
+                description: "Merge tags embedded in the Sign template.",
+                items: {
+                  type: "object",
+                  properties: {
+                    name: {
+                      type: "string",
+                      description: "Name of the tag.",
+                    },
+                    type: {
+                      type: "string",
+                      description: "Type of the tag.",
+                      enum: ["merge_tag"],
+                    },
+                    is_required: {
+                      type: "boolean",
+                      description:
+                        "Indicates whether the merge tag needs to be prefilled before the signature request can be completed.",
+                    },
+                  },
+                },
+              },
+              fields: {
+                type: "array",
+                description: "Form fields that appear in the template.",
+                items: {
+                  type: "object",
+                  properties: {
+                    name: {
+                      type: "string",
+                      description: "Name of the form field.",
+                    },
+                    type: {
+                      type: "string",
+                      description: "Type of the form field.",
+                      enum: ["text", "checkbox"],
+                    },
+                    is_required: {
+                      type: "boolean",
+                      description:
+                        "Indicates whether the assigned signer must complete the field before the signature request can be completed.",
+                    },
+                    assigned_role: {
+                      type: "string",
+                      description:
+                        "The role (as defined in the template) to which this field is assigned. If not set, the field may not be linked to a specific role and will be dismissed during request creation.",
+                    },
+                  },
+                },
+              },
+              variables: {
+                type: "array",
+                description:
+                  "Variables that appear in the AgreementGen template.",
+                items: {
+                  type: "object",
+                  properties: {
+                    name: {
+                      type: "string",
+                      description: "Name of the variable.",
+                    },
+                  },
+                },
+              },
+              created_at: {
+                type: "integer",
+                format: "unix-epoch",
+                description:
+                  "The Unix timestamp when the template was first created.",
+              },
+              updated_at: {
+                type: "integer",
+                format: "unix-epoch",
+                description:
+                  "The Unix timestamp of the last update to the template.",
+              },
+            },
+            title: "TemplateDetail",
+          },
+          example: {
+            template_id: "sign_123456",
+            type: "pdf",
+            name: "Mutual NDA",
+            signing_type: "ORDER",
+            signer_roles: [
+              { name: "Tenant", group: 1 },
+              { name: "Client", group: 2 },
+            ],
+            tags: [
+              { name: "owner.name", type: "merge_tag", is_required: true },
+            ],
+            fields: [
+              {
+                name: "hasCompleted",
+                type: "checkbox",
+                is_required: true,
+                assigned_role: "Tenant",
+              },
+            ],
+            variables: [
+              { name: "Company.Name" },
+              { name: "Document.Name" },
+            ],
+            created_at: 1748456885430,
+            updated_at: 1748456885430,
+          },
+        },
+      },
+    },
+    "4xx": {
+      description: "Unexpected error",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            required: ["error_code", "error_message"],
+            properties: {
+              error_code: { type: "string", description: "The system error code." },
+              error_message: { type: "string", description: "The human-readable error message." },
+            },
+            title: "Error",
+          },
+        },
+      },
+    },
+  }}
+></StatusCodes>
