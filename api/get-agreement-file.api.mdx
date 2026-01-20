@@ -1,0 +1,118 @@
+---
+id: get-agreement-file
+title: "Get Agreement File"
+description: "Obtain a downloadable file or binary PDF data from an AgreementGen document."
+sidebar_label: "Get Agreement File"
+hide_title: true
+hide_table_of_contents: true
+api: eJytVulu4zYQfpUBfyWAbDnZbLIQULQukk3TLrBBDrRoYiS0OLK4lkguSfmoIaAP0SfskxRD+ZKd7PbKD0cShzPfXN/Mggl0qZXGS61Ywj4OPZcKOAg9VYXmgg8LhEwWCNrCUCpu53B9/h4E9xwyq0vgCvoji1ii8peoQOi0oufuo2IRc5hWVvo5Sx4WrG/kT0iPgzpasO+RW7T9yufhyyBino8cSx7YWp9jg4gZbnmJHq0LSiThNNznLGKKl8gSxlfyT1KQzTTHkrNkwfzc0LnzVqoRqyNm8XMlLQqWeFthtOP91TnoDHyOr3jECKRFZ7Ry6MjAca9H/9pqbtBXVrmg6G/F8ctGI5Zq5VF5ssSNKWTKyVL8yZG5xb6/evgJU88iZqw2aL1swDo5UiieKlvsxyZimbYl9yxhlZVsNzK34Sr8cHd3fQv3Nx/A67VrAfs6BcHJLlzMjLToQCp404NSqsqj61IKsDl54n4LhVQeR2hbMJScddDoNN9Dc6/kDMIReFmi87w0cCAVOEy1Eu4QpBIhSmoE0xwVPG98f4apLApQGgqtRmhhqu24y+o6YOOlKXA3WCz33rgkjsk31y2qUiojsm6qy3gVhXgdgQ4fpkfHb7pGZN8unf3muHf8ttN71zk+uTvqJSdvk17vV9aOxdHZ6enZ8elZj/4IzHaqjchezPR+9praokC/XJQ7tdf4fTKb7ZfxvcKZwdSjALRW2/9SiJu+e2BB2VOqBVIEwkuJzvERhm5vleyW7Evt3L69L1FHzEtPCWUXwYW6Dv6W6HMtWMJGGNqE2CRhmxS6eLHNKXVIfGAzO1nxULsyuJHtupgc7ZXttdWiSukFGkWMaHBPT8dxJYZ69lV9t43cWtlgQ7e3lIkmhCvSXQeHNx+ihklz5CI03pJLf+n0r686jcAe/IkUCHNdWehfX8EY59Tf1P7PROPayt9CQTxDozUC7I660c5pQpc7Y5w/04ioo9YgWKOkgKy4nN6HQejLoLweo/p3kBoM8OPPdw2qmsKTaQJEGW+MHXV73R7b1NQHSlAIxQ1maFGluAfwLkd4QQ5MA9wBh1SXxmKOyskJgkMfBoLWhSOaDdRoucf1SAiMlRV66uDP3/8AqdKiEkR1KCRRXgRIfM19ZdFFwJUAXnldBleXV7xuQrbVxq77qB7VvcOsKqCQauySR9WBh/OV2Rs02kmv7XxwsKrXkfR5NQwVuirX5oH4syN06g6DEnL+HDOpJJn6J/fjYaGHccmlirVBRY0252WxVFv5HJVfegCXlRQ4OIjDPW5kzFvn8WHYSTza0n3MbtFOZIpbzTedTttNFyQ7OutUDuMl//E08N+yXciv28oYbYlIsOSyWI0zG2x+t62QRTvtnmNhWiZD5RntfMnVlplL9Jv1AN43bNQqtMWGnP//LW7Zkx5nPjYFl6Ftl3tEQ54PmyXMsYglOytZ4M9BxHLtPAkvFkPu8N4WdU2fP1dow14YsQm3kuAGjhXS0bNgScYLt7uvbbt8cLOcMIfw1S3uFX9W9KiI+ia8qOiNRWxM7NneMetBHa2Yk3A2Iv00ReO3Lu/NSKLo9ey5vLhjEeNt2uNGjgP3Lh9I+4vAtnm6MU+/NFBeFF8sGtqv67V8c/TqjfVgaKQpRoO6rv8Cxb8+1Q==
+sidebar_class_name: "get api-method"
+info_path: api/lumin-api-reference
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get Agreement File"}
+></Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/agreements/{agreement_id}/file"}
+  context={"endpoint"}
+></MethodEndpoint>
+
+Obtain a downloadable file or binary PDF data from an AgreementGen document.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+></Heading>
+
+<ParamsDetails
+  parameters={[
+    {
+      in: "path",
+      name: "agreement_id",
+      schema: { type: "string" },
+      required: true,
+      description: "ID of the AgreementGen document.",
+    },
+  ]}
+></ParamsDetails>
+
+<RequestSchema title={"Body"} body={undefined}></RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{
+    "200": {
+      description:
+        "Returns the downloadable file or binary PDF data of the AgreementGen document.",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            properties: {
+              signed_url: {
+                type: "string",
+                format: "uri",
+                description:
+                  "Signed HTTPS URL to download the agreement file. Expires in 30 minutes.",
+              },
+              expires_at: {
+                type: "integer",
+                format: "unix-epoch",
+                description:
+                  "Unix epoch timestamp (in seconds) indicating when `signed_url` will no longer work.",
+              },
+            },
+          },
+          example: {
+            signed_url:
+              "https://files.luminpdf.com/download/agreement-abc123.pdf?expires=2025-08-24T10:45:00Z",
+            expires_at: 1766726700000,
+          },
+        },
+        "application/pdf": {
+          schema: { type: "string", format: "binary" },
+          description: "Returns binary PDF data",
+        },
+      },
+    },
+    "4xx": {
+      description: "Unexpected error",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            required: ["error_code", "error_message"],
+            properties: {
+              error_code: {
+                type: "string",
+                description: "The system error code.",
+              },
+              error_message: {
+                type: "string",
+                description: "The human-readable error message.",
+              },
+            },
+            title: "Error",
+          },
+        },
+      },
+    },
+  }}
+></StatusCodes>

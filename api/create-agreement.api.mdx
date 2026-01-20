@@ -1,0 +1,244 @@
+---
+id: create-agreement
+title: "Create Agreement"
+description: "Create a new AgreementGen document from a AgreementGen template."
+sidebar_label: "Create Agreement"
+hide_title: true
+hide_table_of_contents: true
+api: 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
+sidebar_class_name: "post api-method"
+info_path: api/lumin-api-reference
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Create Agreement"}
+></Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/agreements"}
+  context={"endpoint"}
+></MethodEndpoint>
+
+Create a new AgreementGen document from a AgreementGen template.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+></Heading>
+
+<ParamsDetails parameters={undefined}></ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{
+    content: {
+      "application/json": {
+        schema: {
+          type: "object",
+          required: ["method", "agreement_data"],
+          properties: {
+            method: {
+              type: "string",
+              enum: ["template"],
+              description: "Must be set to `template`.",
+            },
+            agreement_name: {
+              type: "string",
+              minLength: 1,
+              maxLength: 255,
+              description:
+                'Human-friendly title of the agreement (1-255 chars). Defaults to input name or "New document" if not provided in the request body.\n',
+            },
+            agreement_data: {
+              type: "object",
+              required: ["template_id"],
+              properties: {
+                template_id: {
+                  type: "string",
+                  description:
+                    "Unique identifier of the AG template. Obtainable from the template list API.",
+                },
+                variables: {
+                  type: "object",
+                  description:
+                    "Key-value map of Variables in the template. Pass values for the variables to render them into the created document or leave values blank to make them available for insertion later.\n",
+                },
+                fields: {
+                  type: "object",
+                  description:
+                    "Key-value pairs for Form Fields defined in the template. Keys must match field names. Values prefill the corresponding form fields in the generated document. Currently supports: `text` and `checkbox` fields.\n",
+                },
+                linked_objects: {
+                  type: "array",
+                  description:
+                    "CRM or external objects linked to the agreement.",
+                  items: {
+                    type: "object",
+                    properties: {
+                      integration: {
+                        type: "string",
+                        description:
+                          "The external system or integration where the linked object lives. Example: `salesforce`, `hubspot`.\n",
+                      },
+                      entity_type: {
+                        type: "string",
+                        description:
+                          "The type of the linked object in that provider's data model. Example: `opportunity`, `contact`, `deal`.\n",
+                      },
+                      record_id: {
+                        type: "string",
+                        description:
+                          "The unique identifier of the linked object in the provider system. Example: `0065g00000Vh123ABC` (Salesforce record ID).\n",
+                      },
+                      reference_url: {
+                        type: "string",
+                        format: "uri",
+                        description:
+                          "The reference URL of the linked object in the provider system.",
+                      },
+                    },
+                    title: "LinkedObject",
+                  },
+                },
+              },
+              title: "AgreementTemplateData",
+            },
+          },
+          title: "AgreementCreateRequest",
+        },
+        example: {
+          method: "template",
+          agreement_name: "NDA Agreement",
+          agreement_data: {
+            template_id: "ag_12312321",
+            fields: {
+              "Client.Name": "Acme Corp",
+              "Document.EffectiveDate": "2025-08-01",
+            },
+            variables: {
+              "Client.Name": "Acme Corp",
+              "Document.EffectiveDate": "2025-08-01",
+            },
+            linked_objects: [
+              {
+                integration: "salesforce",
+                entity_type: "opportunity",
+                record_id: "0065g00000Vh123ABC",
+                reference_url:
+                  "https://lumin-uat-dev-ed.develop.lightning.force.com/lightning/r/Account/001QE00000eDhhjYAC/view",
+              },
+            ],
+          },
+        },
+      },
+    },
+  }}
+></RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{
+    "201": {
+      description:
+        "Returns the information of the created AgreementGen document.",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            required: ["id", "name", "created_at"],
+            properties: {
+              id: {
+                type: "string",
+                description: "The unique identifier for the agreement.",
+              },
+              name: {
+                type: "string",
+                description: "The name of the agreement.",
+              },
+              preview_url: {
+                type: "string",
+                format: "uri",
+                description: "The URL to preview the agreement in the browser.",
+              },
+              created_at: {
+                type: "integer",
+                format: "unix-epoch",
+                description:
+                  "The time the agreement was created (Unix timestamp in milliseconds).",
+              },
+              linked_objects: {
+                type: "array",
+                description: "CRM or external objects linked to the agreement.",
+                items: {
+                  type: "object",
+                  properties: {
+                    integration: {
+                      type: "string",
+                      description:
+                        "The external system or integration where the linked object lives. Example: `salesforce`, `hubspot`.\n",
+                    },
+                    entity_type: {
+                      type: "string",
+                      description:
+                        "The type of the linked object in that provider's data model. Example: `opportunity`, `contact`, `deal`.\n",
+                    },
+                    record_id: {
+                      type: "string",
+                      description:
+                        "The unique identifier of the linked object in the provider system. Example: `0065g00000Vh123ABC` (Salesforce record ID).\n",
+                    },
+                    reference_url: {
+                      type: "string",
+                      format: "uri",
+                      description:
+                        "The reference URL of the linked object in the provider system.",
+                    },
+                  },
+                  title: "LinkedObject",
+                },
+              },
+            },
+            title: "AgreementSummary",
+          },
+        },
+      },
+    },
+    "4xx": {
+      description: "Unexpected error",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            required: ["error_code", "error_message"],
+            properties: {
+              error_code: {
+                type: "string",
+                description: "The system error code.",
+              },
+              error_message: {
+                type: "string",
+                description: "The human-readable error message.",
+              },
+            },
+            title: "Error",
+          },
+        },
+      },
+    },
+  }}
+></StatusCodes>
