@@ -12,11 +12,9 @@ When a webhook event is triggered, Lumin sends an **HTTP POST request** with a J
 
 ## Types of webhooks in Lumin
 
-Lumin currently supports **Account-level webhooks**
-    - Configured once at the **Workspace level** (Workspace Owner sets it under **API Key → Account callback**).
-    - Covers all users and events in the Workspace, **independent of which API key or user initiated them**.
-    - Events (e.g., `signature_request_created`, `signature_request_viewed`) are always validated using the **Primary API key**.
-    - **Use case**: Internal tools, single-tenant systems, full Workspace monitoring.
+Lumin currently supports **Account-level webhooks** and **App-level webhooks**
+    - **Account-level webhooks**: Configured once at the **Workspace level** (Workspace Owner sets it under **API Key → Account callback**). Covers all users and events in the Workspace, **independent of which API key or user initiated them**.
+    - **App-level webhooks**: Configured once at the **App level** (App Owner sets it under **Developer settings → Integration apps → App webhook**). Events are limited to the **scopes** granted during OAuth authorization.
 
 ## How the event flow works
 
@@ -123,9 +121,10 @@ Our webhook delivery system implements robust retry mechanisms to ensure reliabl
 - **Verify signatures**: Always validate webhook authenticity
 
 ## Event subscription rules
-
-**By default, Account webhook URLs subscribe to all supported events automatically** - there's no opt-out mechanism.
+- App webhook URLs subscribe to supported events limited to the **scopes** granted during OAuth authorization.
+- Account webhook URLs subscribe to all supported events.
 
 ## Next steps
 
 - See **[Account Webhooks](/docs/api/webhooks/account-callbacks)** for details on configuring Account-level callbacks.
+- See **[App Webhooks](/docs/api/webhooks/app-callbacks)** for details on configuring App-level callbacks.

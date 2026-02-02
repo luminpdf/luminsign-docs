@@ -1,0 +1,37 @@
+---
+title: Overview
+sidebar_position: 1
+---
+
+# Authentication overview
+
+## Overview
+
+Before your app can access Lumin data or interact with Lumin APIs, you need to authenticate your requests.
+
+Lumin currently supports the following authentication methods:
+
+### API key authentication
+- Simple to set up, intended for server-to-server communication.
+- Issued by Workspace Owners via the Lumin Developer Setting page.
+- Best suited for trusted backend jobs, cron tasks, or integrations without user involvement.
+
+### OAuth 2.0 authorization code flow
+- Recommended for applications where end-users need to grant access to their Lumin data.
+- Provides granular permissions via **scopes**.
+- Supports two client types:
+  - **Public Application (with PKCE)** – for mobile apps, SPAs, and desktop apps that cannot safely store secrets.
+  - **Private/Server Application** – for secure servers that can keep client secrets safe.
+
+## Choosing the right method
+
+| Use case | Recommended method |
+|----------|-------------------|
+| Scheduled backend job (no user interaction) | API Key or OAuth 2.0 Private Authorization Code |
+| Web app where users sign in and provide consent | OAuth 2.0 Private Authorization Code |
+| Mobile/SPA app | OAuth 2.0 Public Authorization Code with PKCE |
+| Quick testing | API Key |
+
+### Useful links
+- [API key authentication](/docs/api/authentication/api-key-authentication/)
+- [OAuth 2.0 authentication](/docs/api/category/oauth-20-authentication/)

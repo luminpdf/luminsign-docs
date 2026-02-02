@@ -8,8 +8,6 @@ sidebar_label: Account Webhooks
 
 The **account-level webhook** notifies you of events happening across your entire Workspace. It is configured under your Workspace’s Developer Settings and secured with your Primary API key.
 
-This model is best for **single-tenant integrations**, such as internal tools, where a Workspace admin wants centralized visibility of all activity.
-
 ## Setting up Account webhooks
 :::info
 Only the **Workspace Owner** can create or update the Webhook URL.
@@ -21,9 +19,9 @@ To configure Account webhooks:
 2. Enter your webhook URL (HTTPS required).
 3. Click **Save** button.
 
-![image](../img/account-callback.png)
+![image](./img/account-callback.png)
 
-## Receiving Events
+## Receiving events
 
 Once your Account webhook is configured, Lumin will automatically send **HTTP POST requests** to your endpoint when events occur.
 
@@ -61,7 +59,7 @@ json='{"event": { "event_time": 1694664207595, "event_type": "signature_request_
 echo -n $json | openssl dgst -sha256 -hmac $api_key (X-Signature = 3810cb411041efab279d31698b9584372e5ede9d1641fbb354810f16e51be81c)
 ```
 
-## Respond to Events
+## Respond to events
 
 Your webhook endpoint must respond appropriately to ensure reliable event delivery:
 

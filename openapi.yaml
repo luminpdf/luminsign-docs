@@ -656,13 +656,24 @@ paths:
                 $ref: "#/components/schemas/Error"
   /documents:
     post:
-      summary: Upload Document
+      summary: Create Document
       description: |
-        Upload a document to the user's Workspace.
+        Create and save a PDF file in the user's Workspace.
+
+        The document can be created using one of two methods:
+        - **file-upload** — Import from a file (PDF or other supported formats).
+        - **template** — Create from a PDF template (only templates with `pdf_` prefix are supported).
+
         The document can be saved to:
         - The Workspace's shared document list, optionally inside a folder
         - A specific Space's shared document list, optionally inside a folder
         - The user's Personal document list
+
+        **Supported file formats (for file-upload):** PDF, DOCX, XLSX, PPTX, DOC, XLS, PNG, JPEG/JPG
+
+        **File size limits:**
+        - Free plans: 20 MB
+        - Paid plans: 200 MB
       security:
         - ApiKey: []
         - BearerAuth: []
@@ -673,14 +684,30 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/DocumentCreateRequest"
-            example:
-              method: file-upload
-              document_name: Patient Form
-              location:
-                type: workspace
-                folder_id: "123456"
-              document_data:
-                file_url: https://files.luminpdf.com/download/nda-acmecorp-abc123.pdf
+            examples:
+              file-upload:
+                summary: Create document from file URL
+                value:
+                  method: file-upload
+                  document_name: Patient Form
+                  location:
+                    type: workspace
+                    folder_id: "123456"
+                  document_data:
+                    file_url: https://files.luminpdf.com/download/nda-acmecorp-abc123.pdf
+              template:
+                summary: Create document from PDF template
+                value:
+                  method: template
+                  document_name: Patient Information Form
+                  location:
+                    type: workspace
+                    folder_id: "123456"
+                  document_data:
+                    template_id: pdf_12312321
+                    fields:
+                      Client.Name: Acme Corp
+                      Document.EffectiveDate: "2025-08-01"
           multipart/form-data:
             schema:
               $ref: "#/components/schemas/DocumentCreateRequest"
@@ -690,7 +717,19 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/DocumentSummary"
+              example:
+                id: "doc_abc123def456"
+                name: Patient Form
+                created_at: 1748456885430
+                updated_at: 1748456885430
+                location:
+                  type: workspace
+                  workspace_id: "123456"
+                  folder_id: "789"
+                size: 245678
+                mime_type: application/pdf
+                preview_url: "https://app.luminpdf.com/viewer/doc_abc123def456"
         "4xx":
           description: Unexpected error
           content:
@@ -1466,22 +1505,37 @@ components:
           enum: [personal, space, workspace]
         space_id:
           type: string
-          description: ID of a specific Space in the Workspace. Required if type = space
+          description: ID of a specific Space in the Workspace. Required if `type` = `space`.
         folder_id:
           type: string
           description: ID of a specific folder within the chosen location.
-    DocumentData:
+    DocumentDataFileUpload:
       type: object
-      description: Method-specific payload. Schema depends on the method chosen.
+      description: Payload for file-upload method.
       properties:
         file:
           type: string
           format: binary
-          description: Upload binary file (PDF). Required if file_url not provided
+          description: Upload binary file. Required if `file_url` not provided.
         file_url:
           type: string
           format: uri
-          description: HTTPS URL to download the source file. Required if file not provided
+          description: HTTPS URL to download the source file. Required if `file` not provided.
+    DocumentDataTemplate:
+      type: object
+      description: Payload for template method. Only PDF templates (template_id with `pdf_` prefix) are supported.
+      required:
+        - template_id
+      properties:
+        template_id:
+          type: string
+          description: |
+            Unique identifier of the PDF template. Obtainable from the Template list API.
+            Only PDF templates (IDs starting with `pdf_` prefix) are supported for document creation.
+        fields:
+          type: object
+          description: |
+            Key–value pairs for **Form Fields** defined in the template. Keys must match field names. Values prefill the corresponding form fields in the generated document. Currently supports: **checkbox, text field**.
     DocumentCreateRequest:
       type: object
       required:
@@ -1492,8 +1546,11 @@ components:
       properties:
         method:
           type: string
-          description: Creation method. Must be `file-upload`.
-          enum: [file-upload]
+          description: |
+            Creation method. One of:
+            - `file-upload` — import from a file (PDF or other supported formats).
+            - `template` — create from a PDF template.
+          enum: [file-upload, template]
         document_name:
           type: string
           minLength: 1
@@ -1502,7 +1559,70 @@ components:
         location:
           $ref: "#/components/schemas/DocumentLocation"
         document_data:
-          $ref: "#/components/schemas/DocumentData"
+          oneOf:
+            - $ref: "#/components/schemas/DocumentDataFileUpload"
+            - $ref: "#/components/schemas/DocumentDataTemplate"
+          description: |
+            Method-specific payload. Schema depends on the `method` chosen:
+            - For `file-upload`: Use `DocumentDataFileUpload` schema.
+            - For `template`: Use `DocumentDataTemplate` schema.
+    DocumentSummary:
+      type: object
+      required:
+        - id
+        - name
+        - created_at
+        - updated_at
+        - location
+        - size
+        - mime_type
+        - preview_url
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the document in Lumin.
+        name:
+          type: string
+          description: Human-friendly name of the document.
+        created_at:
+          type: integer
+          format: unix-epoch
+          description: Unix timestamp (milliseconds) when the document was created.
+        updated_at:
+          type: integer
+          format: unix-epoch
+          description: Unix timestamp (milliseconds) when the document was last updated.
+        location:
+          type: object
+          description: Where the document is stored.
+          properties:
+            type:
+              type: string
+              description: |
+                One of:
+                - `workspace` — Workspace's shared document list
+                - `space` — Space's shared document list
+                - `personal` — Personal document list
+              enum: [workspace, space, personal]
+            workspace_id:
+              type: string
+              description: ID of the Workspace that owns this document (derived from the auth token).
+            space_id:
+              type: string
+              description: ID of the Space that contains the document if `location.type` is `space`. Blank otherwise.
+            folder_id:
+              type: string
+              description: ID of the folder that contains the document, if any. Blank otherwise.
+        size:
+          type: integer
+          description: Size of the PDF file in bytes.
+        mime_type:
+          type: string
+          description: MIME type of the file (e.g. `application/pdf`).
+        preview_url:
+          type: string
+          format: uri
+          description: URL to open the document in Lumin's viewer.
     SignatureRequestUpdateRequest:
       type: object
       required:

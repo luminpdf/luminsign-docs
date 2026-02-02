@@ -5,6 +5,36 @@ sidebar_position: 5
 
 This changelog lists all additions and updates to the Lumin API.
 
+### February 01, 2026
+#### Added
+- Add `template` method to [Create Document](/api/create-document) endpoint, allowing document creation from PDF templates (template IDs with `pdf_` prefix).
+- Add documents for OAuth 2.0 authorization flow.
+
+### January 20, 2026
+#### Added
+- Add [Send Signature Request from Template](/api/send-signature-request-from-template) endpoint to create signature requests from templates.
+- Add [Create Agreement](/api/create-agreement) endpoint to create AgreementGen documents from templates.
+- Add [Get Agreement File](/api/get-agreement-file) endpoint to download AgreementGen documents.
+
+### January 19, 2026
+#### Added
+- Add [Send Reminder Emails](/api/send-reminder-emails) endpoint to send reminder emails to signers who haven't signed yet.
+
+### January 07, 2026
+#### Added
+- Add [Update Signature Request](/api/update-signature-request) endpoint to update the due date of existing signature requests.
+- Add [Get Template Details](/api/get-template-details) endpoint to retrieve template information including signer roles, tags, and fields.
+- Add [Upload Document](/api/upload-document) endpoint to upload documents to a Workspace.
+- Add [Get Workspace Information](/api/get-workspace-information) endpoint to retrieve Workspace details.
+- Add [Get Workspace Members](/api/get-workspace-members) endpoint to list members in a Workspace.
+
+### October 10, 2025
+#### Added
+- Add [Get Signature Request File](/api/get-signature-request-file) endpoint with support for multiple file types:
+  - `agreement` — The completed/signed agreement PDF
+  - `coc` — The Certificate of Completion PDF
+  - `merged` — A single PDF combining agreement and CoC
+
 ### September 08, 2025
 #### Added
 - Add Get Templates endpoint to [Template](/api/template/).
