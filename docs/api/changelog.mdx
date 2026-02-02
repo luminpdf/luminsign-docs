@@ -5,10 +5,41 @@ sidebar_position: 5
 
 This changelog lists all additions and updates to the Lumin API.
 
+### February 01, 2026
+#### Added
+- Add `template` method to [Create Document](/api/create-document) endpoint, allowing document creation from PDF templates (template IDs with `pdf_` prefix).
+- Add documents for OAuth 2.0 authorization flow.
+
+### January 20, 2026
+#### Added
+- Add [Send Signature Request from Template](/api/send-signature-request-from-template) endpoint to create signature requests from templates.
+- Add [Create Agreement](/api/create-agreement) endpoint to create AgreementGen documents from templates.
+- Add [Get Agreement File](/api/get-agreement-file) endpoint to download AgreementGen documents.
+
+### January 19, 2026
+#### Added
+- Add [Send Reminder Emails](/api/send-reminder-emails) endpoint to send reminder emails to signers who haven't signed yet.
+
+### January 07, 2026
+#### Added
+- Add [Update Signature Request](/api/update-signature-request) endpoint to update the due date of existing signature requests.
+- Add [Get Template Details](/api/get-template-details) endpoint to retrieve template information including signer roles, tags, and fields.
+- Add [Create Document](/api/create-document) endpoint to create documents from file upload.
+- Add [Get Workspace Information](/api/get-workspace-information) endpoint to retrieve Workspace details.
+- Add [Get Workspace Members](/api/get-workspace-members) endpoint to list members in a Workspace.
+- Add `signature_request_due_date_updated` event to [Signature Request Events](/docs/api/webhooks/webhook-overview/#event-types-and-retry-rules).
+
+### October 10, 2025
+#### Added
+- Add [Get Signature Request File](/api/get-signature-request-file) endpoint with support for multiple file types:
+  - `agreement` — The completed/signed agreement PDF
+  - `coc` — The Certificate of Completion PDF
+  - `merged` — A single PDF combining agreement and CoC
+
 ### September 08, 2025
 #### Added
-- Add Get Templates endpoint to [Template](/api/template/).
-- Add Generate Document from Template endpoint to [Template](/api/template/).
+- Add [List Templates](/api/list-templates) endpoint.
+- Add [Generate Document from Template](/api/generate-document-from-template) endpoint.
 - Add Create PDF from Template walkthrough.
 
 
@@ -18,13 +49,13 @@ This changelog lists all additions and updates to the Lumin API.
 
 ### April 03, 2024
 #### Added
-- Cancel Signature Request ([Cancel Signature Request](/api/cancel-signature-request))
+- Add [Cancel Signature Request](/api/cancel-signature-request) endpoint.
 - Add `signature_request_canceled` and `signature_request_cancel_failed` events to [Signature Request Events](/docs/api/webhooks/webhook-overview/#event-types-and-retry-rules).
 
 ### February 26, 2024
 #### Added
-- Download Signature Request as File URL ([Download File as File URL](/api/download-file-as-file-url/))
-- Download Signature Request as File ([Download File](/api/download-file/))
+- Add [Download File as File URL](/api/download-file-as-file-url) endpoint.
+- Add [Download File](/api/download-file) endpoint.
 
 ### January 10, 2024
 To enhance the flexibility of the Signature Request process, two new parameters have been introduced:
@@ -58,6 +89,6 @@ ex: [text|noreq|signer1|Label|UniqueId]
 ### October 26, 2023
 #### Added
 - Create API Key from **Developer Settings page**. For more information, see [Authentication](/docs/api/authentication/).
-- Send Signature Request ([Send Signature Request](/api/send-signature-request))
-- Get Signature Request ([Get Signature Request](/api/get-signature-request))
-- Get user info ([Get User Info](/api/get-user-information))
+- Add [Send Signature Request](/api/send-signature-request) endpoint.
+- Add [Get Signature Request](/api/get-signature-request) endpoint.
+- Add [Get User Info](/api/get-user-information) endpoint.

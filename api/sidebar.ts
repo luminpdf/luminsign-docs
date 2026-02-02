@@ -151,8 +151,8 @@ const sidebar: SidebarsConfig = {
       items: [
         {
           type: "doc",
-          id: "upload-document",
-          label: "Upload Document",
+          id: "create-document",
+          label: "Create Document",
           className: "api-method post",
         },
       ],

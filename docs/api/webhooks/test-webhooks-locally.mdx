@@ -54,7 +54,7 @@ ngrok http 3000
 
 You will see something similar to the following console UI in your terminal.
 
-![image](../img/ngrok_example.png)
+![image](./img/ngrok_example.png)
 
 Replace `3000` with the port number your local server is using. ngrok will start and display the session's information in your terminal, including the public URL(s) that ngrok has generated for your local server (e.g., ` https://reinaldo-unglorifying.ngrok-free.dev`).
 
@@ -72,7 +72,7 @@ Replace `3000` with the port number your local server is using. ngrok will start
 
 For example, if the ngrok URL is `https://reinaldo-unglorifying.ngrok-free.dev` and your webhook handler path is `/webhook`, set the Account Callback URL to `https://reinaldo-unglorifying.ngrok-free.dev/webhook`.
 
-![image](../img/account-callback.png)
+![image](./img/account-callback.png)
 
 ## Step 5: Testing the webhook
 
@@ -84,7 +84,7 @@ For example, if you're testing the `signature_request_created` event:
 2. Watch your terminal for the webhook request
 3. You should see the webhook payload logged in your console
 
-![image](../img/callback_success_example.png)
+![image](./img/callback_success_example.png)
 
 
 ## Webhook payload example
