@@ -985,10 +985,6 @@ components:
         name:
           type: string
           description: Name of the signer.
-        group:
-          type: string
-          description: |
-            The signing order of signer for signature request with `signing_type` is ORDER. Required if `signing_type` is ORDER. Group starts at 1. Only signers in first group will receive email/notification, signers in subsequent groups will receive email/notification when all signers in previous group has signed.
         signer_role:
           type: string
           description: |
@@ -1035,8 +1031,10 @@ components:
       properties:
         email_address:
           type: string
+          description: Email address of the viewer.
         name:
           type: string
+          description: Name of the viewer.
     SignatureRequest:
       type: object
       required:
