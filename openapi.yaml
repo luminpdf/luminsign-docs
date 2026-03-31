@@ -175,6 +175,76 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /signature_request/{signature_request_id}/signing-link:
+    post:
+      operationId: get-signing-link
+      summary: Get Signing Link
+      description: |
+        Returns a signing link for an existing signature request. This enables presenting signing links within your own applications (mobile apps, web portals, etc.) instead of relying solely on email-based signing flows.
+      security:
+        - ApiKey: []
+        - BearerAuth: []
+      tags:
+        - Signature Requests
+      parameters:
+        - in: path
+          name: signature_request_id
+          schema:
+            type: string
+          required: true
+          description: ID of the signature request.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - signer_email
+              properties:
+                signer_email:
+                  type: string
+                  format: email
+                  description: Email address of the signer whose signing link should be generated.
+            example:
+              signer_email: tenant@example.com
+      responses:
+        "200":
+          description: Signing link generated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - view_url
+                  - signer_email
+                  - status
+                properties:
+                  view_url:
+                    type: string
+                    description: The signing URL that the signer can use to view and sign the document.
+                  signer_email:
+                    type: string
+                    description: Email address of the signer.
+                  status:
+                    type: string
+                    description: Current signing status of the signer.
+                    enum:
+                      - NEED_TO_SIGN
+                      - APPROVED
+                      - WAITING_FOR_OTHERS
+                      - REJECTED
+                      - FAILED
+                      - WAITING_FOR_PROCESSING
+              example:
+                view_url: "https://sign.luminpdf.com/auth?mode=view-contract&token=8647b08b..."
+                signer_email: tenant@example.com
+                status: NEED_TO_SIGN
+        "4xx":
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /signature_request/cancel/{signature_request_id}:
     put:
       summary: Cancel Signature Request
@@ -1012,7 +1082,16 @@ components:
                 claims:
                   type: array
                   description: |
-                    The specific attributes requested from the credential. Required when the `verification` object is present. Required claims (always): `given_name` - Signer's name as input by sender validated against verified name on credential, `family_name` - Signer's family name as input by sender validated against verified name on credential. Optional claims: `issuing_country` - Country where the credential was issued, `issuing_authority` - The issuing authority that ties to the root certificate which was used to sign the DSC, `document_number` - The ID/number of the credential
+                    The specific attributes requested from the credential. Required when the `verification` object is present.
+
+                    **Required claims**:
+                    - `given_name` - Signer's name as input by sender validated against verified name on credential
+                    - `family_name` - Signer's family name as input by sender validated against verified name on credential
+
+                    **Optional claims**:
+                    - `issuing_country` - Country where the credential was issued
+                    - `issuing_authority` - The issuing authority that ties to the root certificate which was used to sign the Digital Signature Certificate
+                    - `document_number` - The ID/number of the credential
                   items:
                     type: string
                     enum:
@@ -1091,8 +1170,10 @@ components:
             properties:
               email_address:
                 type: string
+                description: Email address of the signer.
               name:
                 type: string
+                description: Name of the signer.
               group:
                 type: number
                 description: |
@@ -1109,6 +1190,13 @@ components:
               status:
                 type: string
                 description: The status of the Signer.
+                enum:
+                  - NEED_TO_SIGN
+                  - APPROVED
+                  - WAITING_FOR_OTHERS
+                  - REJECTED
+                  - FAILED
+                  - WAITING_FOR_PROCESSING
               # - $ref: '#/components/schemas/Signer'
               # - type: object
               #   properties:
