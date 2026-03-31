@@ -5,6 +5,13 @@ sidebar_position: 5
 
 This changelog lists all additions and updates to the Lumin API.
 
+### March 31, 2026
+#### Added
+- Add [Get Signing Link](/api/get-signing-link) endpoint to generate a signing URL for a signer within an existing signature request. This enables embedding signing flows directly in your own applications.
+#### Fixed
+- Add missing field descriptions for `email_address` and `name` in the signers response of [Get Signature Request](/api/get-signature-request).
+
+
 ### March 10, 2026
 #### Fixed
 - Remove `group` field from the signers object in the [Send Signature Request from Template](/api/send-signature-request-from-template) endpoint. Signing order is determined by the template's signer roles configuration.

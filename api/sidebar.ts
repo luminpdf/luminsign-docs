@@ -58,6 +58,12 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
+          id: "get-signing-link",
+          label: "Get Signing Link",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
           id: "update-signature-request",
           label: "Update Signature Request",
           className: "api-method patch",
