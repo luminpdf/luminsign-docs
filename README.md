@@ -1,9 +1,10 @@
 # Lumin API Documentation
 
-This repo contains the code for the [Lumin API documentation](https://luminpdf.github.io/luminsign-docs/). 
-The Lumin API allows customers to send documents via [Lumin Sign](https://www.luminpdf.com/lumin-sign/). 
+This repository contains the code for the [Lumin API documentation](https://www.luminpdf.com/lumin-sign/). The Lumin API is a suite of tools designed to seamlessly integrate document workflows into your applications. Beyond our robust digital signature solution, Lumin Sign, the API provides powerful functionalities for document editing, real-time collaboration, and workflow automation.
 
-This website is built using [Docusaurus 2](https://docusaurus.io/).
+Our REST-based API is easy to integrate, allowing you to focus on creating the best experience for your users while we handle the complexities of document management, security, and compliance.
+
+The documentation website is built using [Docusaurus 2](https://docusaurus.io/).
 
 ### Installation
 
